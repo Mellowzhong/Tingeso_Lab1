@@ -13,7 +13,7 @@ export default function NavBar() {
             </Link>
             <section className="flex text-start justify-between">
                 <Link to="/login">
-                    <span className="mx-4">{user.first_name} - {user.last_name}</span>
+                    <span className="mx-4">{user.first_name} - {user.last_name} - {user.rut}</span>
                 </Link>
             </section>
         </div>

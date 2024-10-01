@@ -1,8 +1,11 @@
 package com.example.Backend.Controllers;
 
 import com.example.Backend.Entities.User;
+import com.example.Backend.Forms.UserLoginForm;
+import com.example.Backend.Response.UserResponse;
 import com.example.Backend.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,5 +39,10 @@ public class UserController {
     @DeleteMapping("/delete/{user_id}")
     public void deleteUser(@PathVariable Long user_id) {
         userService.deleteUser(user_id);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<UserResponse> login(@RequestBody UserLoginForm user) {
+        return userService.loginUser(user);
     }
 }

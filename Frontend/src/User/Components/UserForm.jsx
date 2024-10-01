@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { postUser } from '../Services/UserServices';
-import { useDispatch } from 'react-redux';
-import { createUser } from '../../Storage/States/User';
 
 function UserForm() {
     const [first_name, setFirstName] = useState("");
@@ -11,15 +9,12 @@ function UserForm() {
     const [password, setPassword] = useState("");
     const [address, setAddress] = useState("");
 
-    const dispatch = useDispatch()
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const userData = { first_name, last_name, rut, email, password, address };
             const response = await postUser(userData);
             console.log("Usuario registrado exitosamente:", response);
-            dispatch(createUser(userData));
         } catch (error) {
             console.error("Error al registrar usuario:", error);
         }
