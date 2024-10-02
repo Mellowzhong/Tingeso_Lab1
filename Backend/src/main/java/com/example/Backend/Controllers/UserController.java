@@ -1,14 +1,12 @@
 package com.example.Backend.Controllers;
 
 import com.example.Backend.Entities.User;
-import com.example.Backend.Forms.UserLoginForm;
-import com.example.Backend.Response.UserResponse;
 import com.example.Backend.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/user")
@@ -32,17 +30,12 @@ public class UserController {
     }
 
     @PutMapping("/update/{user_id}")
-    public void updateUser(@RequestBody User user, @PathVariable Long user_id) {
+    public void updateUser(@RequestBody User user, @PathVariable UUID user_id) {
         userService.updateUser(user, user_id);
     }
 
     @DeleteMapping("/delete/{user_id}")
-    public void deleteUser(@PathVariable Long user_id) {
+    public void deleteUser(@PathVariable UUID user_id) {
         userService.deleteUser(user_id);
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<UserResponse> login(@RequestBody UserLoginForm user) {
-        return userService.loginUser(user);
     }
 }

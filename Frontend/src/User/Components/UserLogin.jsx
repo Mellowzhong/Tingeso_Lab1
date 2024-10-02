@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { loginUser } from "../Services/UserServices";
-import { useDispatch } from 'react-redux';
-import { createUser } from '../../Storage/States/User';
 
 function UserLogin() {
 
@@ -9,14 +7,11 @@ function UserLogin() {
     const [rut, setRut] = useState("");
     const [password, setPassword] = useState("");
 
-    const dispatch = useDispatch()
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const userData = { rut, password };
             const response = await loginUser(userData);
-            dispatch(createUser(response));
             console.log("Usuario logeado exitosamente:", response);
         } catch (error) {
             console.error("Error al logear usuario:", error);

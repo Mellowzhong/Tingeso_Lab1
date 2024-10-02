@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CreditService {
@@ -23,7 +24,7 @@ public class CreditService {
 
 //    CRUD
 
-    public void addCredit(Credit credit, Long user_id) {
+    public void addCredit(Credit credit, UUID user_id) {
         Optional<User> optionalUser = userRepository.findById(user_id);
 
         if (optionalUser.isPresent()) {
@@ -34,7 +35,7 @@ public class CreditService {
         }
     }
 
-    public List<Credit> getAllCreditsByUserId(Long user_id) {
+    public List<Credit> getAllCreditsByUserId(UUID user_id) {
         Optional<User> optionalUser = userRepository.findById(user_id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
@@ -43,7 +44,7 @@ public class CreditService {
         return null;
     }
 
-    public void updateCredit(Credit credit, Long user_id, Long credit_id) {
+    public void updateCredit(Credit credit, UUID user_id, UUID credit_id) {
         Optional<User> optionalUser = userRepository.findById(user_id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
@@ -53,7 +54,7 @@ public class CreditService {
         }
     }
 
-    public void deleteCredit(Long user_id, Long credit_id) {
+    public void deleteCredit(UUID user_id, UUID credit_id) {
         Optional<User> optionalUser = userRepository.findById(user_id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
