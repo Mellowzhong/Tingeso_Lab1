@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -19,7 +20,17 @@ public class Credit {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private Integer quantity;
+    private Integer Requested_Amount;
+
+    private Integer Approved_Amount;
+
+    private Integer Term_Years;
+
+    private String State;
+
+    private Date Application_Date;
+
+    private Date Approved_rejection_Date;
 
     @ManyToOne
     @JsonIgnore
