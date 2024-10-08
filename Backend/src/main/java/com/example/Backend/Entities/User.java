@@ -29,4 +29,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Credit> credits;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<CreditSimulation> creditSimulations;
 }

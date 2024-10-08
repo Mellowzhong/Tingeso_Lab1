@@ -6,39 +6,31 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "credit")
-public class Credit {
+@Table(name = "creditSimulation")
+public class CreditSimulation {
     @Id
     @Column(name = "id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String Credit_Type;
+    private Integer Simulated_Amount;
 
-    private Integer Requested_Amount;
+    private Integer Simulated_Term;
 
-    private Integer Approved_Amount;
+    private Integer Simulated_Interest_Rate;
 
-    private Integer Term_Years;
+    private Integer Calculated_Monthly_Installment;
 
-    private String Status;
-
-    private Date Application_Date;
-
-    private Date Approved_rejection_Date;
+    private LocalDate Simulation_Date;
 
     @ManyToOne
     @JsonIgnore
     private User user;
-
-    @OneToMany(mappedBy = "credit", cascade = CascadeType.ALL)
-    private List<Document> Documents;
 }

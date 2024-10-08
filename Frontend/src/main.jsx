@@ -7,9 +7,9 @@ import {
 import ComponentsWithNavBar from './Components/ComponentsWithNavBar.jsx';
 import './index.css'
 
-import UserLogin from './User/Components/UserLogin.jsx';
 import UserForm from './User/Components/UserForm.jsx';
 import ErrorPage from './Components/ErrorPage.jsx';
+import Simulation from './Simlulation/Views/Simulation.jsx';
 
 const router = createBrowserRouter([
   {
@@ -22,11 +22,11 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/login",
+    path: "/simulation",
     element: (
       <ComponentsWithNavBar>
-        <UserLogin />
-      </ComponentsWithNavBar>
+        <Simulation />
+      </ComponentsWithNavBar >
     ),
     errorElement: <ErrorPage />,
   },

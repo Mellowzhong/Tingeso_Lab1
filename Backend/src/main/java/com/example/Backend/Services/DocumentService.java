@@ -24,12 +24,13 @@ public class DocumentService {
         this.documentRepository = documentRepository;
     }
 
-    public Document saveDocument(MultipartFile file) throws IOException {
+    public Document saveDocument(MultipartFile file, String typeCredit) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         Document document = Document.builder()
                 .Document_Name(fileName)
                 .Document_Type(file.getContentType())
                 .Data(file.getBytes())
+                .Type_Credit_Document(typeCredit)
                 .build();
 
         return documentRepository.save(document);
