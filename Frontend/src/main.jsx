@@ -9,7 +9,8 @@ import './index.css'
 
 import UserForm from './User/Components/UserForm.jsx';
 import ErrorPage from './Components/ErrorPage.jsx';
-import Simulation from './Simlulation/Views/Simulation.jsx';
+import CreditRequest from './CreditRequest/Views/CreditRequest.jsx';
+import Simulation from './Simulation/Views/Simulation.jsx';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,15 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
+    path: "/creditRequest",
+    element: (
+      <ComponentsWithNavBar>
+        <CreditRequest />
+      </ComponentsWithNavBar >
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
     path: "/simulation",
     element: (
       <ComponentsWithNavBar>
@@ -29,7 +39,7 @@ const router = createBrowserRouter([
       </ComponentsWithNavBar >
     ),
     errorElement: <ErrorPage />,
-  },
+  }
 ]);
 
 createRoot(document.getElementById('root')).render(

@@ -1,4 +1,4 @@
-import SimulationForm from "../Components/SimulationFirstHomeForm";
+import SimulationForm from "../Components/SimulationForm";
 
 function Simulation() {
     return (

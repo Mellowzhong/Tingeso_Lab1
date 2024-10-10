@@ -9,9 +9,14 @@ export default function NavBar() {
                     Presta banco
                 </span>
             </Link>
-            <Link to={"/simulation"}>
+            <Link to="/simulation">
                 <span className="mx-4">
-                    Simulacion
+                    Simulacion de credito
+                </span>
+            </Link>
+            <Link to={"/creditRequest"}>
+                <span className="mx-4">
+                    Solicitud de crédito
                 </span>
             </Link>
         </div>

@@ -1,6 +1,6 @@
 import api from "../../Tools/BaseUrl";
 
-export const postSimulation = async (file, typeCredit) => {
+export const postFile = async (file, typeCredit) => {
   const formData = new FormData();
   formData.append("file", file);
   formData.append("typeCredit", typeCredit);
