@@ -1,6 +1,8 @@
 package com.example.Backend.Controllers;
 
 import com.example.Backend.Entities.User;
+import com.example.Backend.Forms.UserRequestDataForm;
+import com.example.Backend.Response.UserRequestDataResponse;
 import com.example.Backend.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +26,7 @@ public class UserController {
         userService.addUser(user);
     }
 
-    @GetMapping("/get")
+    @GetMapping("/getAll")
     public List<User> getAllUsers() {
         return userService.getUser();
     }
@@ -37,5 +39,11 @@ public class UserController {
     @DeleteMapping("/delete/{user_id}")
     public void deleteUser(@PathVariable UUID user_id) {
         userService.deleteUser(user_id);
+    }
+
+    @PostMapping("/get")
+    public UserRequestDataResponse getUserByUserData(@RequestBody UserRequestDataForm userRequestDataForm) {
+        System.out.println(userRequestDataForm.toString());
+        return userService.getUserByData(userRequestDataForm);
     }
 }

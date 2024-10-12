@@ -11,9 +11,9 @@ public class CalculateSimulation {
     private double calculate(@RequestBody UtilForm utilForm) {
 
         System.out.println(utilForm.toString());
-        double amount = utilForm.getCredit_Amount();
-        double term = utilForm.getSimulated_Interest_Rate();
-        int pay = utilForm.getNumber_Of_Pays();
+        double amount = utilForm.getCreditAmount();
+        double term = utilForm.getSimulatedInterestRate();
+        int pay = utilForm.getNumberOfPays();
 
         double factor = Math.pow(1 + term, pay);
         double quote = (amount * term * factor) / (factor - 1);

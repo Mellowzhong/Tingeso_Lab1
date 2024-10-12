@@ -1,7 +1,9 @@
 package com.example.Backend.Services;
 
 import com.example.Backend.Entities.User;
+import com.example.Backend.Forms.UserRequestDataForm;
 import com.example.Backend.Repositories.UserRepository;
+import com.example.Backend.Response.UserRequestDataResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +13,6 @@ import java.util.UUID;
 
 @Service
 public class UserService {
-
     private final UserRepository userRepository;
 
     @Autowired
@@ -37,5 +38,23 @@ public class UserService {
 
     public void deleteUser(UUID user_id){
         userRepository.deleteById(user_id);
+    }
+
+    public UserRequestDataResponse getUserByData(UserRequestDataForm userRequestDataForm){
+        String FirstName = userRequestDataForm.getFirstName();
+        String LastName = userRequestDataForm.getLastName();
+        String Rut = userRequestDataForm.getRut();
+        Optional<User> getterUser = userRepository.findByFirstNameAndLastNameAndRut(FirstName, LastName, Rut);
+
+        if(getterUser.isPresent()){
+            UserRequestDataResponse userRequestDataResponse = UserRequestDataResponse.builder()
+                    .id(getterUser.get().getId())
+                    .firstName(getterUser.get().getFirstName())
+                    .lastName(getterUser.get().getLastName())
+                    .build();
+
+            return userRequestDataResponse;
+        }
+        return null;
     }
 }

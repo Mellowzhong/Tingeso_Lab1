@@ -1,18 +1,17 @@
 import { useState } from 'react';
 import { postUser } from '../Services/UserServices';
 
-function UserForm() {
-    const [first_name, setFirstName] = useState("");
-    const [last_name, setLastName] = useState("");
+function RegisterUserForm() {
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [rut, setRut] = useState("");
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const [address, setAddress] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const userData = { first_name, last_name, rut, email, password, address };
+            const userData = { firstName, lastName, rut, email, address };
             const response = await postUser(userData);
             console.log("Usuario registrado exitosamente:", response);
         } catch (error) {
@@ -26,11 +25,11 @@ function UserForm() {
 
             <section>
                 <form onSubmit={handleSubmit} className='grid'>
-                    <label htmlFor="first_name">Nombre:
-                        <input type="text" id="first_name" name="first_name" onChange={(e) => setFirstName(e.target.value)} />
+                    <label htmlFor="firstName">Nombre:
+                        <input type="text" id="firstName" name="firstName" onChange={(e) => setFirstName(e.target.value)} />
                     </label>
-                    <label htmlFor="last_name">Apellido:
-                        <input type="text" id="last_name" name="last_name" onChange={(e) => setLastName(e.target.value)} />
+                    <label htmlFor="lastName">Apellido:
+                        <input type="text" id="lastName" name="lastName" onChange={(e) => setLastName(e.target.value)} />
                     </label>
                     <label htmlFor="rut">Rut:
                         <input type="text" id="rut" name="rut" onChange={(e) => setRut(e.target.value)} />
@@ -41,9 +40,6 @@ function UserForm() {
                     <label htmlFor="email">Email:
                         <input type="email" id="email" name="email" onChange={(e) => setEmail(e.target.value)} />
                     </label>
-                    <label htmlFor="password">Contraseña:
-                        <input type="password" id="password" name="password" onChange={(e) => setPassword(e.target.value)} />
-                    </label>
                     <button type="submit">Submit</button>
                 </form>
             </section>
@@ -51,4 +47,4 @@ function UserForm() {
     )
 }
 
-export default UserForm;
+export default RegisterUserForm;

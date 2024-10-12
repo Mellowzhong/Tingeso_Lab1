@@ -1,7 +1,7 @@
 import DocumentForm from "../../Document/Components/DocumentForm";
 
 import { useState } from "react";
-import { postFile } from '../Services/CreditRequestService';
+import { postFile } from '../../Document/Services/DocumentServices'
 
 function RemoldingForm() {
     const [, setIncomeCertificate] = useState(null);
@@ -25,11 +25,11 @@ function RemoldingForm() {
     return (
         <div>
             <h1>Remodeling form</h1>
-            <form className="grid">
+            <div className="grid">
                 <DocumentForm documentRequiredName="Comprobante de ingresos" handleFunction={handleFileChange} setFunction={setIncomeCertificate} documentName="comrpobante de ingresos" />
                 <DocumentForm documentRequiredName="Presupuesto de remodelacion" handleFunction={handleFileChange} setFunction={setRemodelingAmount} documentName="presupuesto de remodelacion" />
                 <DocumentForm documentRequiredName="Certificado de avaluo actualizado" handleFunction={handleFileChange} setFunction={setUpdateAppraisalCertificate} documentName="certificado de avaluo actualizado" />
-            </form>
+            </div>
         </div>
     );
 }

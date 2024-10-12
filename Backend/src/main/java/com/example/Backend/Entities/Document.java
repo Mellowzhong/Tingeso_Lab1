@@ -21,14 +21,14 @@ public class Document {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String Type_Credit_Document;
+    private String typeCreditDocument;
 
-    private String Document_Name;
+    private String documentName;
 
-    private String Document_Type;
+    private String documentType;
 
     @Lob
-    private byte[] Data;
+    private byte[] data;
 
     @ManyToOne
     @JsonIgnore

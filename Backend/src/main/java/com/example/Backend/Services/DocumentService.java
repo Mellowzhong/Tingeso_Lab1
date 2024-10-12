@@ -27,10 +27,10 @@ public class DocumentService {
     public Document saveDocument(MultipartFile file, String typeCredit) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         Document document = Document.builder()
-                .Document_Name(fileName)
-                .Document_Type(file.getContentType())
-                .Data(file.getBytes())
-                .Type_Credit_Document(typeCredit)
+                .documentName(fileName)
+                .documentType(file.getContentType())
+                .data(file.getBytes())
+                .typeCreditDocument(typeCredit)
                 .build();
 
         return documentRepository.save(document);

@@ -20,15 +20,15 @@ public class CreditSimulation {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private Integer Simulated_Amount;
+    private Integer simulatedAmount;
 
-    private Integer Simulated_Term;
+    private Integer simulatedTerm;
 
-    private Integer Simulated_Interest_Rate;
+    private Integer simulatedInterestRate;
 
-    private Integer Calculated_Monthly_Installment;
+    private Integer calculatedMonthlyInstallment;
 
-    private LocalDate Simulation_Date;
+    private LocalDate simulationDate;
 
     @ManyToOne
     @JsonIgnore

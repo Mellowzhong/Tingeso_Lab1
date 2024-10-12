@@ -1,7 +1,7 @@
 import DocumentForm from "../../Document/Components/DocumentForm";
 
 import { useState } from "react";
-import { postFile } from '../Services/CreditRequestService';
+import { postFile } from '../../Document/Services/DocumentServices'
 
 function SecondHomeForm() {
     const [, setIncomeCertificate] = useState(null);
@@ -26,12 +26,12 @@ function SecondHomeForm() {
     return (
         <div>
             <h1>Comercial Property Form</h1>
-            <form className="grid">
+            <div className="grid">
                 <DocumentForm documentRequiredName="Estado financiero del negocio" handleFunction={handleFileChange} setFunction={setBusinessFinanceState} documentName="estado financiero del negocio" />
                 <DocumentForm documentRequiredName="Comprobante de ingresos" handleFunction={handleFileChange} setFunction={setIncomeCertificate} documentName="comprobante de ingresos" />
                 <DocumentForm documentRequiredName="Certificado de avaluo" handleFunction={handleFileChange} setFunction={setAppraisalCertificate} documentName="certificado de avaluo" />
                 <DocumentForm documentRequiredName="Plan de negocio" handleFunction={handleFileChange} setFunction={setBusinessPlan} documentName="plan de negocio" />
-            </form>
+            </div>
         </div>
     );
 }

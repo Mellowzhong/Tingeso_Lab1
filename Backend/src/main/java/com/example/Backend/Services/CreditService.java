@@ -30,7 +30,6 @@ public class CreditService {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             credit.setUser(user);
-            System.out.printf("ola");
             creditRepository.save(credit);
         }
     }

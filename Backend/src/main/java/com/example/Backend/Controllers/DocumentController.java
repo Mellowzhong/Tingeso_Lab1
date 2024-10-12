@@ -37,8 +37,8 @@ public class DocumentController {
     public ResponseEntity<byte[]> getFile(@PathVariable UUID id) throws FileNotFoundException {
         Document fileEntity = documentService.getFile(id).get();
         return ResponseEntity.status(HttpStatus.OK)
-                .header(HttpHeaders.CONTENT_TYPE, fileEntity.getDocument_Type())
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileEntity.getDocument_Name()+"\"")
+                .header(HttpHeaders.CONTENT_TYPE, fileEntity.getDocumentType())
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileEntity.getDocumentName()+"\"")
                 .body(fileEntity.getData());
     }
 }

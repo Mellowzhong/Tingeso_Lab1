@@ -21,24 +21,24 @@ public class Credit {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String Credit_Type;
+    private String creditType;
 
-    private Integer Requested_Amount;
+    private Integer requestedAmount;
 
-    private Integer Approved_Amount;
+    private Integer approvedAmount;
 
-    private Integer Term_Years;
+    private Integer termYears;
 
-    private String Status;
+    private String status;
 
-    private Date Application_Date;
+    private Date application_Date;
 
-    private Date Approved_rejection_Date;
+    private Date approvedRejectionDate;
 
     @ManyToOne
     @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "credit", cascade = CascadeType.ALL)
-    private List<Document> Documents;
+    private List<Document> documents;
 }

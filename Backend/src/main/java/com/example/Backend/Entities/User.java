@@ -19,13 +19,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String First_Name;
+    private String firstName;
 
-    private String Last_Name;
+    private String lastName;
 
-    private String Rut;
+    private String rut;
 
-    private String Address;
+    private String address;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Credit> credits;

@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UtilForm {
-    private int CreditAmount;
-    private double SimulatedInterestRate;
-    private int NumberOfPays;
+public class UserRequestDataForm {
+    private String firstName;
+
+    private String lastName;
+
+    private String rut;
 }

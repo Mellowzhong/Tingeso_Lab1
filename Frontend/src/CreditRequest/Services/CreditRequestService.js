@@ -1,14 +1,10 @@
 import api from "../../Tools/BaseUrl";
 
-export const postFile = async (file, typeCredit) => {
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("typeCredit", typeCredit);
-
-  const response = await api.post("/api/documents", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
-  return response.data;
+export const postCredit = async (creditRequest, userId) => {
+  try {
+    const response = await api.post(`/credit/add/${userId}`, creditRequest);
+    return response.data;
+  } catch (error) {
+    console.error("Error posting credit request:", error);
+  }
 };
