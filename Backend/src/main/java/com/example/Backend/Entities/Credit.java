@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -40,5 +41,5 @@ public class Credit {
     private User user;
 
     @OneToMany(mappedBy = "credit", cascade = CascadeType.ALL)
-    private List<Document> documents;
+    private List<Document> documents = new ArrayList<>();
 }

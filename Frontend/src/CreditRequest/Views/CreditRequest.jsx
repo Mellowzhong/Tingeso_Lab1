@@ -8,16 +8,23 @@ import { useState } from "react";
 import { postCredit } from "../Services/CreditRequestService";
 import { getUser } from "../../User/Services/UserServices"
 
-function Simulation() {
+function CreditRequest() {
+    // User data
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [rut, setRut] = useState("");
 
-    const [creditType, setCrediRequest] = useState("");
+    // Credit forms
     const [showFirstHomeForm, setShowFirstHomeForm] = useState(false);
     const [showSecondHomeForm, setShowSecondHomeForm] = useState(false);
     const [showComercialPropertyForm, setShowComercialPropertyForm] = useState(false);
     const [showRemodelingForm, setShowRemodelingForm] = useState(false);
+
+    // Credit data
+    const [creditId, setCreditId] = useState("");
+    const [creditType, setCrediRequest] = useState("");
+
+    const [showCreditDocuments, setShowCreditDocuments] = useState(false);
 
     const handleCheckboxChange = (formType) => {
         switch (formType) {
@@ -41,15 +48,18 @@ function Simulation() {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Previene el comportamiento predeterminado del formulario
+        e.preventDefault();
         console.log("Submitting credit request:", creditType);
         const userRequestData = { firstName, lastName, rut };
         const creditRequestData = { creditType };
+
+        setShowCreditDocuments(!showCreditDocuments);
 
         try {
             const user = await getUser(userRequestData);
             console.log("User:", user);
             const response = await postCredit(creditRequestData, user.id);
+            setCreditId(response.creditId);
             console.log("Response:", response);
         } catch (error) {
             console.error("Error:", error);
@@ -58,32 +68,42 @@ function Simulation() {
 
     return (
         <>
-            <RequestUserForm setFirstName={setFirstName} setLastName={setLastName} setRut={setRut} />
-            <form className="grid" onSubmit={handleSubmit}>
-                <label htmlFor="firstHome">
-                    {showFirstHomeForm ? `Ocultar first home form` : `Mostrar first home form`}
-                    <input type="checkbox" onChange={() => handleCheckboxChange("firstHome")} />
-                    {showFirstHomeForm && <FirstHomeForm className={showFirstHomeForm ? "show-element" : null} />}
-                </label>
-                <label htmlFor="secondHome">
-                    {showSecondHomeForm ? `Ocultar second home form` : `Mostrar second home form`}
-                    <input type="checkbox" onChange={() => handleCheckboxChange("secondHome")} />
+            {!showCreditDocuments &&
+                <section>
+                    <RequestUserForm setFirstName={setFirstName} setLastName={setLastName} setRut={setRut} />
+                    <form className="grid" onSubmit={handleSubmit}>
+                        <label htmlFor="firstHome">
+                            {showFirstHomeForm ? `Ocultar first home form` : `Mostrar first home form`}
+                            <input type="checkbox" onChange={() => handleCheckboxChange("firstHome")} />
+                        </label>
+                        <label htmlFor="secondHome">
+                            {showSecondHomeForm ? `Ocultar second home form` : `Mostrar second home form`}
+                            <input type="checkbox" onChange={() => handleCheckboxChange("secondHome")} />
+                        </label>
+                        <label htmlFor="comercialProperty">
+                            {showComercialPropertyForm ? `Ocultar comercial property form` : `Mostrar comercial property form`}
+                            <input type="checkbox" onChange={() => handleCheckboxChange("comercialProperty")} />
+                        </label>
+                        <label htmlFor="remodeling">
+                            {showRemodelingForm ? `Ocultar remodeling form` : `Mostrar remodeling form`}
+                            <input type="checkbox" onChange={() => handleCheckboxChange("remodeling")} />
+                        </label>
+                        <button type="submit">Siguente</button>
+                    </form>
+                </section>
+            }
+            {/* Parte de los documentos */}
+            creditId - {creditId}
+            {showCreditDocuments &&
+                <section >
+                    {showFirstHomeForm && <FirstHomeForm creditId={creditId} className={showFirstHomeForm ? "show-element" : null} />}
                     {showSecondHomeForm && <SecondHomeForm className={showSecondHomeForm ? "show-element" : null} />}
-                </label>
-                <label htmlFor="comercialProperty">
-                    {showComercialPropertyForm ? `Ocultar comercial property form` : `Mostrar comercial property form`}
-                    <input type="checkbox" onChange={() => handleCheckboxChange("comercialProperty")} />
                     {showComercialPropertyForm && <ComercialPropertyForm className={showComercialPropertyForm ? "show-element" : null} />}
-                </label>
-                <label htmlFor="remodeling">
-                    {showRemodelingForm ? `Ocultar remodeling form` : `Mostrar remodeling form`}
-                    <input type="checkbox" onChange={() => handleCheckboxChange("remodeling")} />
                     {showRemodelingForm && <RemoldingForm className={showRemodelingForm ? "show-element" : null} />}
-                </label>
-                <button type="submit">Mandar solicitud</button>
-            </form>
+                </section>
+            }
         </>
     );
 }
 
-export default Simulation;
+export default CreditRequest;

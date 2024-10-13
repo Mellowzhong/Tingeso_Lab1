@@ -1,7 +1,9 @@
 package com.example.Backend.Controllers;
 
 import com.example.Backend.Entities.Credit;
+import com.example.Backend.Response.CreditDataResponse;
 import com.example.Backend.Services.CreditService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,10 +21,9 @@ public class CreditController {
     }
 
 //    CRUD
-
     @PostMapping("/add/{user_id}")
-    public void addCredit(@RequestBody Credit credit, @PathVariable UUID user_id) {
-        creditService.addCredit(credit, user_id);
+    public CreditDataResponse addCredit(@RequestBody Credit credit, @PathVariable UUID user_id) {
+        return creditService.addCredit(credit, user_id);
     }
 
     @GetMapping("/get/{user_id}")

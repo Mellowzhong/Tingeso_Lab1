@@ -4,7 +4,7 @@ function RequestUserForm({ setFirstName, setLastName, setRut }) {
 
     return (
         <>
-            <h1>Request aUSER FORM</h1>
+            <h1>Request USER FORM</h1>
             <section>
                 <div className='grid'>
                     <label htmlFor="firstName">Nombre:

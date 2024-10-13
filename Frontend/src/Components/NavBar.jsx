@@ -19,6 +19,11 @@ export default function NavBar() {
                     Solicitud de crédito
                 </span>
             </Link>
+            <Link to={"/excecutive"}>
+                <span className="mx-4">
+                    Ejecutivo
+                </span>
+            </Link>
         </div>
     )
 }

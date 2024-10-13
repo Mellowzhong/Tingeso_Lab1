@@ -24,12 +24,13 @@ public class DocumentController {
         this.documentService = documentService;
     }
 
-    @PostMapping
+    @PostMapping("/post/{credit_id}")
     public ResponseEntity<String> uploadDocument(
             @RequestParam("file") MultipartFile file,
-            @RequestParam("typeCredit") String doc
+            @RequestParam("typeCredit") String doc,
+            @PathVariable UUID credit_id
     ) throws IOException {
-        Document savedDocument = documentService.saveDocument(file, doc);
+        Document savedDocument = documentService.saveDocument(file, doc, credit_id);
         return ResponseEntity.ok("Document uploaded successfully. ID: " + savedDocument.getId());
     }
 

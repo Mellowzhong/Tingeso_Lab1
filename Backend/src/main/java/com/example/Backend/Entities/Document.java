@@ -28,9 +28,11 @@ public class Document {
     private String documentType;
 
     @Lob
+    @Basic(fetch = FetchType.EAGER)
+    @JsonIgnore
     private byte[] data;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Credit credit;
 }

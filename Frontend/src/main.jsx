@@ -11,6 +11,7 @@ import RegisterUserForm from './User/Components/RegisterUserForm.jsx';
 import ErrorPage from './Components/ErrorPage.jsx';
 import CreditRequest from './CreditRequest/Views/CreditRequest.jsx';
 import Simulation from './Simulation/Views/Simulation.jsx';
+import Excecutive from './CreditRequest/Views/Executive.jsx';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,15 @@ const router = createBrowserRouter([
       <ComponentsWithNavBar>
         <RegisterUserForm />
       </ComponentsWithNavBar>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/simulation",
+    element: (
+      <ComponentsWithNavBar>
+        <Simulation />
+      </ComponentsWithNavBar >
     ),
     errorElement: <ErrorPage />,
   },
@@ -32,10 +42,10 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/simulation",
+    path: "/Excecutive",
     element: (
       <ComponentsWithNavBar>
-        <Simulation />
+        <Excecutive />
       </ComponentsWithNavBar >
     ),
     errorElement: <ErrorPage />,
