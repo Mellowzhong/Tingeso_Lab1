@@ -41,4 +41,8 @@ public class Credit {
 
     @OneToMany(mappedBy = "credit", cascade = CascadeType.ALL)
     private List<Document> documents = new ArrayList<>();
+
+    @OneToOne
+    @JsonIgnore
+    private FinancialEvaluation financialEvaluation;
 }
