@@ -1,5 +1,6 @@
 package com.example.Backend.Controllers;
 
+import com.example.Backend.DTOS.CreditDTO;
 import com.example.Backend.Entities.Credit;
 import com.example.Backend.Response.CreditDataResponse;
 import com.example.Backend.Services.CreditService;
@@ -26,9 +27,19 @@ public class CreditController {
         return creditService.addCredit(credit, user_id);
     }
 
+//    @GetMapping("/get/{user_id}")
+//    public List<Credit> getCredit(@PathVariable UUID user_id) {
+//        return creditService.getAllCreditsByUserId(user_id);
+//    }
+
     @GetMapping("/get/{user_id}")
-    public List<Credit> getCredit(@PathVariable UUID user_id) {
+    public List<CreditDTO> getCreditByUserId(@PathVariable UUID user_id) {
         return creditService.getAllCreditsByUserId(user_id);
+    }
+
+    @GetMapping("/getAll")
+    public List<CreditDTO> getAllCredits() {
+        return creditService.getAllCredits();
     }
 
     @PutMapping("/update/{user_id}/{credit_id}")

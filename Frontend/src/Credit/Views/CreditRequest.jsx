@@ -5,7 +5,7 @@ import RemoldingForm from "../Components/RemoldingForm";
 import RequestUserForm from "../../User/Components/RequestUserForm";
 
 import { useState } from "react";
-import { postCredit } from "../Services/CreditRequestService";
+import { postCredit } from "../Services/CreditService";
 import { getUser } from "../../User/Services/UserServices"
 
 function CreditRequest() {
@@ -97,9 +97,9 @@ function CreditRequest() {
             {showCreditDocuments &&
                 <section >
                     {showFirstHomeForm && <FirstHomeForm creditId={creditId} className={showFirstHomeForm ? "show-element" : null} />}
-                    {showSecondHomeForm && <SecondHomeForm className={showSecondHomeForm ? "show-element" : null} />}
-                    {showComercialPropertyForm && <ComercialPropertyForm className={showComercialPropertyForm ? "show-element" : null} />}
-                    {showRemodelingForm && <RemoldingForm className={showRemodelingForm ? "show-element" : null} />}
+                    {showSecondHomeForm && <SecondHomeForm creditId={creditId} className={showSecondHomeForm ? "show-element" : null} />}
+                    {showComercialPropertyForm && <ComercialPropertyForm creditId={creditId} className={showComercialPropertyForm ? "show-element" : null} />}
+                    {showRemodelingForm && <RemoldingForm creditId={creditId} className={showRemodelingForm ? "show-element" : null} />}
                 </section>
             }
         </>

@@ -8,3 +8,12 @@ export const postCredit = async (creditRequest, userId) => {
     console.error("Error posting credit request:", error);
   }
 };
+
+export const getAllCredits = async () => {
+  try {
+    const response = await api.get("/credit/getAll");
+    return response.data;
+  } catch (error) {
+    console.error("Error posting credit request:", error);
+  }
+};

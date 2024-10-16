@@ -37,7 +37,6 @@ public class Credit {
     private Date approvedRejectionDate;
 
     @ManyToOne
-    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "credit", cascade = CascadeType.ALL)

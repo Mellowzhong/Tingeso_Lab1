@@ -14,16 +14,15 @@ export const postFile = async (file, typeCredit, creditId) => {
   return response.data;
 };
 
-export const getDocuments = async () => {
-  const response = await api.get(
-    `/api/documents/${"02292397-ea5e-4247-bf43-e10b85bfa18d"}`,
-    { responseType: "blob" }
-  );
+export const downloadDocument = async (documentId, fileName) => {
+  const response = await api.get(`/api/documents/${documentId}`, {
+    responseType: "blob",
+  });
 
   const url = URL.createObjectURL(response.data);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "file.pdf";
+  a.download = fileName;
   a.click();
 
   console.log(url);

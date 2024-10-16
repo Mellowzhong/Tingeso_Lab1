@@ -9,9 +9,9 @@ import './index.css'
 
 import RegisterUserForm from './User/Components/RegisterUserForm.jsx';
 import ErrorPage from './Components/ErrorPage.jsx';
-import CreditRequest from './CreditRequest/Views/CreditRequest.jsx';
+import CreditRequest from './Credit/Views/CreditRequest.jsx'
 import Simulation from './Simulation/Views/Simulation.jsx';
-import Excecutive from './CreditRequest/Views/Executive.jsx';
+import Excecutive from './Credit/Views/Executive.jsx';
 
 const router = createBrowserRouter([
   {
