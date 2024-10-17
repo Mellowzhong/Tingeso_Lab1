@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres_container
+    environment:
+      POSTGRES_DB: presta-banco-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+
+  backend:
+    container_name: backend
+    image: mellow03/backend:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=192.168.1.198
+      - DB_USER=postgres
+      - DB_PASSWORD=admin
+      - PORT = 8080
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  frontend:
+    container_name: frontend
+    image: mellow03/frontend:latest
+    ports:
+      - "8090:8008"
+    deploy:
+      restart_policy:
+        condition: on-failure

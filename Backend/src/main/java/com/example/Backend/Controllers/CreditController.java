@@ -4,7 +4,6 @@ import com.example.Backend.DTOS.CreditDTO;
 import com.example.Backend.Entities.Credit;
 import com.example.Backend.Response.CreditDataResponse;
 import com.example.Backend.Services.CreditService;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
