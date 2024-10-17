@@ -1,6 +1,4 @@
-version: "3.8"
 services:
-
   postgres:
     image: postgres:latest
     container_name: postgres_container
@@ -17,10 +15,10 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - DB_HOST=192.168.1.198
+      - DB_HOST=postgres_container  # Use the service name here
       - DB_USER=postgres
       - DB_PASSWORD=admin
-      - PORT = 8080
+      - PORT=8080
     deploy:
       restart_policy:
         condition: on-failure
@@ -29,7 +27,7 @@ services:
     container_name: frontend
     image: mellow03/frontend:latest
     ports:
-      - "8090:8008"
+      - "8090:80"
     deploy:
       restart_policy:
         condition: on-failure
