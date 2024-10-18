@@ -3,9 +3,11 @@ package com.example.Backend.Controllers;
 import com.example.Backend.Entities.FinancialEvaluation;
 import com.example.Backend.Services.FinancialEvaluationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/financialEvaluation")
@@ -20,8 +22,8 @@ public class FinancialEvaluationController {
 //    CRUD
 
     @PostMapping("/post/{creditId}")
-    public void postFinancialEvaluation(@PathVariable String creditId, @RequestBody FinancialEvaluation financialEvaluation) {
-
+    public ResponseEntity<FinancialEvaluation> postFinancialEvaluation(@PathVariable UUID creditId, @RequestBody FinancialEvaluation financialEvaluation) {
+        return financialEvaluationService.saveFinancialEvaluation(creditId, financialEvaluation);
     }
 
     @GetMapping("/getAll")

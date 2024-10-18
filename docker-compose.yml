@@ -15,7 +15,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - DB_HOST=postgres_container  # Use the service name here
+      - DB_HOST=postgres_container
       - DB_USER=postgres
       - DB_PASSWORD=admin
       - PORT=8080
@@ -27,7 +27,7 @@ services:
     container_name: frontend
     image: mellow03/frontend:latest
     ports:
-      - "8090:80"
+      - "80:80"
     deploy:
       restart_policy:
         condition: on-failure
