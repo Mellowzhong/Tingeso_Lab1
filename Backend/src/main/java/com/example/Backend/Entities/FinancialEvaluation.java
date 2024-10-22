@@ -21,7 +21,7 @@ public class FinancialEvaluation {
 
     private Boolean debtToIncomeRatio;
 
-    private Boolean CreditHistory;
+    private Boolean creditHistory;
 
     private Boolean employmentHistory;
 
@@ -30,5 +30,6 @@ public class FinancialEvaluation {
     private Boolean evaluationResult;
 
     @OneToOne
+    @JsonIgnore
     private Credit credit;
 }

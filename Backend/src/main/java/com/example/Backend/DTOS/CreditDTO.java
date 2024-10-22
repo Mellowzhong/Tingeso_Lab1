@@ -1,6 +1,7 @@
 package com.example.Backend.DTOS;
 
 import com.example.Backend.DTOS.DocumentDTO;
+import com.example.Backend.Entities.FinancialEvaluation;
 import com.example.Backend.Entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,5 +25,5 @@ public class CreditDTO {
     private Date approvedRejectionDate;
     private User user;
     private List<DocumentDTO> documents;
-
+    private FinancialEvaluation financialEvaluation;
 }

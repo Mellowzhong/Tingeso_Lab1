@@ -43,6 +43,5 @@ public class Credit {
     private List<Document> documents = new ArrayList<>();
 
     @OneToOne
-    @JsonIgnore
     private FinancialEvaluation financialEvaluation;
 }

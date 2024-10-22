@@ -93,6 +93,7 @@ public class CreditService {
         creditDTO.setApplicationDate(credit.getApplication_Date());
         creditDTO.setUser(credit.getUser());
         creditDTO.setApprovedRejectionDate(credit.getApprovedRejectionDate());
+        creditDTO.setFinancialEvaluation(credit.getFinancialEvaluation());
 
         List<DocumentDTO> documentDTOS = credit.getDocuments().stream()
                 .map(this::convertToDocumentDTO)

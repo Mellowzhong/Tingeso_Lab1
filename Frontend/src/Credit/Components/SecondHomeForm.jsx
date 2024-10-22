@@ -1,26 +1,38 @@
 import DocumentForm from "../../Document/Components/DocumentForm";
-
 import PropTypes from 'prop-types';
-
 import { useState } from "react";
-import { postFile } from '../../Document/Services/DocumentServices'
+import { postFile } from '../../Document/Services/DocumentServices';
 
 function SecondHomeForm({ creditId }) {
-    const [, setIncomeCertificate] = useState(null);
-    const [, setAppraisalCertificate] = useState(null);
-    const [, setCreditHistorial] = useState(null);
-    const [, setFirstHOmeCertificate] = useState(null);
+    const [incomeCertificate, setIncomeCertificate] = useState(null);
+    const [appraisalCertificate, setAppraisalCertificate] = useState(null);
+    const [creditHistorial, setCreditHistorial] = useState(null);
+    const [firstHomeCertificate, setFirstHomeCertificate] = useState(null);
 
-    const handleFileChange = async (event, setFile, typeOfCredit) => {
+    const handleFileChange = (event, setFile) => {
         const file = event.target.files[0];
         if (file) {
-            setFile(URL.createObjectURL(file));
-            try {
-                const response = await postFile(file, typeOfCredit, creditId);
-                console.log(response);
-            } catch (error) {
-                console.error("Error uploading file:", error);
+            setFile(file);
+        }
+    };
+
+    const handleUpload = async () => {
+        try {
+            if (incomeCertificate) {
+                await postFile(incomeCertificate, "comrpobante de ingresos", creditId);
             }
+            if (appraisalCertificate) {
+                await postFile(appraisalCertificate, "certificado de avaluo", creditId);
+            }
+            if (firstHomeCertificate) {
+                await postFile(firstHomeCertificate, "certificado de primer vivienda", creditId);
+            }
+            if (creditHistorial) {
+                await postFile(creditHistorial, "historial crediticio", creditId);
+            }
+            console.log("All files uploaded successfully");
+        } catch (error) {
+            console.error("Error uploading files:", error);
         }
     };
 
@@ -30,28 +42,29 @@ function SecondHomeForm({ creditId }) {
             <div className="grid">
                 <DocumentForm
                     documentRequiredName="Comprobante de ingresos"
-                    handleFunction={handleFileChange}
+                    handleFunction={(event) => handleFileChange(event, setIncomeCertificate)}
                     setFunction={setIncomeCertificate}
                     documentName="comrpobante de ingresos"
                 />
                 <DocumentForm
                     documentRequiredName="Certificado de avaluo"
-                    handleFunction={handleFileChange}
+                    handleFunction={(event) => handleFileChange(event, setAppraisalCertificate)}
                     setFunction={setAppraisalCertificate}
                     documentName="certificado de avaluo"
                 />
                 <DocumentForm
                     documentRequiredName="Certificado de primera vivienda"
-                    handleFunction={handleFileChange}
-                    setFunction={setFirstHOmeCertificate}
+                    handleFunction={(event) => handleFileChange(event, setFirstHomeCertificate)}
+                    setFunction={setFirstHomeCertificate}
                     documentName="certificado de primer vivienda"
                 />
                 <DocumentForm
                     documentRequiredName="Historial crediticio"
-                    handleFunction={handleFileChange}
+                    handleFunction={(event) => handleFileChange(event, setCreditHistorial)}
                     setFunction={setCreditHistorial}
                     documentName="historial crediticio"
                 />
+                <button type="button" onClick={handleUpload}>Upload Files</button>
             </div>
         </div>
     );

@@ -32,9 +32,29 @@ public class FinancialEvaluationService {
     public ResponseEntity<FinancialEvaluation> saveFinancialEvaluation(UUID creditID, FinancialEvaluation financialEvaluation) {
         Optional<Credit> optionalCredit = creditRepository.findById(creditID);
         if (optionalCredit.isPresent()) {
-            financialEvaluation.setCredit(optionalCredit.get());
+            optionalCredit.get().setFinancialEvaluation(financialEvaluation);
             return new ResponseEntity<>(financialEvaluationRepository.save(financialEvaluation), HttpStatus.OK);
         }
         return new ResponseEntity<>(financialEvaluationRepository.save(financialEvaluation), HttpStatus.BAD_REQUEST);
+    }
+
+    public ResponseEntity<FinancialEvaluation> updateFinancialEvaluation(UUID creditID, UUID financialEvaluationID,FinancialEvaluation financialEvaluation) {
+        Optional<Credit> optionalCredit = creditRepository.findById(creditID);
+        if (optionalCredit.isPresent()) {
+            Optional<FinancialEvaluation> getterFinancialEvaluation = financialEvaluationRepository.findById(financialEvaluationID);
+
+            if (getterFinancialEvaluation.isPresent()) {
+                getterFinancialEvaluation.get().setDebtToIncomeRatio(financialEvaluation.getDebtToIncomeRatio());
+                getterFinancialEvaluation.get().setCreditHistory(financialEvaluation.getCreditHistory());
+                getterFinancialEvaluation.get().setEmploymentHistory(financialEvaluation.getEmploymentHistory());
+                getterFinancialEvaluation.get().setSavingCapacity(financialEvaluation.getSavingCapacity());
+                getterFinancialEvaluation.get().setEvaluationResult(financialEvaluation.getEvaluationResult());
+                getterFinancialEvaluation.get().setCredit(financialEvaluation.getCredit());
+
+                return new ResponseEntity<>(financialEvaluationRepository.save(getterFinancialEvaluation.get()), HttpStatus.OK);
+            }
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

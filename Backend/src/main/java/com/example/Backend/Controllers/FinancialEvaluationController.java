@@ -31,4 +31,9 @@ public class FinancialEvaluationController {
         return financialEvaluationService.getAllFinancialEvaluations();
     }
 
+
+    @PutMapping("/update/{creditId}/{financialEvaluationId}")
+    public ResponseEntity<FinancialEvaluation> updateFinancialEvaluation(@PathVariable UUID creditId, @PathVariable UUID financialEvaluationId,@RequestBody FinancialEvaluation financialEvaluation) {
+        return financialEvaluationService.updateFinancialEvaluation(creditId, financialEvaluationId, financialEvaluation);
+    }
 }

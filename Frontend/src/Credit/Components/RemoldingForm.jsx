@@ -1,50 +1,60 @@
 import DocumentForm from "../../Document/Components/DocumentForm";
-
 import PropTypes from 'prop-types';
-
 import { useState } from "react";
-import { postFile } from '../../Document/Services/DocumentServices'
+import { postFile } from '../../Document/Services/DocumentServices';
 
 function RemoldingForm({ creditId }) {
-    const [, setIncomeCertificate] = useState(null);
-    const [, setUpdateAppraisalCertificate] = useState(null);
-    const [, setRemodelingAmount] = useState(null);
+    const [incomeCertificate, setIncomeCertificate] = useState(null);
+    const [updateAppraisalCertificate, setUpdateAppraisalCertificate] = useState(null);
+    const [remodelingAmount, setRemodelingAmount] = useState(null);
 
-    const handleFileChange = async (event, setFile, typeOfCredit) => {
+    const handleFileChange = (event, setFile) => {
         const file = event.target.files[0];
         if (file) {
-            setFile(URL.createObjectURL(file));
-            try {
-                const response = await postFile(file, typeOfCredit, creditId);
-                console.log(response);
-            } catch (error) {
-                console.error("Error uploading file:", error);
+            setFile(file); // Store the file object
+        }
+    };
+
+    const handleUpload = async () => {
+        try {
+            if (incomeCertificate) {
+                await postFile(incomeCertificate, "comrpobante de ingresos", creditId);
             }
+            if (remodelingAmount) {
+                await postFile(remodelingAmount, "presupuesto de remodelacion", creditId);
+            }
+            if (updateAppraisalCertificate) {
+                await postFile(updateAppraisalCertificate, "certificado de avaluo actualizado", creditId);
+            }
+            console.log("All files uploaded successfully");
+        } catch (error) {
+            console.error("Error uploading files:", error);
         }
     };
 
     return (
         <div>
-            <h1>Remodeling form</h1>
+            <h1>Remodeling Form</h1>
             <div className="grid">
                 <DocumentForm
                     documentRequiredName="Comprobante de ingresos"
-                    handleFunction={handleFileChange}
+                    handleFunction={(event) => handleFileChange(event, setIncomeCertificate)}
                     setFunction={setIncomeCertificate}
                     documentName="comrpobante de ingresos"
                 />
                 <DocumentForm
                     documentRequiredName="Presupuesto de remodelacion"
-                    handleFunction={handleFileChange}
+                    handleFunction={(event) => handleFileChange(event, setRemodelingAmount)}
                     setFunction={setRemodelingAmount}
                     documentName="presupuesto de remodelacion"
                 />
                 <DocumentForm
                     documentRequiredName="Certificado de avaluo actualizado"
-                    handleFunction={handleFileChange}
+                    handleFunction={(event) => handleFileChange(event, setUpdateAppraisalCertificate)}
                     setFunction={setUpdateAppraisalCertificate}
                     documentName="certificado de avaluo actualizado"
                 />
+                <button type="button" onClick={handleUpload}>Upload Files</button>
             </div>
         </div>
     );
