@@ -29,7 +29,16 @@ function FirstHomeForm({ creditId }) {
                 await postFile(creditHistorial, "historial crediticio", creditId);
             }
             console.log("All files uploaded successfully");
-            const financeEvaluationData = { debtToIncomeRatio: false, creditHistory: false, employmentHistory: false, savingCapacity: false, evaluationResult: false };
+            const financeEvaluationData = {
+                feeToIncomeRatio: false,
+                creditHistory: false,
+                employmentHistory: false,
+                debtToIncomeRatio: false,
+                financeMaxAmount: false,
+                applicantAge: false,
+                savingCapacity: false,
+                evaluationResult: false
+            };
             await postFinanceEvaluation(creditId, financeEvaluationData);
         } catch (error) {
             console.error("Error uploading files:", error);

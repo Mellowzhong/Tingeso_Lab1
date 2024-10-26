@@ -3,16 +3,17 @@ import { updatefinanceEvaluation } from '../../FinanceEvaluation/Services/Financ
 import { downloadDocument } from "../../Document/Services/DocumentServices";
 
 import { useEffect, useState } from "react";
-
 import FinanceEvaluationForm from "../../FinanceEvaluation/Components/FinanceEvaluationForm";
 
-// Falta agregar mas parametros de la confirmacion del credito y la logica de que si se aprueba o no
 function Executive() {
     const [documents, setDocuments] = useState([]);
 
-    const [debtToIncomeRatio, setDebtToIncomeRatio] = useState(false);
+    const [feeToIncomeRatio, setFeeToIncomeRatio] = useState(false);
     const [creditHistory, setCreditHistory] = useState(false);
     const [employmentHistory, setEmploymentHistory] = useState(false);
+    const [debtToIncomeRatio, setDebtToIncomeRatio] = useState(false);
+    const [financeMaxAmount, setFinanceMaxAmount] = useState(false);
+    const [applicantAge, setApplicantAge] = useState(false);
     const [savingCapacity, setSavingCapacity] = useState(false);
     const [evaluationResult, setEvaluationResult] = useState(false);
 
@@ -31,14 +32,24 @@ function Executive() {
 
     const formHandleSubmit = async (e, creditId, financialEvaluationId) => {
         e.preventDefault();
-        const FinanceEvaluationData = { debtToIncomeRatio, creditHistory, employmentHistory, savingCapacity, evaluationResult };
+        const FinanceEvaluationData = {
+            feeToIncomeRatio,
+            creditHistory,
+            employmentHistory,
+            debtToIncomeRatio,
+            financeMaxAmount,
+            applicantAge,
+            savingCapacity,
+            evaluationResult
+        };
+        console.log("Submitting Data:", FinanceEvaluationData); // Debugging line
         const response = await updatefinanceEvaluation(creditId, financialEvaluationId, FinanceEvaluationData);
         console.log("Response:", response);
     }
 
     const documentHandleSubmit = async (e, documentId, fileName) => {
         e.preventDefault();
-        console.log("ola", documentId, fileName);
+        console.log("Requesting document:", documentId, fileName);
         const response = await downloadDocument(documentId, fileName);
         console.log("Response:", response);
     };
@@ -46,17 +57,24 @@ function Executive() {
     return (
         <div className="flex flex-col items-center">
             <h1>Executive</h1>
-            <FinanceEvaluationForm documents={documents}
+            <FinanceEvaluationForm
+                documents={documents}
                 formHandleSubmit={formHandleSubmit}
                 documentHandleSubmit={documentHandleSubmit}
-                setDebtToIncomeRatio={setDebtToIncomeRatio}
+                setFeeToIncomeRatio={setFeeToIncomeRatio}
                 setCreditHistory={setCreditHistory}
                 setEmploymentHistory={setEmploymentHistory}
+                setDebtToIncomeRatio={setDebtToIncomeRatio}
+                setFinanceMaxAmount={setFinanceMaxAmount}
+                setApplicantAge={setApplicantAge}
                 setSavingCapacity={setSavingCapacity}
                 setEvaluationResult={setEvaluationResult}
-                debtToIncomeRatio={debtToIncomeRatio}
+                feeToIncomeRatio={feeToIncomeRatio}
                 creditHistory={creditHistory}
                 employmentHistory={employmentHistory}
+                debtToIncomeRatio={debtToIncomeRatio}
+                financeMaxAmount={financeMaxAmount}
+                applicantAge={applicantAge}
                 savingCapacity={savingCapacity}
                 evaluationResult={evaluationResult}
             />

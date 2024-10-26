@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -42,19 +41,12 @@ public class FinancialEvaluationService {
         Optional<Credit> optionalCredit = creditRepository.findById(creditID);
         if (optionalCredit.isPresent()) {
             Optional<FinancialEvaluation> getterFinancialEvaluation = financialEvaluationRepository.findById(financialEvaluationID);
-
             if (getterFinancialEvaluation.isPresent()) {
-                getterFinancialEvaluation.get().setDebtToIncomeRatio(financialEvaluation.getDebtToIncomeRatio());
-                getterFinancialEvaluation.get().setCreditHistory(financialEvaluation.getCreditHistory());
-                getterFinancialEvaluation.get().setEmploymentHistory(financialEvaluation.getEmploymentHistory());
-                getterFinancialEvaluation.get().setSavingCapacity(financialEvaluation.getSavingCapacity());
-                getterFinancialEvaluation.get().setEvaluationResult(financialEvaluation.getEvaluationResult());
-                getterFinancialEvaluation.get().setCredit(financialEvaluation.getCredit());
-
-                return new ResponseEntity<>(financialEvaluationRepository.save(getterFinancialEvaluation.get()), HttpStatus.OK);
+                financialEvaluation.setId(getterFinancialEvaluation.get().getId());
+                financialEvaluation.setCredit(optionalCredit.get());
+                return new ResponseEntity<>(financialEvaluationRepository.save(financialEvaluation), HttpStatus.OK);
             }
         }
-
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

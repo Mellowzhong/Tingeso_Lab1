@@ -23,6 +23,7 @@ public class CreditController {
 //    CRUD
     @PostMapping("/add/{user_id}")
     public CreditDataResponse addCredit(@RequestBody Credit credit, @PathVariable UUID user_id) {
+        System.out.println(credit.toString());
         return creditService.addCredit(credit, user_id);
     }
 

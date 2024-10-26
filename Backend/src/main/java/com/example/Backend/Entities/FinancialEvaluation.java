@@ -19,11 +19,17 @@ public class FinancialEvaluation {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private Boolean debtToIncomeRatio;
+    private Boolean feeToIncomeRatio;
 
     private Boolean creditHistory;
 
     private Boolean employmentHistory;
+
+    private Boolean debtToIncomeRatio;
+
+    private Boolean financeMaxAmount;
+
+    private Boolean applicantAge;
 
     private Boolean savingCapacity;
 
