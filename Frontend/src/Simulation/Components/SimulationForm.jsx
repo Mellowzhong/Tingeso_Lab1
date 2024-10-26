@@ -6,8 +6,8 @@ function SimulationForm() {
     const [simulatedInterestRate, setSimulatedInterestRate] = useState(0);
     const [numberOfPays, setNumberOfPays] = useState(0);
     const [totalPriceHome, setTotalPriceHome] = useState(0);
-    const [quote, setQuote] = useState(null);
-    const [message, setMessage] = useState("null");
+    const [quote, setQuote] = useState(0);
+    const [message, setMessage] = useState("message");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -37,13 +37,17 @@ function SimulationForm() {
                     />
                 </label>
                 <label htmlFor="simulatedInterestRate">
-                    Tasa de interes:
+                    Tasa de interes anual:
                     <input
                         type="number"
                         id="simulatedInterestRate"
                         name="simulatedInterestRate"
                         step="0.000000001"
-                        onChange={(e) => setSimulatedInterestRate(e.target.value)}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            const newValue = (value / 12) / 100
+                            setSimulatedInterestRate(newValue)
+                        }}
                     />
                 </label>
                 <label htmlFor="numberOfPays">

@@ -1,6 +1,7 @@
 package com.example.Backend.Utils;
 
-import com.example.Backend.Forms.UtilForm;
+import com.example.Backend.Forms.CalculateCreditSimulationForm;
+import com.example.Backend.Forms.CalculateDebtToIncomeRatioForm;
 import com.example.Backend.Response.SimulationResponse;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,9 +9,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/calculate")
 public class CalculateSimulation {
 
-    @PostMapping
-    private SimulationResponse calculate(@RequestBody UtilForm utilForm) {
-
+    @PostMapping("/simulation")
+    private SimulationResponse calculate (@RequestBody CalculateCreditSimulationForm utilForm) {
         double amount = utilForm.getCreditAmount();
         double term = utilForm.getSimulatedInterestRate();
         double totalPriceHome = utilForm.getTotalPriceHome();
@@ -39,6 +39,35 @@ public class CalculateSimulation {
         }else{
             return SimulationResponse.builder()
                     .quote((int) Math.round(quote * 1000))
+                    .message("No esta dentro del rango")
+                    .build();
+        }
+    }
+
+    @PostMapping("/debtToIncomeRatio")
+    private SimulationResponse calculate2(@RequestBody CalculateDebtToIncomeRatioForm utilForm) {
+        double amount = utilForm.getCreditAmount();
+        double term = utilForm.getSimulatedInterestRate();
+        int monthlyClientIncome = utilForm.getMonthlyClientIncome();
+        int pay = utilForm.getNumberOfPays();
+
+        double factor = Math.pow(1 + term, pay);
+        double quote = (amount * term * factor) / (factor - 1);
+        int newQuote = (int) Math.round(quote * 1000);
+
+        System.out.println(newQuote);
+        System.out.println(monthlyClientIncome);
+        double debtToIncomeRatio = ((double) newQuote / monthlyClientIncome) * 100;
+        System.out.println(debtToIncomeRatio);
+
+        if (debtToIncomeRatio <= 35) {
+            return SimulationResponse.builder()
+                    .quote((int) Math.round(debtToIncomeRatio))
+                    .message("Esta dentro del rango")
+                    .build();
+        } else {
+            return SimulationResponse.builder()
+                    .quote((int) Math.round(debtToIncomeRatio))
                     .message("No esta dentro del rango")
                     .build();
         }
