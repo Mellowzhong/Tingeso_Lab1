@@ -36,9 +36,9 @@ function CreditRequest() {
                 setShowSecondHomeForm(!showSecondHomeForm);
                 setCrediRequest(!showSecondHomeForm ? "secondHome" : "");
                 break;
-            case "comercialProperty":
+            case "commercialProperty":
                 setShowComercialPropertyForm(!showComercialPropertyForm);
-                setCrediRequest(!showComercialPropertyForm ? "comercialProperty" : "");
+                setCrediRequest(!showComercialPropertyForm ? "commercialProperty" : "");
                 break;
             case "remodeling":
                 setShowRemodelingForm(!showRemodelingForm);
@@ -59,7 +59,7 @@ function CreditRequest() {
             const user = await getUser(userRequestData);
             console.log("User:", user);
             const response = await postCredit(creditRequestData, user.id);
-            setCreditId(response.creditId);
+            setCreditId(response);
             console.log("Response:", response);
         } catch (error) {
             console.error("Error:", error);
@@ -80,9 +80,9 @@ function CreditRequest() {
                             {showSecondHomeForm ? `Ocultar second home form` : `Mostrar second home form`}
                             <input type="checkbox" onChange={() => handleCheckboxChange("secondHome")} />
                         </label>
-                        <label htmlFor="comercialProperty">
+                        <label htmlFor="commercialProperty">
                             {showComercialPropertyForm ? `Ocultar comercial property form` : `Mostrar comercial property form`}
-                            <input type="checkbox" onChange={() => handleCheckboxChange("comercialProperty")} />
+                            <input type="checkbox" onChange={() => handleCheckboxChange("commercialProperty")} />
                         </label>
                         <label htmlFor="remodeling">
                             {showRemodelingForm ? `Ocultar remodeling form` : `Mostrar remodeling form`}

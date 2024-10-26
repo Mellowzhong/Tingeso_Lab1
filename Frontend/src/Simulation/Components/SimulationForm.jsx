@@ -5,17 +5,22 @@ function SimulationForm() {
     const [creditAmount, setCreditAmount] = useState(0);
     const [simulatedInterestRate, setSimulatedInterestRate] = useState(0);
     const [numberOfPays, setNumberOfPays] = useState(0);
-    const [response, setResponse] = useState(null);
+    const [totalPriceHome, setTotalPriceHome] = useState(0);
+    const [quote, setQuote] = useState(null);
+    const [message, setMessage] = useState("null");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const simulationData = {
             creditAmount,
             simulatedInterestRate,
-            numberOfPays
+            numberOfPays,
+            totalPriceHome,
+            creditType: 'firstHome'
         }
         const response = await getSimulation(simulationData);
-        setResponse(response);
+        setQuote(response.quote);
+        setMessage(response.message);
     }
 
     return (
@@ -50,12 +55,21 @@ function SimulationForm() {
                         onChange={(e) => setNumberOfPays(e.target.value)}
                     />
                 </label>
+                <label htmlFor="totalPriceHome">
+                    Precio total de la casa
+                    <input
+                        type="number"
+                        id="totalPriceHome"
+                        name="totalPriceHome"
+                        onChange={(e) => setTotalPriceHome(e.target.value)}
+                    />
+                </label>
                 <button>Simular</button>
             </form>
             <h2>
                 Informacion
             </h2>
-            {creditAmount} - {simulatedInterestRate} - {numberOfPays} - {response}
+            {creditAmount} - {simulatedInterestRate} - {numberOfPays} - {quote} - {message}
         </div>
     );
 }

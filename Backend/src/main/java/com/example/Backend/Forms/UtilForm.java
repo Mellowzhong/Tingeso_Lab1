@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UtilForm {
-    private int CreditAmount;
-    private double SimulatedInterestRate;
-    private int NumberOfPays;
+    private int creditAmount;
+    private double simulatedInterestRate;
+    private int numberOfPays;
+    private int totalPriceHome;
+    private String creditType;
 }

@@ -5,7 +5,6 @@ import com.example.Backend.Entities.Credit;
 import com.example.Backend.Entities.User;
 import com.example.Backend.Repositories.CreditRepository;
 import com.example.Backend.Repositories.UserRepository;
-import com.example.Backend.Response.CreditDataResponse;
 import com.example.Backend.Utils.ToDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,18 +30,14 @@ public class CreditService {
 
     // CRUD
 
-    public CreditDataResponse addCredit(Credit credit, UUID user_id) {
+    public UUID addCredit(Credit credit, UUID user_id) {
         Optional<User> optionalUser = userRepository.findById(user_id);
 
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             credit.setUser(user);
             creditRepository.save(credit);
-
-            CreditDataResponse creditDataResponse = CreditDataResponse.builder()
-                    .creditId(credit.getId())
-                    .build();
-            return creditDataResponse;
+            return credit.getId();
         }
         return null;
     }
