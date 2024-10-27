@@ -12,6 +12,5 @@ public class CalculateDebtToIncomeRatioForm {
     private double simulatedInterestRate;
     private int numberOfPays;
     private int totalPriceHome;
-    private String creditType;
     private int monthlyClientIncome;
 }

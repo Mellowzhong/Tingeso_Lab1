@@ -28,6 +28,8 @@ public class User {
 
     private String address;
 
+    private int age;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Credit> credits;

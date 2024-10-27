@@ -22,3 +22,11 @@ export const updatefinanceEvaluation = async (
   );
   return response.data;
 };
+
+export const getDebtToIncomeRatioCalculation = async (debtToIncomeData) => {
+  const response = await api.post(
+    "/calculate/debtToIncomeRatio",
+    debtToIncomeData
+  );
+  return response.data;
+};

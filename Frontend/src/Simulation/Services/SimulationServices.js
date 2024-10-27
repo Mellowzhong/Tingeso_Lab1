@@ -1,7 +1,7 @@
 import api from "../../Tools/BaseUrl";
 
-export const getSimulation = async (simulation) => {
-  const response = await api.post("/calculate/simulation", simulation, {
+export const getSimulation = async (simulationData) => {
+  const response = await api.post("/calculate/simulation", simulationData, {
     headers: {
       "Content-Type": "application/json",
     },

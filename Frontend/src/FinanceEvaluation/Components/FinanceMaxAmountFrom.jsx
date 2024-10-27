@@ -1,8 +1,10 @@
-import SimulationForm from "../Components/SimulationForm";
+import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { getSimulation } from '../Services/SimulationServices';
+import { getSimulation } from '../../Simulation/Services/SimulationServices';
 
-function Simulation() {
+import SimulationForm from '../../Simulation/Components/SimulationForm';
+
+function FinanceMaxAmountFrom({ financeMaxAmount, setFinanceMaxAmount }) {
     const [creditAmount, setCreditAmount] = useState(0);
     const [simulatedInterestRate, setSimulatedInterestRate] = useState(0);
     const [numberOfPays, setNumberOfPays] = useState(0);
@@ -25,7 +27,7 @@ function Simulation() {
     }
 
     return (
-        <>
+        <div className='grid border-2 m-4'>
             <form onSubmit={handleSubmit}>
                 <h1>Simulation Form</h1>
                 <SimulationForm
@@ -34,14 +36,27 @@ function Simulation() {
                     setNumberOfPays={setNumberOfPays}
                     setTotalPriceHome={setTotalPriceHome}
                 />
-                <button type='submit'>Simular</button>
             </form>
             <h2>
                 Informacion
             </h2>
             {creditAmount} - {simulatedInterestRate} - {numberOfPays} - {quote} - {message}
-        </>
+            <label htmlFor="financeMaxAmount">
+                <h2>Monto máximo</h2>
+                <input type="checkbox"
+                    name="financeMaxAmount"
+                    id="financeMaxAmount"
+                    checked={financeMaxAmount}
+                    onChange={() => setFinanceMaxAmount(!financeMaxAmount)}
+                />
+            </label>
+        </div>
     );
 }
 
-export default Simulation;
+FinanceMaxAmountFrom.propTypes = {
+    financeMaxAmount: PropTypes.bool.isRequired,
+    setFinanceMaxAmount: PropTypes.func.isRequired,
+};
+
+export default FinanceMaxAmountFrom;
