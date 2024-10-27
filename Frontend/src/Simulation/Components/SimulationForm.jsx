@@ -45,7 +45,6 @@ function SimulationForm({ setCreditAmount, setSimulatedInterestRate, setNumberOf
                     onChange={(e) => setTotalPriceHome(e.target.value)}
                 />
             </label>
-            <button type='submit'>Simular</button>
         </div>
     );
 }

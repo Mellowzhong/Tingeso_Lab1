@@ -12,10 +12,19 @@ import FinanceMaxAmountFrom from "../../FinanceEvaluation/Components/FinanceMaxA
 import ApplicantAgeForm from "../../FinanceEvaluation/Components/ApplicantAgeForm";
 import SavingCapacityForm from "../../FinanceEvaluation/Components/SavingCapacityForm";
 import EvaluationResultForm from "../../FinanceEvaluation/Components/EvaluationResultForm";
+import TotalCostForm from "../../FinanceEvaluation/Components/TotalCostForm";
 
 function Executive() {
     const [documents, setDocuments] = useState([]);
 
+    // Calculate Data
+    const [creditAmount, setCreditAmount] = useState(0);
+    const [simulatedInterestRate, setSimulatedInterestRate] = useState(0);
+    const [numberOfPays, setNumberOfPays] = useState(0);
+    const [totalPriceHome, setTotalPriceHome] = useState(0);
+    const [monthlyClientIncome, setMonthlyClientIncome] = useState(0);
+
+    // Evaluation Data
     const [feeToIncomeRatio, setFeeToIncomeRatio] = useState(false);
     const [creditHistory, setCreditHistory] = useState(false);
     const [employmentHistory, setEmploymentHistory] = useState(false);
@@ -67,26 +76,131 @@ function Executive() {
     return (
         <div className="flex flex-col items-center">
             <h1>Executive</h1>
+
+
             <ul className="w-full flex flex-col items-center">
                 {documents.map((credit) => (
                     <div className="border-2 my-4 w-1/2 text-center" key={credit.id}>
                         <p>Credit ID: {credit.id}</p>
                         {credit.financialEvaluation.evaluationResult ? <p>true</p> : <p>false</p>}
                         <p>financial evaluation ID: {credit.financialEvaluation.id}</p>
+                        <p>Tipo de credito: {credit.creditType}</p>
                         <span>User info</span>
                         <p>First Name: {credit.user.firstName}</p>
                         <p>Last Name: {credit.user.lastName}</p>
                         <p>Rut: {credit.user.rut}</p>
                         <section>
+                            <section>
+                                <div className='grid '>
+                                    <label htmlFor="creditAmount">
+                                        Cantidad solicitada:
+                                        <input
+                                            type="number"
+                                            id="incomeCertificate"
+                                            name="incomeCertificate"
+                                            onChange={(e) => setCreditAmount(parseFloat(e.target.value))}
+                                        />
+                                    </label>
+                                    <label htmlFor="simulatedInterestRate">
+                                        Tasa de interes anual:
+                                        <input
+                                            type="number"
+                                            id="simulatedInterestRate"
+                                            name="simulatedInterestRate"
+                                            step="0.000000001"
+                                            onChange={(e) => {
+                                                const value = parseFloat(e.target.value);
+                                                const newValue = (value / 12) / 100;
+                                                setSimulatedInterestRate(newValue);
+                                            }}
+                                        />
+                                    </label>
+                                    <label htmlFor="numberOfPays">
+                                        Plazo
+                                        <input
+                                            type="number"
+                                            id="numberOfPays"
+                                            name="numberOfPays"
+                                            onChange={(e) => {
+                                                const value = parseInt(e.target.value, 10);
+                                                const newValue = value * 12;
+                                                setNumberOfPays(newValue)
+                                            }}
+                                        />
+                                    </label>
+                                    <label htmlFor="totalPriceHome">
+                                        Precio total de la casa
+                                        <input
+                                            type="number"
+                                            id="totalPriceHome"
+                                            name="totalPriceHome"
+                                            onChange={(e) => setTotalPriceHome(parseFloat(e.target.value))}
+                                        />
+                                    </label>
+                                    <label htmlFor="monthlyClientIncome">
+                                        Ingreso mensual del cliente
+                                        <input
+                                            type="number"
+                                            id="monthlyClientIncome"
+                                            name="monthlyClientIncome"
+                                            onChange={(e) => setMonthlyClientIncome(parseFloat(e.target.value))}
+                                        />
+                                    </label>
+                                </div >
+                            </section>
                             <form className="grid my-4" onSubmit={(e) => formHandleSubmit(e, credit.id, credit.financialEvaluation.id)}>
-                                <FeeToIncomeRatio feeToIncomeRatio={feeToIncomeRatio} setFeeToIncomeRatio={setFeeToIncomeRatio} />
-                                <CreditHistoryForm className="border-2 my-4" creditHistory={creditHistory} setCreditHistory={setCreditHistory} />
-                                <EmpoymentHistoryForm className="border-2 my-4" employmentHistory={employmentHistory} setEmploymentHistory={setEmploymentHistory} />
-                                <DebtToIncomeForm className="border-2 my-4" debtToIncomeRatio={debtToIncomeRatio} setDebtToIncomeRatio={setDebtToIncomeRatio} />
-                                <FinanceMaxAmountFrom className="border-2 my-4" financeMaxAmount={financeMaxAmount} setFinanceMaxAmount={setFinanceMaxAmount} />
-                                <ApplicantAgeForm className="border-2 my-4" applicantAge={applicantAge} setApplicantAge={setApplicantAge} />
-                                <SavingCapacityForm className="border-2 my-4" savingCapacity={savingCapacity} setSavingCapacity={setSavingCapacity} />
-                                <EvaluationResultForm className="border-2 my-4" evaluationResult={evaluationResult} setEvaluationResult={setEvaluationResult} />
+                                <FeeToIncomeRatio feeToIncomeRatio={feeToIncomeRatio}
+                                    setFeeToIncomeRatio={setFeeToIncomeRatio}
+                                    creditAmount={creditAmount}
+                                    simulatedInterestRate={simulatedInterestRate}
+                                    numberOfPays={numberOfPays}
+                                    totalPriceHome={totalPriceHome}
+                                    monthlyClientIncome={monthlyClientIncome}
+                                />
+                                <CreditHistoryForm className="border-2 my-4"
+                                    creditHistory={creditHistory}
+                                    setCreditHistory={setCreditHistory}
+                                />
+                                <EmpoymentHistoryForm className="border-2 my-4"
+                                    employmentHistory={employmentHistory}
+                                    setEmploymentHistory={setEmploymentHistory}
+                                />
+                                <DebtToIncomeForm className="border-2 my-4"
+                                    debtToIncomeRatio={debtToIncomeRatio}
+                                    setDebtToIncomeRatio={setDebtToIncomeRatio}
+                                />
+                                <FinanceMaxAmountFrom className="border-2 my-4"
+                                    financeMaxAmount={financeMaxAmount}
+                                    setFinanceMaxAmount={setFinanceMaxAmount}
+                                    creditAmount={creditAmount}
+                                    simulatedInterestRate={simulatedInterestRate}
+                                    numberOfPays={numberOfPays}
+                                    totalPriceHome={totalPriceHome}
+                                    setCreditAmount={setCreditAmount}
+                                    setSimulatedInterestRate={setSimulatedInterestRate}
+                                    setNumberOfPays={setNumberOfPays}
+                                    setTotalPriceHome={setTotalPriceHome}
+                                />
+                                <ApplicantAgeForm className="border-2 my-4"
+                                    applicantAge={applicantAge}
+                                    setApplicantAge={setApplicantAge}
+                                />
+                                <SavingCapacityForm className="border-2 my-4"
+                                    savingCapacity={savingCapacity}
+                                    setSavingCapacity={setSavingCapacity}
+                                />
+                                <TotalCostForm className="border-2 my-4"
+                                    creditAmount={creditAmount}
+                                    simulatedInterestRate={simulatedInterestRate}
+                                    numberOfPays={numberOfPays}
+                                    totalPriceHome={totalPriceHome}
+                                    creditType={credit.creditType}
+                                />
+                                <EvaluationResultForm className="border-2 my-4"
+                                    evaluationResult={evaluationResult}
+                                    setEvaluationResult={setEvaluationResult}
+                                />
+
                                 <button type="submit">Mandar</button>
                             </form>
                             <div className="border-2 m-4">

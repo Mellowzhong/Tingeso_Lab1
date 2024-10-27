@@ -2,13 +2,9 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { getSimulation } from '../../Simulation/Services/SimulationServices';
 
-import SimulationForm from '../../Simulation/Components/SimulationForm';
-
-function FinanceMaxAmountFrom({ financeMaxAmount, setFinanceMaxAmount }) {
-    const [creditAmount, setCreditAmount] = useState(0);
-    const [simulatedInterestRate, setSimulatedInterestRate] = useState(0);
-    const [numberOfPays, setNumberOfPays] = useState(0);
-    const [totalPriceHome, setTotalPriceHome] = useState(0);
+function FinanceMaxAmountFrom({ financeMaxAmount, setFinanceMaxAmount,
+    creditAmount, simulatedInterestRate, numberOfPays, totalPriceHome,
+}) {
     const [quote, setQuote] = useState(0);
     const [message, setMessage] = useState("message");
 
@@ -28,19 +24,15 @@ function FinanceMaxAmountFrom({ financeMaxAmount, setFinanceMaxAmount }) {
 
     return (
         <div className='grid border-2 m-4'>
-            <form onSubmit={handleSubmit}>
-                <h1>Simulation Form</h1>
-                <SimulationForm
-                    setCreditAmount={setCreditAmount}
-                    setSimulatedInterestRate={setSimulatedInterestRate}
-                    setNumberOfPays={setNumberOfPays}
-                    setTotalPriceHome={setTotalPriceHome}
-                />
-            </form>
-            <h2>
-                Informacion
-            </h2>
-            {creditAmount} - {simulatedInterestRate} - {numberOfPays} - {quote} - {message}
+            <span>
+                <h2>Informacion</h2>
+                {creditAmount} - {simulatedInterestRate} - {numberOfPays} - {totalPriceHome}
+            </span>
+            <button onClick={handleSubmit}>Simular</button>
+            <span>
+                <h2>Respuesta</h2>
+                {quote} - {message}
+            </span>
             <label htmlFor="financeMaxAmount">
                 <h2>Monto máximo</h2>
                 <input type="checkbox"
@@ -57,6 +49,10 @@ function FinanceMaxAmountFrom({ financeMaxAmount, setFinanceMaxAmount }) {
 FinanceMaxAmountFrom.propTypes = {
     financeMaxAmount: PropTypes.bool.isRequired,
     setFinanceMaxAmount: PropTypes.func.isRequired,
+    creditAmount: PropTypes.number.isRequired,
+    simulatedInterestRate: PropTypes.number.isRequired,
+    numberOfPays: PropTypes.number.isRequired,
+    totalPriceHome: PropTypes.number.isRequired,
 };
 
 export default FinanceMaxAmountFrom;

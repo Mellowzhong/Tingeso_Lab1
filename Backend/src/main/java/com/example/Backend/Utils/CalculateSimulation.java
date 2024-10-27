@@ -33,12 +33,12 @@ public class CalculateSimulation {
 
         if (quote < totalPriceHome) {
             return SimulationResponse.builder()
-                    .quote((int) Math.round(quote * 1000))
+                    .quote((int) Math.round(quote))
                     .message("Esta dentro del rango")
                     .build();
         }else{
             return SimulationResponse.builder()
-                    .quote((int) Math.round(quote * 1000))
+                    .quote((int) Math.round(quote))
                     .message("No esta dentro del rango")
                     .build();
         }
@@ -57,7 +57,7 @@ public class CalculateSimulation {
 
         System.out.println(newQuote);
         System.out.println(monthlyClientIncome);
-        double debtToIncomeRatio = ((double) newQuote / monthlyClientIncome) * 100;
+        double debtToIncomeRatio = (double) newQuote / monthlyClientIncome;
         System.out.println(debtToIncomeRatio);
 
         if (debtToIncomeRatio <= 35) {
