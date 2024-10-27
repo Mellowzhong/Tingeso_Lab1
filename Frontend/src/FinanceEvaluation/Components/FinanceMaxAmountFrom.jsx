@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { getSimulation } from '../../Simulation/Services/SimulationServices';
 
 function FinanceMaxAmountFrom({ financeMaxAmount, setFinanceMaxAmount,
-    creditAmount, simulatedInterestRate, numberOfPays, totalPriceHome,
+    creditAmount, simulatedInterestRate, numberOfPays, totalPriceHome, creditType
 }) {
     const [quote, setQuote] = useState(0);
     const [message, setMessage] = useState("message");
@@ -15,7 +15,7 @@ function FinanceMaxAmountFrom({ financeMaxAmount, setFinanceMaxAmount,
             simulatedInterestRate,
             numberOfPays,
             totalPriceHome,
-            creditType: 'firstHome'
+            creditType
         }
         const response = await getSimulation(simulationData);
         setQuote(response.quote);
@@ -53,6 +53,7 @@ FinanceMaxAmountFrom.propTypes = {
     simulatedInterestRate: PropTypes.number.isRequired,
     numberOfPays: PropTypes.number.isRequired,
     totalPriceHome: PropTypes.number.isRequired,
+    creditType: PropTypes.string.isRequired
 };
 
 export default FinanceMaxAmountFrom;

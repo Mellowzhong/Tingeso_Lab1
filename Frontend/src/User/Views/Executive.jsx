@@ -13,6 +13,7 @@ import ApplicantAgeForm from "../../FinanceEvaluation/Components/ApplicantAgeFor
 import SavingCapacityForm from "../../FinanceEvaluation/Components/SavingCapacityForm";
 import EvaluationResultForm from "../../FinanceEvaluation/Components/EvaluationResultForm";
 import TotalCostForm from "../../FinanceEvaluation/Components/TotalCostForm";
+import CalculateDataForm from "../../Components/CalculateDataForm";
 
 function Executive() {
     const [documents, setDocuments] = useState([]);
@@ -91,62 +92,12 @@ function Executive() {
                         <p>Rut: {credit.user.rut}</p>
                         <section>
                             <section>
-                                <div className='grid '>
-                                    <label htmlFor="creditAmount">
-                                        Cantidad solicitada:
-                                        <input
-                                            type="number"
-                                            id="incomeCertificate"
-                                            name="incomeCertificate"
-                                            onChange={(e) => setCreditAmount(parseFloat(e.target.value))}
-                                        />
-                                    </label>
-                                    <label htmlFor="simulatedInterestRate">
-                                        Tasa de interes anual:
-                                        <input
-                                            type="number"
-                                            id="simulatedInterestRate"
-                                            name="simulatedInterestRate"
-                                            step="0.000000001"
-                                            onChange={(e) => {
-                                                const value = parseFloat(e.target.value);
-                                                const newValue = (value / 12) / 100;
-                                                setSimulatedInterestRate(newValue);
-                                            }}
-                                        />
-                                    </label>
-                                    <label htmlFor="numberOfPays">
-                                        Plazo
-                                        <input
-                                            type="number"
-                                            id="numberOfPays"
-                                            name="numberOfPays"
-                                            onChange={(e) => {
-                                                const value = parseInt(e.target.value, 10);
-                                                const newValue = value * 12;
-                                                setNumberOfPays(newValue)
-                                            }}
-                                        />
-                                    </label>
-                                    <label htmlFor="totalPriceHome">
-                                        Precio total de la casa
-                                        <input
-                                            type="number"
-                                            id="totalPriceHome"
-                                            name="totalPriceHome"
-                                            onChange={(e) => setTotalPriceHome(parseFloat(e.target.value))}
-                                        />
-                                    </label>
-                                    <label htmlFor="monthlyClientIncome">
-                                        Ingreso mensual del cliente
-                                        <input
-                                            type="number"
-                                            id="monthlyClientIncome"
-                                            name="monthlyClientIncome"
-                                            onChange={(e) => setMonthlyClientIncome(parseFloat(e.target.value))}
-                                        />
-                                    </label>
-                                </div >
+                                <CalculateDataForm setCreditAmount={setCreditAmount}
+                                    setSimulatedInterestRate={setSimulatedInterestRate}
+                                    setNumberOfPays={setNumberOfPays}
+                                    setTotalPriceHome={setTotalPriceHome}
+                                    setMonthlyClientIncome={setMonthlyClientIncome}
+                                />
                             </section>
                             <form className="grid my-4" onSubmit={(e) => formHandleSubmit(e, credit.id, credit.financialEvaluation.id)}>
                                 <FeeToIncomeRatio feeToIncomeRatio={feeToIncomeRatio}
@@ -168,6 +119,12 @@ function Executive() {
                                 <DebtToIncomeForm className="border-2 my-4"
                                     debtToIncomeRatio={debtToIncomeRatio}
                                     setDebtToIncomeRatio={setDebtToIncomeRatio}
+                                    creditAmount={creditAmount}
+                                    simulatedInterestRate={simulatedInterestRate}
+                                    numberOfPays={numberOfPays}
+                                    totalPriceHome={totalPriceHome}
+                                    monthlyClientIncome={monthlyClientIncome}
+                                    creditType={credit.creditType}
                                 />
                                 <FinanceMaxAmountFrom className="border-2 my-4"
                                     financeMaxAmount={financeMaxAmount}
@@ -176,6 +133,7 @@ function Executive() {
                                     simulatedInterestRate={simulatedInterestRate}
                                     numberOfPays={numberOfPays}
                                     totalPriceHome={totalPriceHome}
+                                    creditType={credit.creditType}
                                     setCreditAmount={setCreditAmount}
                                     setSimulatedInterestRate={setSimulatedInterestRate}
                                     setNumberOfPays={setNumberOfPays}
