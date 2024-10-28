@@ -28,12 +28,16 @@ function SimulationForm({ setCreditAmount, setSimulatedInterestRate, setNumberOf
                 />
             </label>
             <label htmlFor="numberOfPays">
-                Numero de pagos:
+                Plazo:
                 <input
                     type="number"
                     id="numberOfPays"
                     name="numberOfPays"
-                    onChange={(e) => setNumberOfPays(e.target.value)}
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        const newValue = value * 12
+                        setNumberOfPays(newValue)
+                    }}
                 />
             </label>
             <label htmlFor="totalPriceHome">

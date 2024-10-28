@@ -9,6 +9,7 @@ function FirstHomeForm({ creditId }) {
     const [incomeCertificate, setIncomeCertificate] = useState(null);
     const [appraisalCertificate, setAppraisalCertificate] = useState(null);
     const [creditHistorial, setCreditHistorial] = useState(null);
+    const [employment, setEmployment] = useState(null);
 
     const handleFileChange = (event, setFile) => {
         const file = event.target.files[0];
@@ -27,6 +28,9 @@ function FirstHomeForm({ creditId }) {
             }
             if (creditHistorial) {
                 await postFile(creditHistorial, "historial crediticio", creditId);
+            }
+            if (employment) {
+                await postFile(employment, "laboral", creditId);
             }
             console.log("All files uploaded successfully");
             const financeEvaluationData = {
@@ -66,6 +70,12 @@ function FirstHomeForm({ creditId }) {
                     handleFunction={(event) => handleFileChange(event, setCreditHistorial)}
                     setFunction={setCreditHistorial}
                     documentName="historial crediticio"
+                />
+                <DocumentForm
+                    documentRequiredName="Laboral"
+                    handleFunction={(event) => handleFileChange(event, setEmployment)}
+                    setFunction={setEmployment}
+                    documentName="Laboral"
                 />
                 <button type="button" onClick={handleUpload}>Upload Files</button>
             </form>

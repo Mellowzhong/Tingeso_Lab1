@@ -62,7 +62,6 @@ function Executive() {
             savingCapacity,
             evaluationResult
         };
-        console.log("Submitting Data:", FinanceEvaluationData);
         const response = await updatefinanceEvaluation(creditId, financialEvaluationId, FinanceEvaluationData);
         console.log("Response:", response);
     }
