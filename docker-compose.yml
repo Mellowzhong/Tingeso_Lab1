@@ -21,6 +21,26 @@ services:
     networks:
       - backend-network
 
+  backend2:
+    image: mellow03/backend:latest
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - PORT= ${PORT}
+    networks:
+      - backend-network
+
+  backend3:
+    image: mellow03/backend:latest
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - PORT= ${PORT}
+    networks:
+      - backend-network
+
   frontend:
     container_name: frontend_container
     image: mellow03/frontend:latest
@@ -29,17 +49,17 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-    networks:
-      - backend-network
-      
+
   nginx-backend:
     image: nginx:latest
     ports:
       - "8081:8081"
     volumes:
-      - ./nginx/backend.conf:/etc/nginx/nginx.conf
+      - ./nginx:/etc/nginx/conf.d
     depends_on:
       - backend1
+      - backend2
+      - backend3
     networks:
       - backend-network
 
