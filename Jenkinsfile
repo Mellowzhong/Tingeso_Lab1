@@ -28,6 +28,12 @@ pipeline {
             }
         }
 
+        stage('nginx') {
+            steps {
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Mellowzhong/Tingeso_Lab1']])
+                sh 'cd nginx && docker build -t mellow03/nginx-backend:latest .'
+            }
+        }
         stage('Docker Compose') {
             steps {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Mellowzhong/Tingeso_Lab1']])

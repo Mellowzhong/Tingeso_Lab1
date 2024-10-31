@@ -51,7 +51,7 @@ services:
         condition: on-failure
 
   nginx-backend:
-    image: nginx:latest
+    image: mellow03/nginx-backend:latest
     ports:
       - "8081:8081"
     volumes:
