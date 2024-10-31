@@ -12,7 +12,7 @@ services:
       - backend-network
 
   backend1:
-    image: mellow03/backend:latest
+    image: mellow03/backend-presta-banco:latest
     environment:
       - DB_HOST=${DB_HOST}
       - DB_USER=${DB_USER}
@@ -22,7 +22,7 @@ services:
       - backend-network
 
   backend2:
-    image: mellow03/backend:latest
+    image: mellow03/backend-presta-banco:latest
     environment:
       - DB_HOST=${DB_HOST}
       - DB_USER=${DB_USER}
@@ -32,7 +32,7 @@ services:
       - backend-network
 
   backend3:
-    image: mellow03/backend:latest
+    image: mellow03/backend-presta-banco:latest
     environment:
       - DB_HOST=${DB_HOST}
       - DB_USER=${DB_USER}
@@ -41,21 +41,36 @@ services:
     networks:
       - backend-network
 
-  frontend:
-    container_name: frontend_container
-    image: mellow03/frontend:latest
+  frontend1:
+    image: mellow03/frontend-presta-banco:latest
+    networks:
+      - frontend-network
+
+  frontend2:
+    image: mellow03/frontend-presta-banco:latest
+    networks:
+      - frontend-network
+      
+  frontend3:
+    image: mellow03/frontend-presta-banco:latest
+    networks:
+      - frontend-network
+
+  nginx-frontend:
+    image: mellow03/nginx-presta-banco:latest
     ports:
       - "80:80"
-    deploy:
-      restart_policy:
-        condition: on-failure
+    depends_on:
+      - backend1
+      - backend2
+      - backend3
+    networks:
+      - frontend-network
 
   nginx-backend:
-    image: mellow03/nginx-backend:latest
+    image: mellow03/nginx-presta-banco:latest
     ports:
       - "8081:8081"
-    volumes:
-      - ./nginx:/etc/nginx/conf.d
     depends_on:
       - backend1
       - backend2
@@ -65,3 +80,4 @@ services:
 
 networks:
   backend-network:
+  frontend-network:
