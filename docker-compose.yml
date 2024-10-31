@@ -50,7 +50,7 @@ services:
     image: mellow03/frontend-presta-banco:latest
     networks:
       - frontend-network
-      
+
   frontend3:
     image: mellow03/frontend-presta-banco:latest
     networks:
@@ -61,9 +61,9 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - backend1
-      - backend2
-      - backend3
+      - frontend1
+      - frontend2
+      - frontend3
     networks:
       - frontend-network
 
