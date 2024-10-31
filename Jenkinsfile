@@ -28,15 +28,27 @@ pipeline {
             }
         }
 
-        stage('nginx-build') {
+        stage('nginx-backend-build') {
             steps {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Mellowzhong/Tingeso_Lab1']])
-                sh 'cd nginx && docker build -t mellow03/nginx-presta-banco:latest .'
+                sh 'cd nginx && docker build -t mellow03/nginx-backend-presta-banco:latest .'
                 withCredentials([string(credentialsId: 'dhpswid', variable: 'dhpsw')]) {
                     sh 'docker login -u mellow03 -p $dhpsw'
                 }
                 sh 'docker login'
-                sh 'docker push mellow03/nginx-presta-banco:latest'
+                sh 'docker push mellow03/nginx-backend-presta-banco:latest'
+            }
+        }
+
+        stage('nginx-frontend-build') {
+            steps {
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Mellowzhong/Tingeso_Lab1']])
+                sh 'cd nginx && docker build -t mellow03/nginx-frontend-presta-banco:latest .'
+                withCredentials([string(credentialsId: 'dhpswid', variable: 'dhpsw')]) {
+                    sh 'docker login -u mellow03 -p $dhpsw'
+                }
+                sh 'docker login'
+                sh 'docker push mellow03/nginx-frontend-presta-banco:latest'
             }
         }
 

@@ -57,7 +57,7 @@ services:
       - frontend-network
 
   nginx-frontend:
-    image: mellow03/nginx-presta-banco:latest
+    image: nginx-frontend-frontend-presta-banco:latest
     ports:
       - "80:80"
     depends_on:
@@ -68,7 +68,7 @@ services:
       - frontend-network
 
   nginx-backend:
-    image: mellow03/nginx-presta-banco:latest
+    image: mellow03/nginx-backend-presta-banco:latest
     ports:
       - "8081:8081"
     depends_on:
