@@ -54,7 +54,7 @@ function CreditRequest() {
                     <RequestUserForm setFirstName={setFirstName} setLastName={setLastName} setRut={setRut} />
                     <form className="grid" onSubmit={handleSubmit}>
                         <label htmlFor="creditType">Selecciona el tipo de crédito:</label>
-                        <select name="creditType" id="creditType" value={creditType} onBlur={handleSelectChange}>
+                        <select name="creditType" id="creditType" value={creditType} onChange={handleSelectChange}>
                             <option value="">Seleccione una opción</option>
                             <option value="firstHome">First Home</option>
                             <option value="secondHome">Second Home</option>
