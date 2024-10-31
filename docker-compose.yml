@@ -57,7 +57,7 @@ services:
       - frontend-network
 
   nginx-frontend:
-    image: nginx-frontend-frontend-presta-banco:latest
+    image: nginx-frontend-presta-banco:latest
     ports:
       - "80:80"
     depends_on:

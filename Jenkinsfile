@@ -12,7 +12,7 @@ pipeline {
                     sh 'docker login -u mellow03 -p $dhpsw'
                 }
                 sh 'docker login'
-                sh 'docker push mellow03/backend:latest'
+                sh 'docker push mellow03/backend-presta-banco:latest'
             }
         }
 
@@ -24,7 +24,7 @@ pipeline {
                     sh 'docker login -u mellow03 -p $dhpsw'
                 }
                 sh 'docker login'
-                sh 'docker push mellow03/frontend:latest'
+                sh 'docker push mellow03/frontend-presta-banco:latest'
             }
         }
 
