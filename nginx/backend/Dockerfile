@@ -1,2 +1,2 @@
 FROM nginx:latest
-COPY ./backend.conf /etc/nginx/conf.d
+COPY ./backend.conf /etc/nginx/nginx.conf

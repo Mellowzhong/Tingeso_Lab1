@@ -12,7 +12,7 @@ COPY . .
 RUN npm run build
 
 # Etapa de producción
-FROM nginx:stable-alpine
+FROM nginx:latest
 # Copiar los archivos construidos al servidor Nginx
 COPY --from=build /app/dist /usr/share/nginx/html
 # Exponer el puerto 80
