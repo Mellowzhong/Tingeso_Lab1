@@ -94,6 +94,7 @@ DebtToIncomeForm.propTypes = {
     numberOfPays: PropTypes.number.isRequired,
     totalPriceHome: PropTypes.number.isRequired,
     monthlyClientIncome: PropTypes.number.isRequired,
+    creditType: PropTypes.string.isRequired
 };
 
 export default DebtToIncomeForm;

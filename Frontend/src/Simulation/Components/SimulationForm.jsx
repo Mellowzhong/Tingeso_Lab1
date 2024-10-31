@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
+import { comprobeSimulatedInterestRate } from '../../Utils/SimulationUtils'
 
-function SimulationForm({ setCreditAmount, setSimulatedInterestRate, setNumberOfPays, setTotalPriceHome }) {
+function SimulationForm({ creditType, setCreditAmount, setSimulatedInterestRate, setNumberOfPays, setTotalPriceHome }) {
 
     return (
         <div className='grid'>
@@ -10,7 +11,7 @@ function SimulationForm({ setCreditAmount, setSimulatedInterestRate, setNumberOf
                     type="number"
                     id="incomeCertificate"
                     name="incomeCertificate"
-                    onChange={(e) => setCreditAmount(e.target.value)}
+                    onBlur={(e) => setCreditAmount(e.target.value)}
                 />
             </label>
             <label htmlFor="simulatedInterestRate">
@@ -20,8 +21,9 @@ function SimulationForm({ setCreditAmount, setSimulatedInterestRate, setNumberOf
                     id="simulatedInterestRate"
                     name="simulatedInterestRate"
                     step="0.000000001"
-                    onChange={(e) => {
+                    onBlur={(e) => {
                         const value = e.target.value;
+                        comprobeSimulatedInterestRate(creditType, value);
                         const newValue = (value / 12) / 100
                         setSimulatedInterestRate(newValue)
                     }}
@@ -33,8 +35,8 @@ function SimulationForm({ setCreditAmount, setSimulatedInterestRate, setNumberOf
                     type="number"
                     id="numberOfPays"
                     name="numberOfPays"
-                    onChange={(e) => {
-                        const value = e.target.value;
+                    onBlur={(e) => {
+                        const value = e.target.value
                         const newValue = value * 12
                         setNumberOfPays(newValue)
                     }}
@@ -46,7 +48,7 @@ function SimulationForm({ setCreditAmount, setSimulatedInterestRate, setNumberOf
                     type="number"
                     id="totalPriceHome"
                     name="totalPriceHome"
-                    onChange={(e) => setTotalPriceHome(e.target.value)}
+                    onBlur={(e) => setTotalPriceHome(e.target.value)}
                 />
             </label>
         </div>
@@ -54,6 +56,7 @@ function SimulationForm({ setCreditAmount, setSimulatedInterestRate, setNumberOf
 }
 
 SimulationForm.propTypes = {
+    creditType: PropTypes.string.isRequired,
     setCreditAmount: PropTypes.func.isRequired,
     setSimulatedInterestRate: PropTypes.func.isRequired,
     setNumberOfPays: PropTypes.func.isRequired,

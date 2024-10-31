@@ -1,4 +1,4 @@
-import api from "../../Tools/BaseUrl";
+import api from "../../Utils/BaseUrl";
 
 export const postUser = async (user) => {
   console.log("api", import.meta.env.VITE_APU_URL);

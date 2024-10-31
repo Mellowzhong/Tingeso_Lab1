@@ -25,7 +25,6 @@ function Simulation() {
         setMessage(response.message);
     }
 
-    // Manejador de cambio para el select
     const handleCreditTypeChange = (e) => {
         setCreditType(e.target.value);
     }
@@ -35,6 +34,8 @@ function Simulation() {
             <form onSubmit={handleSubmit}>
                 <h1>Simulation Form</h1>
                 <SimulationForm
+                    creditType={creditType}
+                    simulatedInterestRate={simulatedInterestRate}
                     setCreditAmount={setCreditAmount}
                     setSimulatedInterestRate={setSimulatedInterestRate}
                     setNumberOfPays={setNumberOfPays}

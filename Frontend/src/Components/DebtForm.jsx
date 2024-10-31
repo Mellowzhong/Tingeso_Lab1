@@ -14,7 +14,7 @@ export default function DebtForm({ handleGradeChange }) {
                         type="number"
                         name="nota"
                         id="nota"
-                        onChange={(e) => setDebt(parseInt(e.target.value))}
+                        onBlur={(e) => setDebt(parseInt(e.target.value))}
                     />
                     <button onClick={() => handleGradeChange(debt)} type='button'>confirmar</button>
                 </label>

@@ -92,6 +92,7 @@ function Executive() {
                         <section>
                             <section>
                                 <CalculateDataForm setCreditAmount={setCreditAmount}
+                                    creditType={credit.creditType}
                                     setSimulatedInterestRate={setSimulatedInterestRate}
                                     setNumberOfPays={setNumberOfPays}
                                     setTotalPriceHome={setTotalPriceHome}

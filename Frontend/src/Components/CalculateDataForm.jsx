@@ -1,6 +1,7 @@
 import PropTYpes from 'prop-types';
+import { comprobeSimulatedInterestRate } from '../Utils/SimulationUtils';
 
-function CalculateDataForm({ setCreditAmount, setSimulatedInterestRate, setNumberOfPays, setTotalPriceHome, setMonthlyClientIncome }) {
+function CalculateDataForm({ creditType, setCreditAmount, setSimulatedInterestRate, setNumberOfPays, setTotalPriceHome, setMonthlyClientIncome }) {
 
     return (
         <div className='grid '>
@@ -10,7 +11,7 @@ function CalculateDataForm({ setCreditAmount, setSimulatedInterestRate, setNumbe
                     type="number"
                     id="incomeCertificate"
                     name="incomeCertificate"
-                    onChange={(e) => setCreditAmount(parseFloat(e.target.value))}
+                    onBlur={(e) => setCreditAmount(parseFloat(e.target.value))}
                 />
             </label>
             <label htmlFor="simulatedInterestRate">
@@ -20,8 +21,9 @@ function CalculateDataForm({ setCreditAmount, setSimulatedInterestRate, setNumbe
                     id="simulatedInterestRate"
                     name="simulatedInterestRate"
                     step="0.000000001"
-                    onChange={(e) => {
+                    onBlur={(e) => {
                         const value = parseFloat(e.target.value);
+                        comprobeSimulatedInterestRate(creditType, value);
                         const newValue = (value / 12) / 100;
                         setSimulatedInterestRate(newValue);
                     }}
@@ -33,7 +35,7 @@ function CalculateDataForm({ setCreditAmount, setSimulatedInterestRate, setNumbe
                     type="number"
                     id="numberOfPays"
                     name="numberOfPays"
-                    onChange={(e) => {
+                    onBlur={(e) => {
                         const value = parseInt(e.target.value, 10);
                         const newValue = value * 12;
                         setNumberOfPays(newValue)
@@ -46,7 +48,7 @@ function CalculateDataForm({ setCreditAmount, setSimulatedInterestRate, setNumbe
                     type="number"
                     id="totalPriceHome"
                     name="totalPriceHome"
-                    onChange={(e) => setTotalPriceHome(parseFloat(e.target.value))}
+                    onBlur={(e) => setTotalPriceHome(parseFloat(e.target.value))}
                 />
             </label>
             <label htmlFor="monthlyClientIncome">
@@ -55,7 +57,7 @@ function CalculateDataForm({ setCreditAmount, setSimulatedInterestRate, setNumbe
                     type="number"
                     id="monthlyClientIncome"
                     name="monthlyClientIncome"
-                    onChange={(e) => setMonthlyClientIncome(parseFloat(e.target.value))}
+                    onBlur={(e) => setMonthlyClientIncome(parseFloat(e.target.value))}
                 />
             </label>
         </div >
@@ -63,6 +65,7 @@ function CalculateDataForm({ setCreditAmount, setSimulatedInterestRate, setNumbe
 }
 
 CalculateDataForm.propTypes = {
+    creditType: PropTYpes.string.isRequired,
     setCreditAmount: PropTYpes.func.isRequired,
     setSimulatedInterestRate: PropTYpes.func.isRequired,
     setNumberOfPays: PropTYpes.func.isRequired,

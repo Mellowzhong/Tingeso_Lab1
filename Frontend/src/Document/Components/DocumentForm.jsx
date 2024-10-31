@@ -7,7 +7,7 @@ function DocumentForm({ handleFunction, setFunction, documentName, documentRequi
                 type="file"
                 id={documentName}
                 name={documentName}
-                onChange={(e) => handleFunction(e, setFunction, documentName)}
+                onBlur={(e) => handleFunction(e, setFunction, documentName)}
             />
         </label>
     )

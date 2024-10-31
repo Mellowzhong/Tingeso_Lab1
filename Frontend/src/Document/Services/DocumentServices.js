@@ -1,4 +1,4 @@
-import api from "../../Tools/BaseUrl";
+import api from "../../Utils/BaseUrl";
 
 export const postFile = async (file, typeCredit, creditId) => {
   console.log("creditiD", creditId);

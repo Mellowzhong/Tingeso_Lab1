@@ -24,7 +24,7 @@ function ApplicantAgeForm({ applicantAge, setApplicantAge }) {
                         type="number"
                         id="Age"
                         name="Age"
-                        onChange={(e) => setAge(e.target.value)}
+                        onBlur={(e) => setAge(e.target.value)}
                         className='mt-2 mb-2 text-center'
                     />
                     <button onClick={handleSimulationSubmit} type='button'>Comprobar</button>
