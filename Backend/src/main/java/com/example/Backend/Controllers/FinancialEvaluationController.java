@@ -11,6 +11,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/financialEvaluation")
+
 public class FinancialEvaluationController {
     private final FinancialEvaluationService financialEvaluationService;
 
