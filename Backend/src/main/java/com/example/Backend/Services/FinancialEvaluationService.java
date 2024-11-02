@@ -31,10 +31,11 @@ public class FinancialEvaluationService {
     public ResponseEntity<FinancialEvaluation> saveFinancialEvaluation(UUID creditID, FinancialEvaluation financialEvaluation) {
         Optional<Credit> optionalCredit = creditRepository.findById(creditID);
         if (optionalCredit.isPresent()) {
-            optionalCredit.get().setFinancialEvaluation(financialEvaluation);
+            Credit credit = optionalCredit.get();
+            financialEvaluation.setCredit(credit);
             return new ResponseEntity<>(financialEvaluationRepository.save(financialEvaluation), HttpStatus.OK);
         }
-        return new ResponseEntity<>(financialEvaluationRepository.save(financialEvaluation), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     public ResponseEntity<FinancialEvaluation> updateFinancialEvaluation(UUID creditID, UUID financialEvaluationID,FinancialEvaluation financialEvaluation) {

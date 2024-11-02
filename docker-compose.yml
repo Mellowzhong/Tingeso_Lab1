@@ -2,8 +2,6 @@ services:
   postgres:
     image: postgres:latest
     container_name: postgres_container
-    volumes:
-      - data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -93,9 +91,6 @@ services:
       - backend3
     networks:
       - app-network
-
-volumes:
-  data:
 
 networks:
   app-network:

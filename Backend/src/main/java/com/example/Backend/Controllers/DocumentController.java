@@ -45,7 +45,6 @@ public class DocumentController {
                 .body(fileEntity.getData());
     }
 
-    // Nuevo método para obtener todos los documentos como DTOs
     @GetMapping("/all")
     public ResponseEntity<List<DocumentDTO>> getAllDocuments() {
         List<DocumentDTO> documents = documentService.getAllDocuments();

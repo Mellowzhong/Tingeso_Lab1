@@ -22,13 +22,11 @@ public class CreditService {
     private final ToDTO toDTO; // Instancia de la clase de utilidades
 
     @Autowired
-    public CreditService(CreditRepository creditRepository, UserRepository userRepository) {
+    public CreditService(CreditRepository creditRepository, UserRepository userRepository, ToDTO toDTO) {
         this.creditRepository = creditRepository;
         this.userRepository = userRepository;
-        this.toDTO = new ToDTO(); // Inicializar la instancia
+        this.toDTO = toDTO; // Inyectar la instancia de ToDTO en lugar de crear una nueva
     }
-
-    // CRUD
 
     public UUID addCredit(Credit credit, UUID user_id) {
         Optional<User> optionalUser = userRepository.findById(user_id);
@@ -40,23 +38,6 @@ public class CreditService {
             return credit.getId();
         }
         return null;
-    }
-
-    public void updateCredit(Credit credit, UUID user_id, UUID credit_id) {
-        Optional<User> optionalUser = userRepository.findById(user_id);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            credit.setUser(user);
-            credit.setId(credit_id);
-            creditRepository.save(credit);
-        }
-    }
-
-    public void deleteCredit(UUID user_id, UUID credit_id) {
-        Optional<User> optionalUser = userRepository.findById(user_id);
-        if (optionalUser.isPresent()) {
-            creditRepository.deleteById(credit_id);
-        }
     }
 
     public List<CreditDTO> getAllCreditsByUserId(UUID user_id) {

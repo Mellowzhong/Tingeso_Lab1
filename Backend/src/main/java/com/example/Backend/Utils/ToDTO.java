@@ -4,10 +4,12 @@ import com.example.Backend.DTOS.CreditDTO;
 import com.example.Backend.DTOS.DocumentDTO;
 import com.example.Backend.Entities.Credit;
 import com.example.Backend.Entities.Document;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class ToDTO {
     public DocumentDTO convertToDocumentDTO(Document document) {
         DocumentDTO documentDTO = new DocumentDTO();

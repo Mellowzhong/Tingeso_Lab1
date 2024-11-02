@@ -19,8 +19,6 @@ public class FinancialEvaluationController {
         this.financialEvaluationService = financialEvaluationService;
     }
 
-//    CRUD
-
     @PostMapping("/post/{creditId}")
     public ResponseEntity<FinancialEvaluation> postFinancialEvaluation(@PathVariable UUID creditId, @RequestBody FinancialEvaluation financialEvaluation) {
         return financialEvaluationService.saveFinancialEvaluation(creditId, financialEvaluation);

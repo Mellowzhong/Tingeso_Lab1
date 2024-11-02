@@ -19,7 +19,6 @@ public class CreditController {
         this.creditService = creditService;
     }
 
-//    CRUD
     @PostMapping("/add/{user_id}")
     public UUID addCredit(@RequestBody Credit credit, @PathVariable UUID user_id) {
         System.out.println(credit.toString());

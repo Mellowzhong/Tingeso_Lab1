@@ -31,19 +31,8 @@ public class UserController {
         return userService.getUser();
     }
 
-    @PutMapping("/update/{user_id}")
-    public void updateUser(@RequestBody User user, @PathVariable UUID user_id) {
-        userService.updateUser(user, user_id);
-    }
-
-    @DeleteMapping("/delete/{user_id}")
-    public void deleteUser(@PathVariable UUID user_id) {
-        userService.deleteUser(user_id);
-    }
-
     @PostMapping("/get")
     public UserRequestDataResponse getUserByUserData(@RequestBody UserRequestDataForm userRequestDataForm) {
-        System.out.println(userRequestDataForm.toString());
         return userService.getUserByData(userRequestDataForm);
     }
 }

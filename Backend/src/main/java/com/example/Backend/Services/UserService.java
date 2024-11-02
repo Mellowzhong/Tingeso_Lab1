@@ -4,7 +4,10 @@ import com.example.Backend.Entities.User;
 import com.example.Backend.Forms.UserRequestDataForm;
 import com.example.Backend.Repositories.UserRepository;
 import com.example.Backend.Response.UserRequestDataResponse;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,24 +23,21 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void addUser(User user){
-        userRepository.save(user);
+    public ResponseEntity<User> addUser(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User cannot be null");
+        }
+        if (userRepository.existsById(user.getId())) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
+        User savedUser = userRepository.save(user);
+
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
     public List<User> getUser(){
         return userRepository.findAll();
-    }
-
-    public void updateUser(User user, UUID user_id){
-        Optional<User> optionalUser = userRepository.findById(user_id);
-        if(optionalUser.isPresent()){
-            user.setId(user_id);
-            userRepository.save(user);
-        }
-    }
-
-    public void deleteUser(UUID user_id){
-        userRepository.deleteById(user_id);
     }
 
     public UserRequestDataResponse getUserByData(UserRequestDataForm userRequestDataForm){

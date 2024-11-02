@@ -23,13 +23,13 @@ import java.util.stream.Collectors;
 public class DocumentService {
     private final DocumentRepository documentRepository;
     private final CreditRepository creditRepository;
-    private final ToDTO toDTO; // Instancia de la clase de utilidades
+    private final ToDTO toDTO; // Inyectar la clase de utilidades
 
     @Autowired
-    public DocumentService(DocumentRepository documentRepository, CreditRepository creditRepository) {
+    public DocumentService(DocumentRepository documentRepository, CreditRepository creditRepository, ToDTO toDTO) {
         this.documentRepository = documentRepository;
         this.creditRepository = creditRepository;
-        this.toDTO = new ToDTO(); // Inicializar la instancia
+        this.toDTO = toDTO; // Inyectar la instancia de ToDTO
     }
 
     public Document saveDocument(MultipartFile file, String typeCredit, UUID credit_id) throws IOException {
@@ -56,7 +56,7 @@ public class DocumentService {
     @Transactional
     public Optional<Document> getFile(UUID id) throws FileNotFoundException {
         Optional<Document> file = documentRepository.findById(id);
-        if(file.isPresent()){
+        if (file.isPresent()) {
             return file;
         }
         throw new FileNotFoundException();
@@ -66,7 +66,7 @@ public class DocumentService {
     public List<DocumentDTO> getAllDocuments() {
         List<Document> documents = documentRepository.findAll();
         return documents.stream()
-                .map(toDTO::convertToDocumentDTO)
+                .map(toDTO::convertToDocumentDTO) // Utilizar el método del servicio inyectado
                 .collect(Collectors.toList());
     }
 }
