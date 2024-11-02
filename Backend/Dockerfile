@@ -1,5 +1,5 @@
 # Etapa de construcción
-FROM maven:3.8.6-openjdk-18-slim AS build
+FROM --platform=linux/amd64 maven:3.8.6-openjdk-18-slim AS build
 WORKDIR /home/app
 COPY pom.xml ./
 # Descargar dependencias antes de copiar el código fuente completo para aprovechar el caché de Docker
@@ -9,7 +9,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Etapa de ejecución
-FROM openjdk:17-jdk-slim
+FROM --platform=linux/amd64 openjdk:17-jdk-slim
 WORKDIR /home/app
 
 # Copiar el archivo JAR generado desde la etapa de construcción
