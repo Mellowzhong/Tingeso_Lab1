@@ -11,7 +11,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/credit")
-@CrossOrigin("*")
 public class CreditController {
     private final CreditService creditService;
 
