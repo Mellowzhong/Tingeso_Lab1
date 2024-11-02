@@ -2,6 +2,8 @@ services:
   postgres:
     image: postgres:latest
     container_name: postgres_container
+    volumes:
+      - data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -22,7 +24,7 @@ services:
     networks:
       - app-network
     expose:
-      - "8090"   # Exponer el puerto dentro del contenedor
+      - "8090"  
 
   backend2:
     image: mellow03/backend-presta-banco:latest
@@ -34,7 +36,7 @@ services:
     networks:
       - app-network
     expose:
-      - "8090"   # Exponer el puerto dentro del contenedor
+      - "8090"   
 
   backend3:
     image: mellow03/backend-presta-banco:latest
@@ -46,7 +48,7 @@ services:
     networks:
       - app-network
     expose:
-      - "8090"   # Exponer el puerto dentro del contenedor
+      - "8090"  
 
   # Frontend
   frontend1:
@@ -70,7 +72,7 @@ services:
     volumes:
       - ./nginx-frontend.conf:/etc/nginx/nginx.conf
     ports:
-      - "8070:80"   # Mapeo correcto del puerto externo al interno.
+      - "8070:80"   
     depends_on:
       - frontend1
       - frontend2
@@ -84,13 +86,16 @@ services:
     volumes:
       - ./nginx-backend.conf:/etc/nginx/nginx.conf
     ports:
-      - "8090:8090"   # Mapeo correcto del puerto externo al interno.
+      - "8090:8090"  
     depends_on:
       - backend1
       - backend2
       - backend3
     networks:
       - app-network
+
+volumes:
+  data:
 
 networks:
   app-network:

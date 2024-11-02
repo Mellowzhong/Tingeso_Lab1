@@ -11,7 +11,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/credit")
-
 public class CreditController {
     private final CreditService creditService;
 
@@ -35,15 +34,5 @@ public class CreditController {
     @GetMapping("/getAll")
     public List<CreditDTO> getAllCredits() {
         return creditService.getAllCredits();
-    }
-
-    @PutMapping("/update/{user_id}/{credit_id}")
-    public void updateCredit(@RequestBody Credit credit, @PathVariable UUID user_id, @PathVariable UUID credit_id) {
-        creditService.updateCredit(credit, user_id, credit_id);
-    }
-
-    @DeleteMapping("/delete/{user_id}/{credit_id}")
-    public void deleteCredit(@PathVariable UUID user_id, @PathVariable UUID credit_id) {
-        creditService.deleteCredit(credit_id, user_id);
     }
 }

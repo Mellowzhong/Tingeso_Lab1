@@ -17,7 +17,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/documents")
-
 public class DocumentController {
 
     private final DocumentService documentService;
