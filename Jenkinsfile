@@ -13,28 +13,75 @@ pipeline {
 
         stage('Build backend') {
             steps {
-                sh 'cd Backend && docker build -t mellow03/backend-presta-banco:latest .'
-                withCredentials([string(credentialsId: 'dhpswid', variable: 'dhpsw')]) {
-                    sh 'docker login -u mellow03 -p $dhpsw'
+                script {
+                    if (isUnix()) {
+                        sh 'cd Backend && docker build -t mellow03/backend-presta-banco:latest .'
+                    } else {
+                        bat 'cd Backend && docker build -t mellow03/backend-presta-banco:latest .'
+                    }
                 }
-                sh 'docker push mellow03/backend-presta-banco:latest'
+                
+                withCredentials([string(credentialsId: 'dhpswid', variable: 'dhpsw')]) {
+                    script {
+                        if (isUnix()) {
+                            sh 'docker login -u mellow03 -p $dhpsw'
+                        } else {
+                            bat 'docker login -u mellow03 -p %dhpsw%'
+                        }
+                    }
+                }
+
+                script {
+                    if (isUnix()) {
+                        sh 'docker push mellow03/backend-presta-banco:latest'
+                    } else {
+                        bat 'docker push mellow03/backend-presta-banco:latest'
+                    }
+                }
             }
         }
 
         stage('Test backend') {
             steps {
-                sh 'cd Backend && mvn test'
+                script {
+                    if (isUnix()) {
+                        sh 'cd Backend && mvn test'
+                    } else {
+                        bat 'cd Backend && mvn test'
+                    }
+                }
             }
         }
 
         stage('Build frontend') {
             steps {
-                sh 'cd Frontend && docker build -t mellow03/frontend-presta-banco:latest .'
-                withCredentials([string(credentialsId: 'dhpswid', variable: 'dhpsw')]) {
-                    sh 'docker login -u mellow03 -p $dhpsw'
+                script {
+                    if (isUnix()) {
+                        sh 'cd Frontend && docker build -t mellow03/frontend-presta-banco:latest .'
+                    } else {
+                        bat 'cd Frontend && docker build -t mellow03/frontend-presta-banco:latest .'
+                    }
                 }
-                sh 'docker push mellow03/frontend-presta-banco:latest'
+
+                withCredentials([string(credentialsId: 'dhpswid', variable: 'dhpsw')]) {
+                    script {
+                        if (isUnix()) {
+                            sh 'docker login -u mellow03 -p $dhpsw'
+                        } else {
+                            bat 'docker login -u mellow03 -p %dhpsw%'
+                        }
+                    }
+                }
+
+                script {
+                    if (isUnix()) {
+                        sh 'docker push mellow03/frontend-presta-banco:latest'
+                    } else {
+                        bat 'docker push mellow03/frontend-presta-banco:latest'
+                    }
+                }
             }
         }
+
     }
 }
