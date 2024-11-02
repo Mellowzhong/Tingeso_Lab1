@@ -5,6 +5,7 @@ import com.example.Backend.Forms.UserRequestDataForm;
 import com.example.Backend.Response.UserRequestDataResponse;
 import com.example.Backend.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/user")
+@CrossOrigin("*")
 public class UserController {
 
     private final UserService userService;
@@ -22,8 +24,8 @@ public class UserController {
     }
 
     @PostMapping("/post")
-    public void createUser(@RequestBody User user) {
-        userService.addUser(user);
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        return userService.addUser(user);
     }
 
     @GetMapping("/getAll")

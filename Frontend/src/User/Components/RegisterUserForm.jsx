@@ -13,6 +13,7 @@ function RegisterUserForm() {
         e.preventDefault();
         try {
             const userData = { firstName, lastName, rut, email, address, age };
+            console.log("userData:", userData);
             const response = await postUser(userData);
             console.log("Usuario registrado exitosamente:", response);
         } catch (error) {

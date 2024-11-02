@@ -24,6 +24,7 @@ function Executive() {
     const [numberOfPays, setNumberOfPays] = useState(0);
     const [totalPriceHome, setTotalPriceHome] = useState(0);
     const [monthlyClientIncome, setMonthlyClientIncome] = useState(0);
+    const [balance, setBalance] = useState(0);
 
     // Evaluation Data
     const [feeToIncomeRatio, setFeeToIncomeRatio] = useState(false);
@@ -97,6 +98,7 @@ function Executive() {
                                     setNumberOfPays={setNumberOfPays}
                                     setTotalPriceHome={setTotalPriceHome}
                                     setMonthlyClientIncome={setMonthlyClientIncome}
+                                    setBalance={setBalance}
                                 />
                             </section>
                             <form className="grid my-4" onSubmit={(e) => formHandleSubmit(e, credit.id, credit.financialEvaluation.id)}>
@@ -144,7 +146,9 @@ function Executive() {
                                     setApplicantAge={setApplicantAge}
                                 />
                                 <SavingCapacityForm className="border-2 my-4"
-                                    savingCapacity={savingCapacity}
+                                    balance={balance}
+                                    creditAmount={creditAmount}
+                                    monthlyClientIncome={monthlyClientIncome}
                                     setSavingCapacity={setSavingCapacity}
                                 />
                                 <TotalCostForm className="border-2 my-4"

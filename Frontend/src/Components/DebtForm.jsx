@@ -7,7 +7,7 @@ export default function DebtForm({ handleGradeChange }) {
     return (
         <div>
             <div>
-                <label htmlFor="nota" className="grid">
+                <label className="grid">
                     <h2 className="m-auto">Deuda</h2>
                     <input
                         className="rounded-md border-2"

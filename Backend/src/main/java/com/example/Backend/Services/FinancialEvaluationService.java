@@ -32,6 +32,7 @@ public class FinancialEvaluationService {
         Optional<Credit> optionalCredit = creditRepository.findById(creditID);
         if (optionalCredit.isPresent()) {
             Credit credit = optionalCredit.get();
+            credit.setFinancialEvaluation(financialEvaluation);
             financialEvaluation.setCredit(credit);
             return new ResponseEntity<>(financialEvaluationRepository.save(financialEvaluation), HttpStatus.OK);
         }

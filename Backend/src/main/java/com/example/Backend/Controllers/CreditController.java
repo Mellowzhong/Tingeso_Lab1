@@ -11,6 +11,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/credit")
+@CrossOrigin("*")
 public class CreditController {
     private final CreditService creditService;
 
@@ -21,7 +22,6 @@ public class CreditController {
 
     @PostMapping("/add/{user_id}")
     public UUID addCredit(@RequestBody Credit credit, @PathVariable UUID user_id) {
-        System.out.println(credit.toString());
         return creditService.addCredit(credit, user_id);
     }
 

@@ -27,9 +27,6 @@ public class UserService {
         if (user == null) {
             throw new IllegalArgumentException("User cannot be null");
         }
-        if (userRepository.existsById(user.getId())) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
 
         User savedUser = userRepository.save(user);
 

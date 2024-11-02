@@ -25,7 +25,7 @@ public class CreditService {
     public CreditService(CreditRepository creditRepository, UserRepository userRepository, ToDTO toDTO) {
         this.creditRepository = creditRepository;
         this.userRepository = userRepository;
-        this.toDTO = toDTO; // Inyectar la instancia de ToDTO en lugar de crear una nueva
+        this.toDTO = toDTO;
     }
 
     public UUID addCredit(Credit credit, UUID user_id) {

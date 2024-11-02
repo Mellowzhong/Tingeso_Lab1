@@ -56,7 +56,7 @@ function DebtToIncomeForm({ debtToIncomeRatio, setDebtToIncomeRatio, creditAmoun
                         <button className='ml-4' type='button' onClick={() => add()}>agregar</button>
                     </div>
 
-                    <div className='flex flex-wrap'>
+                    <div className='flex flex-wrap justify-center'>
                         {
                             Array.from({ length: debts }).map(
                                 (_, index) => (

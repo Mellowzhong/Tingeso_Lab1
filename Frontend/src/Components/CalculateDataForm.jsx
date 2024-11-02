@@ -1,7 +1,7 @@
 import PropTYpes from 'prop-types';
 import { comprobeSimulatedInterestRate } from '../Utils/SimulationUtils';
 
-function CalculateDataForm({ creditType, setCreditAmount, setSimulatedInterestRate, setNumberOfPays, setTotalPriceHome, setMonthlyClientIncome }) {
+function CalculateDataForm({ creditType, setCreditAmount, setSimulatedInterestRate, setNumberOfPays, setTotalPriceHome, setMonthlyClientIncome, setBalance }) {
 
     return (
         <div className='grid '>
@@ -60,6 +60,15 @@ function CalculateDataForm({ creditType, setCreditAmount, setSimulatedInterestRa
                     onBlur={(e) => setMonthlyClientIncome(parseFloat(e.target.value))}
                 />
             </label>
+            <label htmlFor="monthlyClientIncome">
+                Saldo
+                <input
+                    type="number"
+                    id="balance"
+                    name="balance"
+                    onBlur={(e) => setBalance(parseInt(e.target.value))}
+                />
+            </label>
         </div >
     );
 }
@@ -71,6 +80,7 @@ CalculateDataForm.propTypes = {
     setNumberOfPays: PropTYpes.func.isRequired,
     setTotalPriceHome: PropTYpes.func.isRequired,
     setMonthlyClientIncome: PropTYpes.func.isRequired,
+    setBalance: PropTYpes.func.isRequired,
 };
 
 export default CalculateDataForm;
