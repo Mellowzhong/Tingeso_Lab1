@@ -165,10 +165,16 @@ function Executive() {
                                 numberOfPays={numberOfPays}
                                 totalPriceHome={totalPriceHome}
                                 monthlyClientIncome={monthlyClientIncome}
+                                creditType={credit.creditType}
                             />
                             <FinanceMaxAmountFrom
                                 financeMaxAmount={financeMaxAmount}
                                 setFinanceMaxAmount={setFinanceMaxAmount}
+                                creditAmount={creditAmount}
+                                simulatedInterestRate={simulatedInterestRate}
+                                numberOfPays={numberOfPays}
+                                totalPriceHome={totalPriceHome}
+                                creditType={credit.creditType}
                             />
                             <ApplicantAgeForm
                                 applicantAge={applicantAge}
@@ -185,6 +191,7 @@ function Executive() {
                                 simulatedInterestRate={simulatedInterestRate}
                                 numberOfPays={numberOfPays}
                                 totalPriceHome={totalPriceHome}
+                                creditType={credit.creditType}
                             />
                             <EvaluationResultForm
                                 evaluationResult={evaluationResult}
