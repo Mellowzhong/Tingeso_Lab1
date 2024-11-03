@@ -1,12 +1,19 @@
 import api from "../../Utils/BaseUrl";
 
 export const postUser = async (user) => {
-  console.log("api", import.meta.env.VITE_APU_URL);
-  const response = await api.post("/user/post", user);
-  return response.data;
+  try {
+    const response = await api.post("/user/post", user);
+    return response.data;
+  } catch (error) {
+    console.error("Error posting user", error);
+  }
 };
 
 export const getUser = async (userData) => {
-  const response = await api.post(`/user/get`, userData);
-  return response.data;
+  try {
+    const response = await api.post(`/user/get`, userData);
+    return response.data;
+  } catch (error) {
+    console.error("Error getting user", error);
+  }
 };

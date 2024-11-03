@@ -16,7 +16,6 @@ function SavingCapacityForm({ balance, monthlyClientIncome, creditAmount, setSav
 
     // Función para validar la capacidad de ahorro
     const validateSavingCapacity = () => {
-        console.log('Validando capacidad de ahorro');
         const rules = [
             isMinAmountValid,
             savingHistory,

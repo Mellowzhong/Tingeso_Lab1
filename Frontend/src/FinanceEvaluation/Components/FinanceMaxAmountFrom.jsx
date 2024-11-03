@@ -23,9 +23,15 @@ function FinanceMaxAmountFrom({
             totalPriceHome,
             creditType
         };
-        const response = await getSimulation(simulationData);
-        setQuote(response.quote);
-        setMessage(response.message);
+        try {
+            const response = await getSimulation(simulationData);
+            setQuote(response.quote);
+            setMessage(response.message);
+        }
+        catch {
+            alert("Error al simular");
+        }
+
     };
 
     return (

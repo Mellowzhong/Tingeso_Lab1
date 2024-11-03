@@ -26,7 +26,7 @@ function SecondHomeForm({ creditId }) {
             if (creditHistorial) await postFile(creditHistorial, "historial crediticio", creditId);
             if (employment) await postFile(employment, "laboral", creditId);
 
-            console.log("All files uploaded successfully");
+            alert("All files uploaded successfully");
             const financeEvaluationData = {
                 feeToIncomeRatio: false,
                 creditHistory: false,
@@ -38,8 +38,8 @@ function SecondHomeForm({ creditId }) {
                 evaluationResult: false
             };
             await postFinanceEvaluation(creditId, financeEvaluationData);
-        } catch (error) {
-            console.error("Error uploading files:", error);
+        } catch {
+            alert("Error al subir los archivos");
         }
     };
 

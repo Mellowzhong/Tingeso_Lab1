@@ -26,7 +26,7 @@ function ComercialPropertyForm({ creditId }) {
             if (businessPlan) await postFile(businessPlan, "plan de negocio", creditId);
             if (employment) await postFile(employment, "laboral", creditId);
 
-            console.log("All files uploaded successfully");
+            alert("All files uploaded successfully");
 
             const financeEvaluationData = {
                 feeToIncomeRatio: false,
@@ -39,8 +39,8 @@ function ComercialPropertyForm({ creditId }) {
                 evaluationResult: false
             };
             await postFinanceEvaluation(creditId, financeEvaluationData);
-        } catch (error) {
-            console.error("Error uploading files:", error);
+        } catch {
+            alert("Error al subir los archivos");
         }
     };
 

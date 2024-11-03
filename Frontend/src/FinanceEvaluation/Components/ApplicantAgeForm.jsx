@@ -5,7 +5,7 @@ function ApplicantAgeForm({ applicantAge, setApplicantAge }) {
     const [age, setAge] = useState(0);
     const [message, setMessage] = useState("Edad del solicitante no comprobada");
 
-    const handleSimulationSubmit = async (e) => {
+    const handleSimulationSubmit = (e) => {
         e.preventDefault();
 
         if (age <= 75 && age >= 18) {

@@ -39,10 +39,8 @@ function Executive() {
         const fetchCredits = async () => {
             try {
                 const response = await getAllCredits();
-                console.log("Fetched credits:");
                 setDocuments(response || []);
-            } catch (error) {
-                console.error("Error fetching credits:", error);
+            } catch {
                 setDocuments([]);
             }
         };
@@ -62,16 +60,25 @@ function Executive() {
             savingCapacity,
             evaluationResult
         };
-        const response = await updatefinanceEvaluation(creditId, financialEvaluationId, FinanceEvaluationData);
-        console.log("Response:", response);
+        try {
+            await updatefinanceEvaluation(creditId, financialEvaluationId, FinanceEvaluationData);
+            alert("Evaluación enviada correctamente");
+        }
+        catch {
+            alert("Error al enviar evaluación");
+        }
     };
 
     // Handle document request submission
     const documentHandleSubmit = async (e, documentId, fileName) => {
         e.preventDefault();
-        console.log("Requesting document:", documentId, fileName);
-        const response = await downloadDocument(documentId, fileName);
-        console.log("Response:", response);
+        try {
+            await downloadDocument(documentId, fileName);
+            alert("Documento solicitado correctamente");
+        }
+        catch {
+            alert("Error al solicitar documento");
+        }
     };
 
     return (

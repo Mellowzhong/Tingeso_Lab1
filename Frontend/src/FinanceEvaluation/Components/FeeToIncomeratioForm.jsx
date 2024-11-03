@@ -23,9 +23,14 @@ function FeeToIncomeRatio({
             totalPriceHome,
             monthlyClientIncome
         };
-        const response = await getDebtToIncomeRatioCalculation(simulationData);
-        setQuote(response.quote);
-        setMessage(response.message);
+        try {
+            const response = await getDebtToIncomeRatioCalculation(simulationData);
+            setQuote(response.quote);
+            setMessage(response.message);
+        }
+        catch {
+            alert("Error al calcular la relación cuota/ingreso");
+        }
     };
 
     return (

@@ -27,9 +27,8 @@ function CreditRequest() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (creditType === "") {
-            console.log("No credit type selected");
+            alert("Seleccione un tipo de crédito");
         } else {
-            console.log("Submitting credit request:", creditType);
             const userRequestData = { firstName, lastName, rut };
             const creditRequestData = { creditType };
 
@@ -37,10 +36,8 @@ function CreditRequest() {
 
             try {
                 const user = await getUser(userRequestData);
-                console.log("User:", user);
                 const response = await postCredit(creditRequestData, user.id);
                 setCreditId(response);
-                console.log("Response:", response);
             } catch (error) {
                 console.error("Error:", error);
             }

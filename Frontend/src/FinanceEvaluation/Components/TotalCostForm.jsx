@@ -19,11 +19,16 @@ function TotalCostForm({ creditAmount, simulatedInterestRate, numberOfPays, tota
         };
 
         // Simulación
-        const response = await getSimulation(simulationData);
-        const aux = response.quote + creditLifeInsurance + 20000;
+        try {
+            const response = await getSimulation(simulationData);
+            const aux = response.quote + creditLifeInsurance + 20000;
 
-        // Cálculo del costo total
-        setTotalCost(aux * numberOfPays + administrationFee);
+            // Cálculo del costo total
+            setTotalCost(aux * numberOfPays + administrationFee);
+        }
+        catch {
+            alert("Error al simular");
+        }
     };
 
     return (

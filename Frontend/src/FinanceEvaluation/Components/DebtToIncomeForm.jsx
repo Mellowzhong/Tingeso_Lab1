@@ -26,7 +26,6 @@ function DebtToIncomeForm({
     };
 
     const handleGradeChange = (debt) => {
-        console.log('Nueva deuda:', debt);
         setTotalDebts((prevTotalGrade) => prevTotalGrade + parseFloat(debt));
     };
 
@@ -40,17 +39,20 @@ function DebtToIncomeForm({
             monthlyClientIncome,
             creditType
         };
-        const response = await getSimulation(simulationData);
-        setTotalDebts(response.quote + totalDebts);
-        console.log('Ingreso mensual:', fivePercentMonthlyClientIncome);
-        console.log('Total deudas:', totalDebts);
-        console.log('Respuesta:', response.quote);
+        try {
+            const response = await getSimulation(simulationData);
+            setTotalDebts(response.quote + totalDebts);
 
-        if (totalDebts > fivePercentMonthlyClientIncome) {
-            setMessage('No es posible el crédito');
-        } else {
-            setMessage('Es posible el crédito');
+            if (totalDebts > fivePercentMonthlyClientIncome) {
+                setMessage('No es posible el crédito');
+            } else {
+                setMessage('Es posible el crédito');
+            }
         }
+        catch {
+            alert("Error al simular");
+        }
+
     };
 
     return (
