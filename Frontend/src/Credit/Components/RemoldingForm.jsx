@@ -13,25 +13,19 @@ function RemoldingForm({ creditId }) {
     const handleFileChange = (event, setFile) => {
         const file = event.target.files[0];
         if (file) {
-            setFile(file); // Store the file object
+            setFile(file);
         }
     };
 
     const handleUpload = async () => {
         try {
-            if (incomeCertificate) {
-                await postFile(incomeCertificate, "comrpobante de ingresos", creditId);
-            }
-            if (remodelingAmount) {
-                await postFile(remodelingAmount, "presupuesto de remodelacion", creditId);
-            }
-            if (updateAppraisalCertificate) {
-                await postFile(updateAppraisalCertificate, "certificado de avaluo actualizado", creditId);
-            }
-            if (employment) {
-                await postFile(employment, "laboral", creditId);
-            }
+            if (incomeCertificate) await postFile(incomeCertificate, "comrpobante de ingresos", creditId);
+            if (remodelingAmount) await postFile(remodelingAmount, "presupuesto de remodelacion", creditId);
+            if (updateAppraisalCertificate) await postFile(updateAppraisalCertificate, "certificado de avaluo actualizado", creditId);
+            if (employment) await postFile(employment, "laboral", creditId);
+
             console.log("All files uploaded successfully");
+
             const financeEvaluationData = {
                 feeToIncomeRatio: false,
                 creditHistory: false,
@@ -49,9 +43,9 @@ function RemoldingForm({ creditId }) {
     };
 
     return (
-        <div>
-            <h1>Remodeling Form</h1>
-            <div className="grid">
+        <div className="w-full max-w-md bg-white shadow-md rounded-lg p-6 mt-8">
+            <h2 className="text-xl font-semibold mb-4">Documentos para Remodelación</h2>
+            <form className="grid gap-4">
                 <DocumentForm
                     documentRequiredName="Comprobante de ingresos"
                     handleFunction={(event) => handleFileChange(event, setIncomeCertificate)}
@@ -59,13 +53,13 @@ function RemoldingForm({ creditId }) {
                     documentName="comrpobante de ingresos"
                 />
                 <DocumentForm
-                    documentRequiredName="Presupuesto de remodelacion"
+                    documentRequiredName="Presupuesto de remodelación"
                     handleFunction={(event) => handleFileChange(event, setRemodelingAmount)}
                     setFunction={setRemodelingAmount}
                     documentName="presupuesto de remodelacion"
                 />
                 <DocumentForm
-                    documentRequiredName="Certificado de avaluo actualizado"
+                    documentRequiredName="Certificado de avalúo actualizado"
                     handleFunction={(event) => handleFileChange(event, setUpdateAppraisalCertificate)}
                     setFunction={setUpdateAppraisalCertificate}
                     documentName="certificado de avaluo actualizado"
@@ -76,14 +70,16 @@ function RemoldingForm({ creditId }) {
                     setFunction={setEmployment}
                     documentName="Laboral"
                 />
-                <button type="button" onClick={handleUpload}>Upload Files</button>
-            </div>
+                <button type="button" onClick={handleUpload} className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">
+                    Subir Archivos
+                </button>
+            </form>
         </div>
     );
 }
 
 RemoldingForm.propTypes = {
-    creditId: PropTypes.string,
+    creditId: PropTypes.string.isRequired,
 };
 
 export default RemoldingForm;

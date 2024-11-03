@@ -7,7 +7,7 @@ import {
 import ComponentsWithNavBar from './Components/ComponentsWithNavBar.jsx';
 import './index.css'
 
-import RegisterUserForm from './User/Components/RegisterUserForm.jsx';
+import User from './User/Views/User.jsx';
 import ErrorPage from './Components/ErrorPage.jsx';
 import CreditRequest from './Credit/Views/CreditRequest.jsx'
 import Simulation from './Simulation/Views/Simulation.jsx';
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <ComponentsWithNavBar>
-        <RegisterUserForm />
+        <User />
       </ComponentsWithNavBar>
     ),
     errorElement: <ErrorPage />,

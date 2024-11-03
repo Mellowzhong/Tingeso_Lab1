@@ -17,6 +17,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/documents")
+@CrossOrigin("*")
 public class DocumentController {
 
     private final DocumentService documentService;
@@ -30,24 +31,18 @@ public class DocumentController {
     public ResponseEntity<String> uploadDocument(
             @RequestParam("file") MultipartFile file,
             @RequestParam("typeCredit") String doc,
-            @PathVariable UUID credit_id
+            @PathVariable("credit_id") UUID creditId // Especifica el nombre del parámetro aquí
     ) throws IOException {
-        Document savedDocument = documentService.saveDocument(file, doc, credit_id);
+        Document savedDocument = documentService.saveDocument(file, doc, creditId);
         return ResponseEntity.ok("Document uploaded successfully. ID: " + savedDocument.getId());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<byte[]> getFile(@PathVariable UUID id) throws FileNotFoundException {
+    public ResponseEntity<byte[]> getFile(@PathVariable("id") UUID id) throws FileNotFoundException {
         Document fileEntity = documentService.getFile(id).orElseThrow(FileNotFoundException::new);
         return ResponseEntity.status(HttpStatus.OK)
                 .header(HttpHeaders.CONTENT_TYPE, fileEntity.getDocumentType())
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileEntity.getDocumentName()+"\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileEntity.getDocumentName() + "\"")
                 .body(fileEntity.getData());
-    }
-
-    @GetMapping("/all")
-    public ResponseEntity<List<DocumentDTO>> getAllDocuments() {
-        List<DocumentDTO> documents = documentService.getAllDocuments();
-        return ResponseEntity.ok(documents);
     }
 }

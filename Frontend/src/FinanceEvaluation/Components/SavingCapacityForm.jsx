@@ -4,7 +4,6 @@ import CalculateSavingCapacityForm from '../../Components/CalculateSavingCapacit
 import CalculateRecentWithdrawalsForm from '../../Components/CalculateRecentWithdrawalsForm';
 
 function SavingCapacityForm({ balance, monthlyClientIncome, creditAmount, setSavingCapacity }) {
-    // Por defecto, todas las validaciones comienzan como "No válidas"
     const [isMinAmountValid, setIsMinAmountValid] = useState(false);
     const [savingHistory, setSavingHistory] = useState(false);
     const [totalIncomes, setTotalIncomes] = useState(0);
@@ -76,25 +75,46 @@ function SavingCapacityForm({ balance, monthlyClientIncome, creditAmount, setSav
     };
 
     return (
-        <div className='grid border-2 m-4'>
-            <h2>Saldo mínimo requerido</h2>
-            {isMinAmountValid ? <p>Válido</p> : <p>No válido</p>}
-            <button type='button' onClick={handleMinAmount}>Comprobar Saldo</button>
+        <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-full">
+            {/* Saldo mínimo requerido */}
+            <section className="mb-4">
+                <h2 className="text-lg font-semibold mb-2">Saldo Mínimo Requerido</h2>
+                <p className={isMinAmountValid ? 'text-green-500' : 'text-red-500'}>
+                    {isMinAmountValid ? 'Válido' : 'No válido'}
+                </p>
+                <button
+                    type="button"
+                    onClick={handleMinAmount}
+                    className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
+                >
+                    Comprobar Saldo
+                </button>
+            </section>
 
-            <section className='border-4 m-2'>
-                <div className='border-2 m-2'>
-                    <h2>Historial de ahorro</h2>
-                    {savingHistory ? <p>Válido</p> : <p>No válido</p>}
+            {/* Historial de ahorro */}
+            <section className="border-2 border-gray-300 rounded-lg p-4 mb-4">
+                <h2 className="text-lg font-semibold mb-2">Historial de Ahorro</h2>
+                <p className={savingHistory ? 'text-green-500' : 'text-red-500'}>
+                    {savingHistory ? 'Válido' : 'No válido'}
+                </p>
+
+                {/* Depósitos periódicos */}
+                <div className="mt-4">
+                    <h3 className="font-semibold">Depósitos Periódicos: {totalIncomes}</h3>
+                    <p className={periodicDeposits ? 'text-green-500' : 'text-red-500'}>
+                        {periodicDeposits ? 'Válido' : 'No válido'}
+                    </p>
+                    <button
+                        type="button"
+                        onClick={handleValidatePeriodicDeposits}
+                        className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 mt-2"
+                    >
+                        Validar Depósitos Periódicos
+                    </button>
                 </div>
 
-                <div className='border-2 m-2'>
-                    <h2>Depositos periodicos: {totalIncomes}</h2>
-                    {periodicDeposits ? <p>Válido</p> : <p>No válido</p>}
-                    <button type='button' onClick={handleValidatePeriodicDeposits}>Validar Depósitos Periódicos</button>
-                </div>
-
-                {/* Renderizar 12 veces el componente CalculateSavingCapacityForm */}
-                <div className='flex flex-wrap justify-center'>
+                {/* Formulario dinámico para calcular capacidad de ahorro */}
+                <div className="flex flex-wrap justify-center mt-4">
                     {Array.from({ length: 12 }).map((_, index) => (
                         <div key={index} className="mx-1">
                             <CalculateSavingCapacityForm
@@ -106,26 +126,38 @@ function SavingCapacityForm({ balance, monthlyClientIncome, creditAmount, setSav
                 </div>
             </section>
 
-            {/* Balance/Years form */}
-            <div className='grid border-2 m-2'>
-                <h2>Relacion saldo/Años de antiguedad</h2>
-                {savingCapacityBalanceYears ? <p>Válido</p> : <p>No válido</p>}
-                <label>
-                    <h2>Años</h2>
+            {/* Relación saldo/años */}
+            <section className="border-2 border-gray-300 rounded-lg p-4 mb-4">
+                <h2 className="text-lg font-semibold mb-2">Relación Saldo/Años</h2>
+                <p className={savingCapacityBalanceYears ? 'text-green-500' : 'text-red-500'}>
+                    {savingCapacityBalanceYears ? 'Válido' : 'No válido'}
+                </p>
+                <label htmlFor="years" className="block mb-2">
+                    Años:
                     <input
                         type="number"
                         name="years"
                         id="years"
                         onChange={(e) => setYears(parseInt(e.target.value))}
+                        className="border border-gray-300 rounded-md p-2 w-full mt-1"
                     />
                 </label>
-                <button type='button' onClick={handleValidateBalanceYears}>Validar Relación Saldo/Años</button>
-            </div>
+                <button
+                    type="button"
+                    onClick={handleValidateBalanceYears}
+                    className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
+                >
+                    Validar Relación Saldo/Años
+                </button>
+            </section>
 
-            <div>
-                <h2>Retiros recientes</h2>
-                {savingCapacityRecentWithdrawals ? <p>Válido</p> : <p>No válido</p>}
-                <div className='flex flex-wrap justify-center'>
+            {/* Retiros recientes */}
+            <section className="border-2 border-gray-300 rounded-lg p-4 mb-4">
+                <h2 className="text-lg font-semibold mb-2">Retiros Recientes</h2>
+                <p className={savingCapacityRecentWithdrawals ? 'text-green-500' : 'text-red-500'}>
+                    {savingCapacityRecentWithdrawals ? 'Válido' : 'No válido'}
+                </p>
+                <div className="flex flex-wrap justify-center mt-4">
                     {Array.from({ length: 6 }).map((_, index) => (
                         <div key={index} className="mx-1">
                             <CalculateRecentWithdrawalsForm
@@ -135,12 +167,21 @@ function SavingCapacityForm({ balance, monthlyClientIncome, creditAmount, setSav
                         </div>
                     ))}
                 </div>
-            </div>
+            </section>
 
-            <h2>Resultado de evaluación</h2>
+            {/* Resultado de evaluación */}
+            <h2 className="text-lg font-semibold mb-2">Resultado de Evaluación</h2>
             <p>{evaluationResult}</p>
-            <button type='button' onClick={validateSavingCapacity}>Validar</button>
-        </div >
+
+            {/* Botón para validar capacidad de ahorro */}
+            <button
+                type="button"
+                onClick={validateSavingCapacity}
+                className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 mt-4"
+            >
+                Validar Capacidad de Ahorro
+            </button>
+        </div>
     );
 }
 

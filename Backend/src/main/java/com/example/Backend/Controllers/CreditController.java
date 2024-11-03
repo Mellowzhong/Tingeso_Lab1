@@ -11,6 +11,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/credit")
+@CrossOrigin("*")
 public class CreditController {
     private final CreditService creditService;
 
@@ -20,12 +21,12 @@ public class CreditController {
     }
 
     @PostMapping("/add/{user_id}")
-    public UUID addCredit(@RequestBody Credit credit, @PathVariable UUID user_id) {
+    public UUID addCredit(@RequestBody Credit credit, @PathVariable("user_id") UUID user_id) {
         return creditService.addCredit(credit, user_id);
     }
 
     @GetMapping("/get/{user_id}")
-    public List<CreditDTO> getCreditByUserId(@PathVariable UUID user_id) {
+    public List<CreditDTO> getCreditByUserId(@PathVariable("user_id") UUID user_id) {
         return creditService.getAllCreditsByUserId(user_id);
     }
 

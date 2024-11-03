@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
-
-import { getSimulation } from '../../Simulation/Services/SimulationServices';
-
 import { useState } from 'react';
+import { getSimulation } from '../../Simulation/Services/SimulationServices';
 
 function TotalCostForm({ creditAmount, simulatedInterestRate, numberOfPays, totalPriceHome, creditType }) {
     const [totalCost, setTotalCost] = useState(0);
@@ -18,26 +16,40 @@ function TotalCostForm({ creditAmount, simulatedInterestRate, numberOfPays, tota
             numberOfPays,
             totalPriceHome,
             creditType
-        }
+        };
+
+        // Simulación
         const response = await getSimulation(simulationData);
+        const aux = response.quote + creditLifeInsurance + 20000;
 
-        const aux = response.quote + creditLifeInsurance + 20000
-
+        // Cálculo del costo total
         setTotalCost(aux * numberOfPays + administrationFee);
-    }
+    };
 
     return (
-        <div className='grid border-2 m-4'>
-            <h1>Costo total</h1>
-            <span>
-                <h2>Informacion</h2>
-                {creditAmount} - {simulatedInterestRate} - {numberOfPays} - {totalPriceHome}
-            </span>
-            <button onClick={handleSimulationSubmit}>Simular</button>
-            <span>
-                <h2>Respuesta</h2>
-                {totalCost}
-            </span>
+        <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-full">
+            {/* Información del crédito */}
+            <section className="mb-4">
+                <h2 className="text-lg font-semibold mb-2">Información del Crédito</h2>
+                <p>{`Monto del crédito: ${creditAmount}`}</p>
+                <p>{`Tasa de interés simulada: ${simulatedInterestRate}`}</p>
+                <p>{`Número de pagos: ${numberOfPays}`}</p>
+                <p>{`Precio total de la vivienda: ${totalPriceHome}`}</p>
+            </section>
+
+            {/* Botón para simular */}
+            <button
+                onClick={handleSimulationSubmit}
+                className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 mb-4"
+            >
+                Simular
+            </button>
+
+            {/* Resultados de la simulación */}
+            <section className="mb-4">
+                <h2 className="text-lg font-semibold mb-2">Costo Total</h2>
+                <p className="text-green-500">{`Costo Total Simulado: ${totalCost}`}</p>
+            </section>
         </div>
     );
 }

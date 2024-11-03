@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfig {
 
     @Bean
-    public ToDTO toDto() {
+    public ToDTO toDTO() {
         return new ToDTO();
     }
 }

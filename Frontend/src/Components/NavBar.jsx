@@ -6,7 +6,7 @@ export default function NavBar() {
         <div className="my-4 py-4 border-b-2 text-center">
             <Link to="/">
                 <span className="mx-4">
-                    Presta banco
+                    Registrar usuario
                 </span>
             </Link>
             <Link to="/simulation">

@@ -26,7 +26,7 @@ function CreditRequest() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (creditType == "") {
+        if (creditType === "") {
             console.log("No credit type selected");
         } else {
             console.log("Submitting credit request:", creditType);
@@ -48,34 +48,61 @@ function CreditRequest() {
     };
 
     return (
-        <>
-            {!showCreditDocuments &&
-                <section>
+        <div className='flex flex-col items-center justify-center'>
+            <h1 className='text-4xl font-bold text-center'>Solicitud de Crédito</h1>
+            {!showCreditDocuments && (
+                <section className='w-full max-w-md bg-white shadow-md rounded-lg p-6 m-8'>
+
+                    {/* Formulario de solicitud de usuario */}
                     <RequestUserForm setFirstName={setFirstName} setLastName={setLastName} setRut={setRut} />
-                    <form className="grid" onSubmit={handleSubmit}>
-                        <label htmlFor="creditType">Selecciona el tipo de crédito:</label>
-                        <select name="creditType" id="creditType" value={creditType} onChange={handleSelectChange}>
-                            <option value="">Seleccione una opción</option>
-                            <option value="firstHome">First Home</option>
-                            <option value="secondHome">Second Home</option>
-                            <option value="commercialProperty">Commercial Property</option>
-                            <option value="remodeling">Remodeling</option>
-                        </select>
-                        <button type="submit">Siguiente</button>
+
+                    {/* Formulario para seleccionar el tipo de crédito */}
+                    <form onSubmit={handleSubmit} className="grid gap-4">
+                        <label htmlFor="creditType" className='text-sm font-medium text-gray-700 text-center my-6'>
+                            Selecciona el tipo de crédito:
+
+                            <select
+                                name="creditType"
+                                id="creditType"
+                                value={creditType}
+                                onChange={handleSelectChange}
+                                className='border-2 mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md'
+                            >
+                                <option value="">Seleccione una opción</option>
+                                <option value="firstHome">Primera casa</option>
+                                <option value="secondHome">Segunda casa</option>
+                                <option value="commercialProperty">Propiedad comercial</option>
+                                <option value="remodeling">Remodelación</option>
+                            </select>
+                        </label>
+                        {/* Botón para continuar */}
+                        <button type="submit" className='w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700'>
+                            Siguiente
+                        </button>
                     </form>
                 </section>
-            }
+            )}
+
             {/* Parte de los documentos */}
-            creditId - {creditId}
-            {showCreditDocuments &&
-                <section>
-                    {creditType === "firstHome" && <FirstHomeForm creditId={creditId} />}
-                    {creditType === "secondHome" && <SecondHomeForm creditId={creditId} />}
-                    {creditType === "commercialProperty" && <ComercialPropertyForm creditId={creditId} />}
-                    {creditType === "remodeling" && <RemoldingForm creditId={creditId} />}
+            {showCreditDocuments && (
+                <section className='w-full max-w-md bg-white shadow-md rounded-lg p-6 mt-8'>
+                    <h2 className='text-xl font-semibold mb-4'>Documentos del Crédito</h2>
+                    {creditId && (
+                        <>
+                            <p className='text-sm text-gray-700 mb-4'>
+                                Código de crédito: <span className='font-medium'>{creditId}</span>
+                            </p>
+
+                            {/* Mostrar formularios específicos basados en el tipo de crédito seleccionado */}
+                            {creditType === "firstHome" && <FirstHomeForm creditId={creditId} />}
+                            {creditType === "secondHome" && <SecondHomeForm creditId={creditId} />}
+                            {creditType === "commercialProperty" && <ComercialPropertyForm creditId={creditId} />}
+                            {creditType === "remodeling" && <RemoldingForm creditId={creditId} />}
+                        </>
+                    )}
                 </section>
-            }
-        </>
+            )}
+        </div>
     );
 }
 

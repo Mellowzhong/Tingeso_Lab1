@@ -20,21 +20,12 @@ function SecondHomeForm({ creditId }) {
 
     const handleUpload = async () => {
         try {
-            if (incomeCertificate) {
-                await postFile(incomeCertificate, "comrpobante de ingresos", creditId);
-            }
-            if (appraisalCertificate) {
-                await postFile(appraisalCertificate, "certificado de avaluo", creditId);
-            }
-            if (firstHomeCertificate) {
-                await postFile(firstHomeCertificate, "certificado de primer vivienda", creditId);
-            }
-            if (creditHistorial) {
-                await postFile(creditHistorial, "historial crediticio", creditId);
-            }
-            if (employment) {
-                await postFile(employment, "laboral", creditId);
-            }
+            if (incomeCertificate) await postFile(incomeCertificate, "comrpobante de ingresos", creditId);
+            if (appraisalCertificate) await postFile(appraisalCertificate, "certificado de avaluo", creditId);
+            if (firstHomeCertificate) await postFile(firstHomeCertificate, "certificado de primer vivienda", creditId);
+            if (creditHistorial) await postFile(creditHistorial, "historial crediticio", creditId);
+            if (employment) await postFile(employment, "laboral", creditId);
+
             console.log("All files uploaded successfully");
             const financeEvaluationData = {
                 feeToIncomeRatio: false,
@@ -53,9 +44,9 @@ function SecondHomeForm({ creditId }) {
     };
 
     return (
-        <div>
-            <h1>Second Home Form</h1>
-            <div className="grid">
+        <div className="w-full max-w-md bg-white shadow-md rounded-lg p-6 mt-8">
+            <h2 className="text-xl font-semibold mb-4">Documentos para Segunda Vivienda</h2>
+            <form className="grid gap-4">
                 <DocumentForm
                     documentRequiredName="Comprobante de ingresos"
                     handleFunction={(event) => handleFileChange(event, setIncomeCertificate)}
@@ -63,7 +54,7 @@ function SecondHomeForm({ creditId }) {
                     documentName="comrpobante de ingresos"
                 />
                 <DocumentForm
-                    documentRequiredName="Certificado de avaluo"
+                    documentRequiredName="Certificado de avalúo"
                     handleFunction={(event) => handleFileChange(event, setAppraisalCertificate)}
                     setFunction={setAppraisalCertificate}
                     documentName="certificado de avaluo"
@@ -86,14 +77,16 @@ function SecondHomeForm({ creditId }) {
                     setFunction={setEmployment}
                     documentName="Laboral"
                 />
-                <button type="button" onClick={handleUpload}>Upload Files</button>
-            </div>
+                <button type="button" onClick={handleUpload} className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">
+                    Subir Archivos
+                </button>
+            </form>
         </div>
     );
 }
 
 SecondHomeForm.propTypes = {
-    creditId: PropTypes.string,
+    creditId: PropTypes.string.isRequired,
 };
 
 export default SecondHomeForm;
