@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 function DocumentForm({ handleFunction, setFunction, documentName, documentRequiredName }) {
     return (
-        <label htmlFor={documentName}>{documentRequiredName}
+        <label className='grid' htmlFor={documentName}>{documentRequiredName}
             <input
                 type="file"
                 id={documentName}

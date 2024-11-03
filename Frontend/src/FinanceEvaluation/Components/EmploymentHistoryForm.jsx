@@ -1,19 +1,24 @@
 import PropTypes from 'prop-types';
 
 function EmpoymentHistoryForm({ employmentHistory, setEmploymentHistory }) {
+    const handleValidation = () => {
+        setEmploymentHistory(!employmentHistory); // Cambia el estado de `employmentHistory`
+    };
+
     return (
         <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-full">
-            <label htmlFor="employmentHistory" className="flex items-center space-x-3">
-                <h2 className="text-lg font-semibold">Historial Laboral</h2>
-                <input
-                    type="checkbox"
-                    name="employmentHistory"
-                    id="employmentHistory"
-                    checked={employmentHistory}
-                    onChange={() => setEmploymentHistory(!employmentHistory)}
-                    className="w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-                />
-            </label>
+            <h2 className="text-4xl font-semibold text-center mb-4">Historial Laboral</h2>
+
+            {/* Botón para validar historial laboral */}
+            <div className="flex justify-center">
+                <button
+                    onClick={handleValidation}
+                    type="button"
+                    className={`bg-${employmentHistory ? 'green' : 'red'}-500 text-white py-2 px-4 rounded-md hover:bg-${employmentHistory ? 'green' : 'red'}-600`}
+                >
+                    {employmentHistory ? "Historial validado" : "Validar Historial"}
+                </button>
+            </div>
         </div>
     );
 }

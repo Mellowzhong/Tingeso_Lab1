@@ -34,6 +34,8 @@ function TotalCostForm({ creditAmount, simulatedInterestRate, numberOfPays, tota
     return (
         <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-full">
             {/* Información del crédito */}
+            <h2 className="text-4xl font-semibold mb-2 text-center">Costo Total</h2>
+
             <section className="mb-4">
                 <h2 className="text-lg font-semibold mb-2">Información del Crédito</h2>
                 <p>{`Monto del crédito: ${creditAmount}`}</p>
@@ -47,12 +49,11 @@ function TotalCostForm({ creditAmount, simulatedInterestRate, numberOfPays, tota
                 onClick={handleSimulationSubmit}
                 className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 mb-4"
             >
-                Simular
+                Calcular
             </button>
 
             {/* Resultados de la simulación */}
             <section className="mb-4">
-                <h2 className="text-lg font-semibold mb-2">Costo Total</h2>
                 <p className="text-green-500">{`Costo Total Simulado: ${totalCost}`}</p>
             </section>
         </div>

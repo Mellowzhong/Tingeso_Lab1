@@ -15,10 +15,15 @@ function ApplicantAgeForm({ applicantAge, setApplicantAge }) {
         }
     };
 
+    const handleValidation = () => {
+        setApplicantAge(!applicantAge); // Cambia el estado de `applicantAge`
+    };
+
     return (
         <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-full">
+            {/* Comprobar edad */}
             <section className="mb-4">
-                <h2 className="text-lg font-semibold mb-2 text-center">Comprobar Edad del Solicitante</h2>
+                <h2 className="text-4xl font-semibold mb-2 text-center">Comprobar Edad del Solicitante</h2>
                 <div className="flex flex-col items-center">
                     <label htmlFor="Age" className="w-full">
                         <input
@@ -43,19 +48,15 @@ function ApplicantAgeForm({ applicantAge, setApplicantAge }) {
                 </div>
             </section>
 
+            {/* Botón para validar edad */}
             <section className="flex flex-col items-center">
-                <h2 className="text-lg font-semibold mb-2">Edad del Solicitante</h2>
-                <label htmlFor="applicantAge" className="flex items-center space-x-3">
-                    <input
-                        type="checkbox"
-                        name="applicantAge"
-                        id="applicantAge"
-                        checked={applicantAge}
-                        onChange={() => setApplicantAge(!applicantAge)}
-                        className="w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-                    />
-                    <span>Confirmar que la edad cumple los requisitos</span>
-                </label>
+                <button
+                    onClick={handleValidation}
+                    type="button"
+                    className={`bg-${applicantAge ? 'green' : 'red'}-500 text-white py-2 px-4 rounded-md hover:bg-${applicantAge ? 'green' : 'red'}-600`}
+                >
+                    {applicantAge ? "Edad validada" : "Validar Edad"}
+                </button>
             </section>
         </div>
     );

@@ -52,21 +52,27 @@ function DebtToIncomeForm({
         catch {
             alert("Error al simular");
         }
+    };
 
+    // Función para validar la relación deuda-ingresos
+    const handleValidation = () => {
+        setDebtToIncomeRatio(!debtToIncomeRatio); // Cambia el estado de `debtToIncomeRatio`
     };
 
     return (
         <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-full">
             <section className="mb-4">
-                <h2 className="text-lg font-semibold mb-4">Deudas</h2>
-
-                {/* Formulario dinámico para las deudas */}
-                <div className="flex flex-wrap justify-center mb-4">
-                    {Array.from({ length: debts }).map((_, index) => (
-                        <div key={index} className="mx-2">
-                            <DebtForm handleGradeChange={handleGradeChange} />
-                        </div>
-                    ))}
+                <h2 className="text-4xl font-semibold mb-2 text-center">Relación Deuda-Ingresos</h2>
+                <div>
+                    <h2 className="text-lg font-semibold mb-4 text-center">Deudas</h2>
+                    {/* Formulario dinámico para las deudas */}
+                    <div className="flex flex-wrap justify-center mb-4">
+                        {Array.from({ length: debts }).map((_, index) => (
+                            <div key={index} className="m-2">
+                                <DebtForm handleGradeChange={handleGradeChange} />
+                            </div>
+                        ))}
+                    </div>
                 </div>
                 {/* Botones para agregar o quitar deudas */}
                 <div className="flex justify-center mb-4">
@@ -101,20 +107,15 @@ function DebtToIncomeForm({
                 </button>
             </section>
 
-            {/* Relación deuda-ingresos */}
-            <section>
-                <h2 className="text-lg font-semibold mb-2">Relación Deuda-Ingresos</h2>
-                <label htmlFor="debtToIncomeRatio" className="flex items-center space-x-3">
-                    <input
-                        type="checkbox"
-                        name="debtToIncomeRatio"
-                        id="debtToIncomeRatio"
-                        checked={debtToIncomeRatio}
-                        onChange={() => setDebtToIncomeRatio(!debtToIncomeRatio)}
-                        className="w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-                    />
-                    <span>Confirmar relación deuda-ingresos</span>
-                </label>
+            {/* Botón para validar relación deuda-ingresos */}
+            <section className="flex justify-center mt-6">
+                <button
+                    onClick={handleValidation}
+                    type="button"
+                    className={`bg-${debtToIncomeRatio ? 'green' : 'red'}-500 text-white py-2 px-4 rounded-md hover:bg-${debtToIncomeRatio ? 'green' : 'red'}-600`}
+                >
+                    {debtToIncomeRatio ? "Relación validada" : "Validar Relación"}
+                </button>
             </section>
         </div>
     );

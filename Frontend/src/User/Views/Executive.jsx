@@ -97,11 +97,14 @@ function Executive() {
                         <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6">
                             {/* Información del usuario - ocupa 1/3 */}
                             <div className="bg-gray-100 p-4 rounded-lg">
-                                <h3 className="font-semibold text-lg mb-2">Información del Usuario</h3>
-                                <p>Nombre: {credit.user.firstName}</p>
-                                <p>Apellido: {credit.user.lastName}</p>
-                                <p>RUT: {credit.user.rut}</p>
-
+                                <h3 className="font-semibold text-lg mb-2 text-center">Información del Usuario</h3>
+                                <div className="text-center">
+                                    <p>Nombre: {credit.user.firstName}</p>
+                                    <p>Apellido: {credit.user.lastName}</p>
+                                    <p>Rut: {credit.user.rut}</p>
+                                    <p>Direccion: {credit.user.address}</p>
+                                    <p>Edad: {credit.user.age}</p>
+                                </div>
                                 {/* Formulario de cálculo de datos movido aquí */}
                                 <section className="mt-6 ">
                                     <CalculateDataForm
@@ -116,19 +119,29 @@ function Executive() {
                                 </section>
                             </div>
 
-                            {/* Sección para solicitar documentos - ocupa 2/3 */}
                             <div className="bg-gray-100 p-4 rounded-lg">
-                                <h3 className="text-lg font-semibold mb-4">Solicitar Documentos</h3>
-                                <div className="flex flex-wrap">
+                                <h3 className="text-lg font-semibold mb-4 text-center">Solicitar Documentos</h3>
+                                <div className="flex flex-wrap justify-center">
                                     {credit.documents.map((document) => (
                                         <form
                                             key={document.id}
                                             onSubmit={(e) => documentHandleSubmit(e, document.id, document.documentName)}
-                                            className="mb-4"
+                                            className="m-4 text-center"
                                         >
-                                            <p>ID del documento: {document.id}</p>
-                                            <p>Nombre del documento: {document.documentName}</p>
-                                            <p>Tipo de documento: {document.documentType}</p>
+                                            <div className="my-2 border-2 p-2 rounded-xl">
+                                                <span>
+                                                    <strong> ID del documento</strong>
+                                                    <p className="my-2">{document.id}</p>
+                                                </span>
+                                                <span>
+                                                    <strong> Nombre del documento</strong>
+                                                    <p className="my-2"> {document.documentName}</p>
+                                                </span>
+                                                <span>
+                                                    <strong> Tipo de documento</strong>
+                                                    <p className="my-2">{document.documentType}</p>
+                                                </span>
+                                            </div>
                                             <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 mt-2">
                                                 Solicitar Documento
                                             </button>

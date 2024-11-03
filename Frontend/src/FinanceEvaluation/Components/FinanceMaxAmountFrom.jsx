@@ -27,16 +27,21 @@ function FinanceMaxAmountFrom({
             const response = await getSimulation(simulationData);
             setQuote(response.quote);
             setMessage(response.message);
-        }
-        catch {
+        } catch {
             alert("Error al simular");
         }
+    };
 
+    // Función para validar el monto máximo
+    const handleValidation = () => {
+        setFinanceMaxAmount(!financeMaxAmount); // Cambia el estado de `financeMaxAmount`
     };
 
     return (
         <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-full">
             {/* Información del crédito */}
+            <h2 className="text-4xl font-semibold text-center">Monto Máximo</h2>
+
             <section className="mb-4">
                 <h2 className="text-lg font-semibold mb-2">Información del Crédito</h2>
                 <p>{`Monto del crédito: ${creditAmount}`}</p>
@@ -60,18 +65,16 @@ function FinanceMaxAmountFrom({
                 <p className={message.includes('No') ? 'text-red-500' : 'text-green-500'}>{message}</p>
             </section>
 
-            {/* Monto máximo */}
-            <label htmlFor="financeMaxAmount" className="flex items-center space-x-3">
-                <h2 className="text-lg font-semibold">Monto Máximo</h2>
-                <input
-                    type="checkbox"
-                    name="financeMaxAmount"
-                    id="financeMaxAmount"
-                    checked={financeMaxAmount}
-                    onChange={() => setFinanceMaxAmount(!financeMaxAmount)}
-                    className="w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-                />
-            </label>
+            {/* Botón para validar monto máximo */}
+            <div className="flex justify-center mt-6">
+                <button
+                    onClick={handleValidation}
+                    type="button"
+                    className={`bg-${financeMaxAmount ? 'green' : 'red'}-500 text-white py-2 px-4 rounded-md hover:bg-${financeMaxAmount ? 'green' : 'red'}-600`}
+                >
+                    {financeMaxAmount ? "Monto validado" : "Validar Monto"}
+                </button>
+            </div>
         </div>
     );
 }

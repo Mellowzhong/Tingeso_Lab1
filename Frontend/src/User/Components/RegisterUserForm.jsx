@@ -5,14 +5,13 @@ function RegisterUserForm() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [rut, setRut] = useState("");
-    const [email, setEmail] = useState("");
     const [address, setAddress] = useState("");
     const [age, setAge] = useState(0);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const userData = { firstName, lastName, rut, email, address, age };
+            const userData = { firstName, lastName, rut, address, age };
             await postUser(userData);
             alert("Usuario registrado correctamente");
         } catch {
@@ -37,9 +36,6 @@ function RegisterUserForm() {
                     </label>
                     <label className='grid' htmlFor="address">Dirección:
                         <input type="text" id="address" name="address" onChange={(e) => setAddress(e.target.value)} className='border p-2 focus:ring-indigo-500 focus:border-indigo-500' />
-                    </label>
-                    <label className='grid' htmlFor="email">Email:
-                        <input type="email" id="email" name="email" onChange={(e) => setEmail(e.target.value)} className='border p-2 focus:ring-indigo-500 focus:border-indigo-500' />
                     </label>
                     <label className='grid' htmlFor="age">Edad:
                         <input type="number" id="age" name="age" onChange={(e) => setAge(e.target.value)} className='border p-2 focus:ring-indigo-500 focus:border-indigo-500' />

@@ -75,6 +75,7 @@ function SavingCapacityForm({ balance, monthlyClientIncome, creditAmount, setSav
 
     return (
         <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-full">
+            <h2 className="text-4xl font-semibold text-center">Capacidad de Ahorro</h2>
             {/* Saldo mínimo requerido */}
             <section className="mb-4">
                 <h2 className="text-lg font-semibold mb-2">Saldo Mínimo Requerido</h2>
@@ -115,7 +116,7 @@ function SavingCapacityForm({ balance, monthlyClientIncome, creditAmount, setSav
                 {/* Formulario dinámico para calcular capacidad de ahorro */}
                 <div className="flex flex-wrap justify-center mt-4">
                     {Array.from({ length: 12 }).map((_, index) => (
-                        <div key={index} className="mx-1">
+                        <div key={index} className="m-2">
                             <CalculateSavingCapacityForm
                                 setSavingHistory={setSavingHistory}
                                 handleIncomeChange={handleIncomeChange}

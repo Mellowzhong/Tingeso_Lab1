@@ -1,19 +1,24 @@
 import PropTypes from 'prop-types';
 
 function CreditHistoryForm({ creditHistory, setCreditHistory }) {
+    const handleValidation = () => {
+        setCreditHistory(!creditHistory); // Cambia el estado de `creditHistory`
+    };
+
     return (
         <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-full">
-            <label htmlFor="creditHistory" className="flex items-center space-x-3">
-                <h2 className="text-lg font-semibold">Historial crediticio</h2>
-                <input
-                    type="checkbox"
-                    name="creditHistory"
-                    id="creditHistory"
-                    checked={creditHistory}
-                    onChange={() => setCreditHistory(!creditHistory)}
-                    className="w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-                />
-            </label>
+            <h2 className="text-4xl font-semibold text-center mb-4">Historial Crediticio</h2>
+
+            {/* Botón para validar historial crediticio */}
+            <div className="flex justify-center">
+                <button
+                    onClick={handleValidation}
+                    type="button"
+                    className={`bg-${creditHistory ? 'green' : 'red'}-500 text-white py-2 px-4 rounded-md hover:bg-${creditHistory ? 'green' : 'red'}-600`}
+                >
+                    {creditHistory ? "Historial validado" : "Validar Historial"}
+                </button>
+            </div>
         </div>
     );
 }
