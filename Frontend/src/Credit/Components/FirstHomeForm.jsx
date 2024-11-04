@@ -10,6 +10,9 @@ function FirstHomeForm({ creditId }) {
     const [creditHistorial, setCreditHistorial] = useState(null);
     const [employment, setEmployment] = useState(null);
 
+    // Estado para manejar la carga
+    const [isLoading, setIsLoading] = useState(false);
+
     const handleFileChange = (event, setFile) => {
         const file = event.target.files[0];
         if (file) {
@@ -18,6 +21,7 @@ function FirstHomeForm({ creditId }) {
     };
 
     const handleUpload = async () => {
+        setIsLoading(true); // Iniciar la carga
         try {
             if (incomeCertificate) await postFile(incomeCertificate, "comrpobante de ingresos", creditId);
             if (appraisalCertificate) await postFile(appraisalCertificate, "certificado de avaluo", creditId);
@@ -25,6 +29,8 @@ function FirstHomeForm({ creditId }) {
             if (employment) await postFile(employment, "laboral", creditId);
 
             alert("All files uploaded successfully");
+
+            // Datos de evaluación financiera
             const financeEvaluationData = {
                 feeToIncomeRatio: false,
                 creditHistory: false,
@@ -38,12 +44,22 @@ function FirstHomeForm({ creditId }) {
             await postFinanceEvaluation(creditId, financeEvaluationData);
         } catch {
             alert("Error al subir los archivos");
+        } finally {
+            setIsLoading(false); // Finalizar la carga
         }
     };
 
     return (
         <div className="w-full max-w-md bg-white shadow-md rounded-lg p-6 mt-8">
             <h2 className="text-xl font-semibold mb-4">Documentos para Primera Vivienda</h2>
+
+            {/* Mostrar mensaje de carga si está subiendo archivos */}
+            {isLoading && (
+                <div className="text-blue-600 font-semibold mb-4">
+                    Subiendo los archivos...
+                </div>
+            )}
+
             <form className="grid gap-4">
                 <DocumentForm
                     documentRequiredName="Comprobante de ingresos"
@@ -69,8 +85,15 @@ function FirstHomeForm({ creditId }) {
                     setFunction={setEmployment}
                     documentName="Laboral"
                 />
-                <button type="button" onClick={handleUpload} className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">
-                    Subir Archivos
+
+                {/* Botón deshabilitado mientras se suben los archivos */}
+                <button
+                    type="button"
+                    onClick={handleUpload}
+                    className={`bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    disabled={isLoading}
+                >
+                    {isLoading ? 'Subiendo...' : 'Subir Archivos'}
                 </button>
             </form>
         </div>
