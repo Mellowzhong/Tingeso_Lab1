@@ -11,7 +11,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/financialEvaluation")
-@CrossOrigin("*")
 public class FinancialEvaluationController {
     private final FinancialEvaluationService financialEvaluationService;
 
