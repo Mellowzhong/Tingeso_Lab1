@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/calculate")
+@CrossOrigin("*")
 public class CalculateSimulation {
 
     @PostMapping("/simulation")
@@ -14,16 +15,17 @@ public class CalculateSimulation {
         double amount = utilForm.getCreditAmount();
         double term = utilForm.getSimulatedInterestRate();
         double totalPriceHome = utilForm.getTotalPriceHome();
+        double newTotalPriceHome = 0;
         String creditType = utilForm.getCreditType();
 
         if (creditType.equals("firstHome")) {
-            totalPriceHome = totalPriceHome * 0.8;
+            newTotalPriceHome = (totalPriceHome * 0.8);
         }else if (creditType.equals("secondHome")) {
-            totalPriceHome = totalPriceHome * 0.7;
+            newTotalPriceHome = totalPriceHome * 0.7;
         }else if (creditType.equals("commercialProperty")) {
-            totalPriceHome = totalPriceHome * 0.6;
+            newTotalPriceHome = totalPriceHome * 0.6;
         }else if (creditType.equals("remodeling")) {
-            totalPriceHome = totalPriceHome * 0.5;
+            newTotalPriceHome = totalPriceHome * 0.5;
         }
 
         int pay = utilForm.getNumberOfPays();
@@ -35,11 +37,13 @@ public class CalculateSimulation {
             return SimulationResponse.builder()
                     .quote((int) Math.round(quote))
                     .message("Esta dentro del rango")
+                    .totalPriceHome((int)Math.round(newTotalPriceHome))
                     .build();
         }else{
             return SimulationResponse.builder()
                     .quote((int) Math.round(quote))
                     .message("No esta dentro del rango")
+                    .totalPriceHome((int)Math.round(newTotalPriceHome))
                     .build();
         }
     }

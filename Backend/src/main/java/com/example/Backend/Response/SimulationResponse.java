@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class SimulationResponse {
-    private int quote;
+    private double quote;
     private String message;
+    private double totalPriceHome;
 }

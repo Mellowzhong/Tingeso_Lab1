@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CalculateCreditSimulationForm {
-    private int creditAmount;
+    private double creditAmount;
     private double simulatedInterestRate;
     private int numberOfPays;
     private int totalPriceHome;

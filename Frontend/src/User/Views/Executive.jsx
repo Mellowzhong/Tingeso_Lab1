@@ -85,8 +85,6 @@ function Executive() {
             <ul className="w-full flex flex-col items-center">
                 {documents.map((credit) => (
                     <div className="border-2 border-gray-300 rounded-lg p-6 my-4 w-full max-w-full" key={credit.id}>
-                        <h2 className="text-xl font-semibold mb-4">Crédito ID: {credit.id}</h2>
-                        <p className="mb-2">ID de evaluación financiera: {credit.financialEvaluation.id}</p>
 
                         {/* Contenedor principal con grid para organizar la información del usuario y los documentos */}
                         <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6">
@@ -136,10 +134,6 @@ function Executive() {
                                             className="m-4 text-center"
                                         >
                                             <div className="my-2 border-2 p-2 rounded-xl bg-white">
-                                                <span>
-                                                    <strong> ID del documento</strong>
-                                                    <p className="my-2">{document.id}</p>
-                                                </span>
                                                 <span>
                                                     <strong> Nombre del documento</strong>
                                                     <p className="my-2"> {document.documentName}</p>

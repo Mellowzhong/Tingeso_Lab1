@@ -42,3 +42,12 @@ export const getDebtToIncomeRatioCalculation = async (debtToIncomeData) => {
     console.error("Error getting debt to income ratio", error);
   }
 };
+
+export const maxAmount = async () => {
+  try {
+    const response = await api.get("/calculate/maxAmount");
+    return response.data;
+  } catch (error) {
+    console.error("Error getting max amount", error);
+  }
+};

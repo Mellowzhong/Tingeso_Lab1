@@ -93,27 +93,6 @@ function SavingCapacityForm({ balance, monthlyClientIncome, creditAmount, setSav
 
             {/* Historial de ahorro */}
             <section className="border-2 border-gray-300 rounded-lg p-4 mb-4">
-                <div className='text-center'>
-                    <h2 className="text-lg font-semibold mb-2">Historial de Ahorro</h2>
-                    <p className={savingHistory ? 'text-green-500' : 'text-red-500'}>
-                        {savingHistory ? 'Válido' : 'No válido'}
-                    </p>
-                    {/* Depósitos periódicos */}
-                    <div className="mt-4">
-                        <h3 className="font-semibold">Depósitos Periódicos: {totalIncomes}</h3>
-                        <p className={periodicDeposits ? 'text-green-500' : 'text-red-500'}>
-                            {periodicDeposits ? 'Válido' : 'No válido'}
-                        </p>
-                        <button
-                            type="button"
-                            onClick={handleValidatePeriodicDeposits}
-                            className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 mt-2"
-                        >
-                            Validar Depósitos Periódicos
-                        </button>
-                    </div>
-                </div>
-
 
                 {/* Formulario dinámico para calcular capacidad de ahorro */}
                 <div className="flex flex-wrap justify-center mt-4">
@@ -127,7 +106,29 @@ function SavingCapacityForm({ balance, monthlyClientIncome, creditAmount, setSav
                     ))}
                 </div>
             </section>
-
+            <div className='text-center m-4'>
+                <div className='text-center border-2 p-4 rounded-lg'>
+                    <div className='border-2 w-1/4 mx-auto rounded-lg bg-white p-4 my-2'>
+                        <h2 className="text-lg font-semibold mb-2">Historial de Ahorro</h2>
+                        <p className={savingHistory ? 'text-green-500' : 'text-red-500'}>
+                            {savingHistory ? 'Válido' : 'No válido'}
+                        </p>
+                    </div>
+                    <div className='border-2 w-1/4 mx-auto rounded-lg bg-white p-4 my-2'>
+                        <h3 className="font-semibold">Depósitos Periódicos: {totalIncomes}</h3>
+                        <p className={periodicDeposits ? 'text-green-500' : 'text-red-500'}>
+                            {periodicDeposits ? 'Válido' : 'No válido'}
+                        </p>
+                        <button
+                            type="button"
+                            onClick={handleValidatePeriodicDeposits}
+                            className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 mt-2"
+                        >
+                            Validar Depósitos Periódicos
+                        </button>
+                    </div>
+                </div>
+            </div>
             {/* Relación saldo/años */}
             <section className="border-2 border-gray-300 rounded-lg p-4 mb-4 text-center">
                 <h2 className="text-lg font-semibold mb-2">Relación Saldo/Años</h2>
@@ -152,6 +153,7 @@ function SavingCapacityForm({ balance, monthlyClientIncome, creditAmount, setSav
                     Validar Relación Saldo/Años
                 </button>
             </section>
+
 
             {/* Retiros recientes */}
             <section className="border-2 border-gray-300 rounded-lg p-4 mb-4 text-center">

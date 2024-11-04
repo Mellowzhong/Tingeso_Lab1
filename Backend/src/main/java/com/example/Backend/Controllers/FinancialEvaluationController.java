@@ -11,6 +11,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/financialEvaluation")
+@CrossOrigin("*")
 public class FinancialEvaluationController {
     private final FinancialEvaluationService financialEvaluationService;
 
@@ -31,7 +32,7 @@ public class FinancialEvaluationController {
 
 
     @PutMapping("/update/{creditId}/{financialEvaluationId}")
-    public ResponseEntity<FinancialEvaluation> updateFinancialEvaluation(@PathVariable("financialEvaluationId") UUID creditId, @PathVariable UUID financialEvaluationId,@RequestBody FinancialEvaluation financialEvaluation) {
+    public ResponseEntity<FinancialEvaluation> updateFinancialEvaluation(@PathVariable("creditId") UUID creditId, @PathVariable("financialEvaluationId") UUID financialEvaluationId,@RequestBody FinancialEvaluation financialEvaluation) {
         return financialEvaluationService.updateFinancialEvaluation(creditId, financialEvaluationId, financialEvaluation);
     }
 }

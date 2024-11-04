@@ -96,13 +96,9 @@ function CreditRequest() {
             {/* Parte de los documentos */}
             {showCreditDocuments && (
                 <section className='w-full max-w-md bg-white shadow-md rounded-lg p-6 mt-8'>
-                    <h2 className='text-xl font-semibold mb-4'>Documentos del Crédito</h2>
+                    <h2 className='text-xl font-semibold mb-4 text-center'>Documentos del Crédito</h2>
                     {creditId && (
                         <>
-                            <p className='text-sm text-gray-700 mb-4'>
-                                Código de crédito: <span className='font-medium'>{creditId}</span>
-                            </p>
-
                             {/* Mostrar formularios específicos basados en el tipo de crédito seleccionado */}
                             {creditType === "firstHome" && <FirstHomeForm creditId={creditId} />}
                             {creditType === "secondHome" && <SecondHomeForm creditId={creditId} />}
