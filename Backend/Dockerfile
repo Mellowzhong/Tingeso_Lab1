@@ -15,12 +15,6 @@ WORKDIR /home/app
 # Copiar el archivo JAR generado desde la etapa de construcción
 COPY --from=build /home/app/target/Backend-0.0.1-SNAPSHOT.jar backend.jar
 
-# Definir variables de entorno necesarias
-ENV PORT=8080 \
-    DB_HOST=192.168.1.176 \
-    DB_USER=postgres \
-    DB_PASSWORD=admin
-
 EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "backend.jar"]
