@@ -1,29 +1,34 @@
 import { Link } from "react-router-dom";
 
 export default function NavBar() {
-
     return (
-        <div className="my-4 py-4 border-b-2 text-center">
-            <Link to="/">
-                <span className="mx-4">
-                    Registrar usuario
-                </span>
-            </Link>
-            <Link to="/simulation">
-                <span className="mx-4">
-                    Simulacion de credito
-                </span>
-            </Link>
-            <Link to={"/creditRequest"}>
-                <span className="mx-4">
-                    Solicitud de crédito
-                </span>
-            </Link>
-            <Link to={"/excecutive"}>
-                <span className="mx-4">
+        <nav className="bg-indigo-600 py-4 shadow-md mb-6">
+            <div className="container mx-auto flex justify-center space-x-8">
+                <Link
+                    to="/"
+                    className="text-white text-lg font-semibold hover:text-gray-300 transition duration-300"
+                >
+                    Registrar Usuario
+                </Link>
+                <Link
+                    to="/simulation"
+                    className="text-white text-lg font-semibold hover:text-gray-300 transition duration-300"
+                >
+                    Simulación de Crédito
+                </Link>
+                <Link
+                    to="/creditRequest"
+                    className="text-white text-lg font-semibold hover:text-gray-300 transition duration-300"
+                >
+                    Solicitud de Crédito
+                </Link>
+                <Link
+                    to="/excecutive"
+                    className="text-white text-lg font-semibold hover:text-gray-300 transition duration-300"
+                >
                     Ejecutivo
-                </span>
-            </Link>
-        </div>
-    )
+                </Link>
+            </div>
+        </nav>
+    );
 }

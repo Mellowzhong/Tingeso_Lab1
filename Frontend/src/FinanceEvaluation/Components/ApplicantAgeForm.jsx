@@ -25,7 +25,7 @@ function ApplicantAgeForm({ applicantAge, setApplicantAge }) {
             <section className="mb-4">
                 <h2 className="text-4xl font-semibold mb-2 text-center">Comprobar Edad del Solicitante</h2>
                 <div className="flex flex-col items-center">
-                    <label htmlFor="Age" className="w-full">
+                    <label htmlFor="Age" className="w-1/4">
                         <input
                             type="number"
                             id="Age"

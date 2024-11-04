@@ -42,7 +42,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/Excecutive",
+    path: "/excecutive",
     element: (
       <ComponentsWithNavBar>
         <Excecutive />

@@ -77,7 +77,7 @@ function SavingCapacityForm({ balance, monthlyClientIncome, creditAmount, setSav
         <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-full">
             <h2 className="text-4xl font-semibold text-center">Capacidad de Ahorro</h2>
             {/* Saldo mínimo requerido */}
-            <section className="mb-4">
+            <section className="mb-4 text-center">
                 <h2 className="text-lg font-semibold mb-2">Saldo Mínimo Requerido</h2>
                 <p className={isMinAmountValid ? 'text-green-500' : 'text-red-500'}>
                     {isMinAmountValid ? 'Válido' : 'No válido'}
@@ -93,25 +93,27 @@ function SavingCapacityForm({ balance, monthlyClientIncome, creditAmount, setSav
 
             {/* Historial de ahorro */}
             <section className="border-2 border-gray-300 rounded-lg p-4 mb-4">
-                <h2 className="text-lg font-semibold mb-2">Historial de Ahorro</h2>
-                <p className={savingHistory ? 'text-green-500' : 'text-red-500'}>
-                    {savingHistory ? 'Válido' : 'No válido'}
-                </p>
-
-                {/* Depósitos periódicos */}
-                <div className="mt-4">
-                    <h3 className="font-semibold">Depósitos Periódicos: {totalIncomes}</h3>
-                    <p className={periodicDeposits ? 'text-green-500' : 'text-red-500'}>
-                        {periodicDeposits ? 'Válido' : 'No válido'}
+                <div className='text-center'>
+                    <h2 className="text-lg font-semibold mb-2">Historial de Ahorro</h2>
+                    <p className={savingHistory ? 'text-green-500' : 'text-red-500'}>
+                        {savingHistory ? 'Válido' : 'No válido'}
                     </p>
-                    <button
-                        type="button"
-                        onClick={handleValidatePeriodicDeposits}
-                        className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 mt-2"
-                    >
-                        Validar Depósitos Periódicos
-                    </button>
+                    {/* Depósitos periódicos */}
+                    <div className="mt-4">
+                        <h3 className="font-semibold">Depósitos Periódicos: {totalIncomes}</h3>
+                        <p className={periodicDeposits ? 'text-green-500' : 'text-red-500'}>
+                            {periodicDeposits ? 'Válido' : 'No válido'}
+                        </p>
+                        <button
+                            type="button"
+                            onClick={handleValidatePeriodicDeposits}
+                            className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 mt-2"
+                        >
+                            Validar Depósitos Periódicos
+                        </button>
+                    </div>
                 </div>
+
 
                 {/* Formulario dinámico para calcular capacidad de ahorro */}
                 <div className="flex flex-wrap justify-center mt-4">
@@ -127,19 +129,19 @@ function SavingCapacityForm({ balance, monthlyClientIncome, creditAmount, setSav
             </section>
 
             {/* Relación saldo/años */}
-            <section className="border-2 border-gray-300 rounded-lg p-4 mb-4">
+            <section className="border-2 border-gray-300 rounded-lg p-4 mb-4 text-center">
                 <h2 className="text-lg font-semibold mb-2">Relación Saldo/Años</h2>
                 <p className={savingCapacityBalanceYears ? 'text-green-500' : 'text-red-500'}>
                     {savingCapacityBalanceYears ? 'Válido' : 'No válido'}
                 </p>
                 <label htmlFor="years" className="block mb-2">
-                    Años:
+                    <h3>Años:</h3>
                     <input
                         type="number"
                         name="years"
                         id="years"
                         onChange={(e) => setYears(parseInt(e.target.value))}
-                        className="border border-gray-300 rounded-md p-2 w-full mt-1"
+                        className="border border-gray-300 rounded-md p-2 w-1/4 mt-1"
                     />
                 </label>
                 <button
@@ -152,7 +154,7 @@ function SavingCapacityForm({ balance, monthlyClientIncome, creditAmount, setSav
             </section>
 
             {/* Retiros recientes */}
-            <section className="border-2 border-gray-300 rounded-lg p-4 mb-4">
+            <section className="border-2 border-gray-300 rounded-lg p-4 mb-4 text-center">
                 <h2 className="text-lg font-semibold mb-2">Retiros Recientes</h2>
                 <p className={savingCapacityRecentWithdrawals ? 'text-green-500' : 'text-red-500'}>
                     {savingCapacityRecentWithdrawals ? 'Válido' : 'No válido'}
@@ -170,17 +172,19 @@ function SavingCapacityForm({ balance, monthlyClientIncome, creditAmount, setSav
             </section>
 
             {/* Resultado de evaluación */}
-            <h2 className="text-lg font-semibold mb-2">Resultado de Evaluación</h2>
-            <p>{evaluationResult}</p>
+            <div className='text-center'>
+                <h2 className="text-lg font-semibold mb-2">Resultado de Evaluación</h2>
+                <p>{evaluationResult}</p>
 
-            {/* Botón para validar capacidad de ahorro */}
-            <button
-                type="button"
-                onClick={validateSavingCapacity}
-                className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 mt-4"
-            >
-                Validar Capacidad de Ahorro
-            </button>
+                {/* Botón para validar capacidad de ahorro */}
+                <button
+                    type="button"
+                    onClick={validateSavingCapacity}
+                    className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 mt-4"
+                >
+                    Validar Capacidad de Ahorro
+                </button>
+            </div>
         </div>
     );
 }

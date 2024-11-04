@@ -50,8 +50,6 @@ class CreditServiceTest {
         credit1.setId(UUID.randomUUID());
         credit1.setCreditType("Home Loan");
         credit1.setRequestedAmount(100000);
-        credit1.setApprovedAmount(80000);
-        credit1.setTermYears(15);
         credit1.setStatus("Approved");
         credit1.setUser(user);
 
@@ -59,8 +57,6 @@ class CreditServiceTest {
         credit2.setId(UUID.randomUUID());
         credit2.setCreditType("Personal Loan");
         credit2.setRequestedAmount(50000);
-        credit2.setApprovedAmount(40000);
-        credit2.setTermYears(5);
         credit2.setStatus("Pending");
         credit2.setUser(user);
 

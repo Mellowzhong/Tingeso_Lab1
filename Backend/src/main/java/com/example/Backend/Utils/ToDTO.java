@@ -23,15 +23,14 @@ public class ToDTO {
     public CreditDTO convertToCreditDTO(Credit credit) {
         CreditDTO creditDTO = new CreditDTO();
         creditDTO.setId(credit.getId());
-        creditDTO.setUser(credit.getUser());
         creditDTO.setCreditType(credit.getCreditType());
         creditDTO.setRequestedAmount(credit.getRequestedAmount());
-        creditDTO.setApprovedAmount(credit.getApprovedAmount());
-        creditDTO.setTermYears(credit.getTermYears());
+        creditDTO.setTotalPriceHome(credit.getTotalPriceHome());
+        creditDTO.setMonthlyClientIncome(credit.getMonthlyClientIncome());
         creditDTO.setStatus(credit.getStatus());
-        creditDTO.setApplicationDate(credit.getApplication_Date());
-        creditDTO.setApprovedRejectionDate(credit.getApprovedRejectionDate());
+        creditDTO.setApplicationDate(credit.getApplicationDate());
         creditDTO.setFinancialEvaluation(credit.getFinancialEvaluation());
+        creditDTO.setUser(credit.getUser());
 
         List<DocumentDTO> documentDTOS = credit.getDocuments().stream()
                 .map(this::convertToDocumentDTO)

@@ -18,11 +18,10 @@ public class CreditDTO {
     private UUID id;
     private String creditType;
     private Integer requestedAmount;
-    private Integer approvedAmount;
-    private Integer termYears;
+    private Integer totalPriceHome;
+    private Integer monthlyClientIncome;
     private String status;
     private Date applicationDate;
-    private Date approvedRejectionDate;
     private User user;
     private List<DocumentDTO> documents;
     private FinancialEvaluation financialEvaluation;

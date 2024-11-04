@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 
 function RequestUserForm({ setFirstName, setLastName, setRut }) {
     return (
-        <section className='border-2 p-4 rounded-lg bg-white'>
+        <section className='bg-white'>
+            <h3 className='text-lg font-semibold mb-4 text-center'>Datos del Usuario</h3>
             <div className='grid gap-4'>
                 <label htmlFor="firstName" className='grid'>
                     Nombre:
@@ -11,7 +12,7 @@ function RequestUserForm({ setFirstName, setLastName, setRut }) {
                         id="firstName"
                         name="firstName"
                         onChange={(e) => setFirstName(e.target.value)}
-                        className='border p-2 focus:ring-indigo-500 focus:border-indigo-500'
+                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                     />
                 </label>
                 <label htmlFor="lastName" className='grid'>
@@ -21,7 +22,7 @@ function RequestUserForm({ setFirstName, setLastName, setRut }) {
                         id="lastName"
                         name="lastName"
                         onChange={(e) => setLastName(e.target.value)}
-                        className='border p-2 focus:ring-indigo-500 focus:border-indigo-500'
+                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                     />
                 </label>
                 <label htmlFor="rut" className='grid'>
@@ -31,7 +32,7 @@ function RequestUserForm({ setFirstName, setLastName, setRut }) {
                         id="rut"
                         name="rut"
                         onChange={(e) => setRut(e.target.value)}
-                        className='border p-2 focus:ring-indigo-500 focus:border-indigo-500'
+                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                     />
                 </label>
             </div>

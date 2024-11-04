@@ -38,7 +38,7 @@ function FeeToIncomeRatio({
     };
 
     return (
-        <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-full">
+        <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-full text-center">
             {/* Información del crédito */}
             <h2 className="text-4xl font-semibold text-center">Relación Cuota/Ingreso</h2>
             <section className="mb-4">

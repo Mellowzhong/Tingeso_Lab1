@@ -32,7 +32,7 @@ function TotalCostForm({ creditAmount, simulatedInterestRate, numberOfPays, tota
     };
 
     return (
-        <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-full">
+        <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-full text-center">
             {/* Información del crédito */}
             <h2 className="text-4xl font-semibold mb-2 text-center">Costo Total</h2>
 

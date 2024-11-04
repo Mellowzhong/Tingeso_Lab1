@@ -26,15 +26,13 @@ public class Credit {
 
     private Integer requestedAmount;
 
-    private Integer approvedAmount;
+    private Integer totalPriceHome;
 
-    private Integer termYears;
+    private Integer monthlyClientIncome;
 
     private String status;
 
-    private Date application_Date;
-
-    private Date approvedRejectionDate;
+    private Date applicationDate;
 
     @ManyToOne
     private User user;

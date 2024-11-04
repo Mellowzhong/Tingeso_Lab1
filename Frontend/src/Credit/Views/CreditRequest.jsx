@@ -3,6 +3,7 @@ import SecondHomeForm from "../Components/SecondHomeForm";
 import ComercialPropertyForm from "../Components/ComercialPropertyForm";
 import RemoldingForm from "../Components/RemoldingForm";
 import RequestUserForm from "../../User/Components/RequestUserForm";
+import CreditDataForm from "../../Components/CreditDataForm";
 
 import { useState } from "react";
 import { postCredit } from "../Services/CreditService";
@@ -17,6 +18,9 @@ function CreditRequest() {
     // Credit data
     const [creditId, setCreditId] = useState("");
     const [creditType, setCreditType] = useState("");
+    const [requestedAmount, setRequestedAmount] = useState(0);
+    const [totalPriceHome, setTotalPriceHome] = useState(0);
+    const [monthlyClientIncome, setMonthlyClientIncome] = useState(0);
 
     const [showCreditDocuments, setShowCreditDocuments] = useState(false);
 
@@ -30,16 +34,16 @@ function CreditRequest() {
             alert("Seleccione un tipo de crédito");
         } else {
             const userRequestData = { firstName, lastName, rut };
-            const creditRequestData = { creditType };
-
             setShowCreditDocuments(true);
 
             try {
                 const user = await getUser(userRequestData);
+                const creditRequestData = { creditType, status: "En revisión", applicationDate: new Date(), requestedAmount, totalPriceHome, monthlyClientIncome };
                 const response = await postCredit(creditRequestData, user.id);
                 setCreditId(response);
-            } catch (error) {
-                console.error("Error:", error);
+                alert("Crédito solicitado con éxito");
+            } catch {
+                alert("Error al solicitar el crédito");
             }
         }
     };
@@ -51,8 +55,17 @@ function CreditRequest() {
                 <section className='w-full max-w-md bg-white shadow-md rounded-lg p-6 m-8'>
 
                     {/* Formulario de solicitud de usuario */}
-                    <RequestUserForm setFirstName={setFirstName} setLastName={setLastName} setRut={setRut} />
+                    <div className="border-2 p-4 rounded-lg">
+                        <RequestUserForm setFirstName={setFirstName}
+                            setLastName={setLastName}
+                            setRut={setRut}
+                        />
 
+                        <CreditDataForm setRequestedAmount={setRequestedAmount}
+                            setTotalPriceHome={setTotalPriceHome}
+                            setMonthlyClientIncome={setMonthlyClientIncome}
+                        />
+                    </div>
                     {/* Formulario para seleccionar el tipo de crédito */}
                     <form onSubmit={handleSubmit} className="grid gap-4">
                         <label htmlFor="creditType" className='text-sm font-medium text-gray-700 text-center my-6'>

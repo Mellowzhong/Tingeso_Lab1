@@ -17,11 +17,8 @@ function Executive() {
     const [documents, setDocuments] = useState([]);
 
     // Calculate Data
-    const [creditAmount, setCreditAmount] = useState(0);
     const [simulatedInterestRate, setSimulatedInterestRate] = useState(0);
     const [numberOfPays, setNumberOfPays] = useState(0);
-    const [totalPriceHome, setTotalPriceHome] = useState(0);
-    const [monthlyClientIncome, setMonthlyClientIncome] = useState(0);
     const [balance, setBalance] = useState(0);
 
     // Evaluation Data
@@ -89,31 +86,41 @@ function Executive() {
                 {documents.map((credit) => (
                     <div className="border-2 border-gray-300 rounded-lg p-6 my-4 w-full max-w-full" key={credit.id}>
                         <h2 className="text-xl font-semibold mb-4">Crédito ID: {credit.id}</h2>
-                        <p className="mb-2">Resultado de evaluación financiera: {credit.financialEvaluation.evaluationResult ? "Aprobado" : "Pendiente"}</p>
                         <p className="mb-2">ID de evaluación financiera: {credit.financialEvaluation.id}</p>
-                        <p className="mb-4">Tipo de crédito: {credit.creditType}</p>
 
                         {/* Contenedor principal con grid para organizar la información del usuario y los documentos */}
                         <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6">
                             {/* Información del usuario - ocupa 1/3 */}
                             <div className="bg-gray-100 p-4 rounded-lg">
-                                <h3 className="font-semibold text-lg mb-2 text-center">Información del Usuario</h3>
-                                <div className="text-center">
-                                    <p>Nombre: {credit.user.firstName}</p>
-                                    <p>Apellido: {credit.user.lastName}</p>
-                                    <p>Rut: {credit.user.rut}</p>
-                                    <p>Direccion: {credit.user.address}</p>
-                                    <p>Edad: {credit.user.age}</p>
+                                <div className="bg-white rounded-lg p-2 my-2">
+                                    <h3 className="font-semibold text-lg mb-2 text-center">Información del usuario</h3>
+                                    <div className="text-center ">
+                                        <p>Nombre: {credit.user.firstName}</p>
+                                        <p>Apellido: {credit.user.lastName}</p>
+                                        <p>Rut: {credit.user.rut}</p>
+                                        <p>Direccion: {credit.user.address}</p>
+                                        <p>Edad: {credit.user.age}</p>
+                                        <p>Ingreso mensual: {credit.monthlyClientIncome}</p>
+                                        <p>Precio total de la casa: {credit.totalPriceHome}</p>
+                                        <p>Cantidad solicitada: {credit.requestedAmount}</p>
+                                    </div>
+                                </div>
+                                <div className="bg-white rounded-lg p-2 my-2">
+                                    <h3 className="font-semibold text-lg mb-2 text-center">Información del credito</h3>
+                                    <div className="text-center">
+                                        <p>Ingreso mensual: {credit.monthlyClientIncome}</p>
+                                        <p>Precio total de la casa: {credit.totalPriceHome}</p>
+                                        <p>Cantidad solicitada: {credit.requestedAmount}</p>
+                                        <p className="mb-4">Tipo de crédito: {credit.creditType}</p>
+                                        <p className="mb-2">Resultado de evaluación financiera: {credit.financialEvaluation.evaluationResult ? "Aprobado" : "Pendiente"}</p>
+                                    </div>
                                 </div>
                                 {/* Formulario de cálculo de datos movido aquí */}
                                 <section className="mt-6 ">
                                     <CalculateDataForm
-                                        setCreditAmount={setCreditAmount}
                                         creditType={credit.creditType}
                                         setSimulatedInterestRate={setSimulatedInterestRate}
                                         setNumberOfPays={setNumberOfPays}
-                                        setTotalPriceHome={setTotalPriceHome}
-                                        setMonthlyClientIncome={setMonthlyClientIncome}
                                         setBalance={setBalance}
                                     />
                                 </section>
@@ -128,7 +135,7 @@ function Executive() {
                                             onSubmit={(e) => documentHandleSubmit(e, document.id, document.documentName)}
                                             className="m-4 text-center"
                                         >
-                                            <div className="my-2 border-2 p-2 rounded-xl">
+                                            <div className="my-2 border-2 p-2 rounded-xl bg-white">
                                                 <span>
                                                     <strong> ID del documento</strong>
                                                     <p className="my-2">{document.id}</p>
@@ -156,11 +163,11 @@ function Executive() {
                             <FeeToIncomeRatio
                                 feeToIncomeRatio={feeToIncomeRatio}
                                 setFeeToIncomeRatio={setFeeToIncomeRatio}
-                                creditAmount={creditAmount}
+                                creditAmount={credit.requestedAmount}
                                 simulatedInterestRate={simulatedInterestRate}
                                 numberOfPays={numberOfPays}
-                                totalPriceHome={totalPriceHome}
-                                monthlyClientIncome={monthlyClientIncome}
+                                totalPriceHome={credit.totalPriceHome}
+                                monthlyClientIncome={credit.monthlyClientIncome}
                             />
                             <CreditHistoryForm
                                 creditHistory={creditHistory}
@@ -173,20 +180,20 @@ function Executive() {
                             <DebtToIncomeForm
                                 debtToIncomeRatio={debtToIncomeRatio}
                                 setDebtToIncomeRatio={setDebtToIncomeRatio}
-                                creditAmount={creditAmount}
+                                creditAmount={credit.requestedAmount}
                                 simulatedInterestRate={simulatedInterestRate}
                                 numberOfPays={numberOfPays}
-                                totalPriceHome={totalPriceHome}
-                                monthlyClientIncome={monthlyClientIncome}
+                                totalPriceHome={credit.totalPriceHome}
+                                monthlyClientIncome={credit.monthlyClientIncome}
                                 creditType={credit.creditType}
                             />
                             <FinanceMaxAmountFrom
                                 financeMaxAmount={financeMaxAmount}
                                 setFinanceMaxAmount={setFinanceMaxAmount}
-                                creditAmount={creditAmount}
+                                creditAmount={credit.requestedAmount}
                                 simulatedInterestRate={simulatedInterestRate}
                                 numberOfPays={numberOfPays}
-                                totalPriceHome={totalPriceHome}
+                                totalPriceHome={credit.totalPriceHome}
                                 creditType={credit.creditType}
                             />
                             <ApplicantAgeForm
@@ -195,15 +202,15 @@ function Executive() {
                             />
                             <SavingCapacityForm
                                 balance={balance}
-                                creditAmount={creditAmount}
-                                monthlyClientIncome={monthlyClientIncome}
+                                creditAmount={credit.requestedAmount}
+                                monthlyClientIncome={credit.monthlyClientIncome}
                                 setSavingCapacity={setSavingCapacity}
                             />
                             <TotalCostForm
-                                creditAmount={creditAmount}
+                                creditAmount={credit.requestedAmount}
                                 simulatedInterestRate={simulatedInterestRate}
                                 numberOfPays={numberOfPays}
-                                totalPriceHome={totalPriceHome}
+                                totalPriceHome={credit.totalPriceHome}
                                 creditType={credit.creditType}
                             />
                             <EvaluationResultForm
@@ -212,7 +219,7 @@ function Executive() {
                             />
 
                             {/* Botón para enviar evaluación */}
-                            <button type="submit" className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">
+                            <button type="submit" className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 w-1/2 mx-auto">
                                 Enviar Evaluación
                             </button>
                         </form>
