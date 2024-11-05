@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import {
-  createBrowserRouter,
+  createHashRouter,
   RouterProvider,
 } from "react-router-dom";
 import ComponentsWithNavBar from './Components/ComponentsWithNavBar.jsx';
@@ -13,7 +13,7 @@ import CreditRequest from './Credit/Views/CreditRequest.jsx'
 import Simulation from './Simulation/Views/Simulation.jsx';
 import Excecutive from "./User/Views/Executive.jsx";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: (
