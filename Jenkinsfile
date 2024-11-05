@@ -11,13 +11,27 @@ pipeline {
             }
         }
 
+        stage('Setup Docker Buildx') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh 'docker buildx create --use || true'
+                        sh 'docker buildx inspect --bootstrap'
+                    } else {
+                        bat 'docker buildx create --use || true'
+                        bat 'docker buildx inspect --bootstrap'
+                    }
+                }
+            }
+        }
+
         stage('Build backend') {
             steps {
                 script {
                     if (isUnix()) {
-                        sh 'cd Backend && docker build -t mellow03/backend-presta-banco:latest .'
+                        sh 'cd Backend && docker buildx build --platform linux/amd64,linux/arm64 -t mellow03/backend-presta-banco:latest .'
                     } else {
-                        bat 'cd Backend && docker build -t mellow03/backend-presta-banco:latest .'
+                        bat 'cd Backend && docker buildx build --platform linux/amd64,linux/arm64 -t mellow03/backend-presta-banco:latest .'
                     }
                 }
                 
@@ -57,9 +71,9 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh 'cd Frontend && docker build -t mellow03/frontend-presta-banco:latest .'
+                        sh 'cd Frontend && docker buildx build --platform linux/amd64,linux/arm64 -t mellow03/frontend-presta-banco:latest .'
                     } else {
-                        bat 'cd Frontend && docker build -t mellow03/frontend-presta-banco:latest .'
+                        bat 'cd Frontend && docker buildx build --platform linux/amd64,linux/arm64 -t mellow03/frontend-presta-banco:latest .'
                     }
                 }
 
