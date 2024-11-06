@@ -14,6 +14,7 @@ services:
   # Backend
   backend1:
     image: mellow03/backend-presta-banco:latest
+    platform: linux/amd64
     environment:
       - DB_HOST=${DB_HOST}
       - DB_USER=${DB_USER}
@@ -26,6 +27,7 @@ services:
 
   backend2:
     image: mellow03/backend-presta-banco:latest
+    platform: linux/amd64
     environment:
       - DB_HOST=${DB_HOST}
       - DB_USER=${DB_USER}
@@ -38,6 +40,7 @@ services:
 
   backend3:
     image: mellow03/backend-presta-banco:latest
+    platform: linux/amd64
     environment:
       - DB_HOST=${DB_HOST}
       - DB_USER=${DB_USER}
@@ -51,16 +54,19 @@ services:
   # Frontend
   frontend1:
     image: mellow03/frontend-presta-banco:latest
+    platform: linux/amd64
     networks:
       - app-network
 
   frontend2:
     image: mellow03/frontend-presta-banco:latest
+    platform: linux/amd64
     networks:
       - app-network
 
   frontend3:
     image: mellow03/frontend-presta-banco:latest
+    platform: linux/amd64
     networks:
       - app-network
 
