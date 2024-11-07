@@ -92,7 +92,7 @@ function Simulation() {
                         {maxTotalPriceHome}
                     </p>
                     <h3 className="grid my-4">
-                        <strong className='text-4xl mb-4'>Cuota mensual</strong>
+                        <strong className='text-4xl mb-4'>Cuota mensual Chile</strong>
                     </h3>
                     <p className='text-4xl'>
                         {quote}
