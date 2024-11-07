@@ -81,7 +81,6 @@ function Executive() {
     return (
         <div className="flex flex-col items-center min-h-screen p-6 bg-gray-50">
             <h1 className="text-3xl font-bold mb-6">Vista de ejecutivo</h1>
-            <h1>Testing build front</h1>
             <ul className="w-full flex flex-col items-center">
                 {documents.map((credit) => (
                     <div className="border-2 border-gray-300 rounded-lg p-6 my-4 w-full max-w-full" key={credit.id}>
