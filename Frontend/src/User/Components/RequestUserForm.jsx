@@ -1,6 +1,15 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 
 function RequestUserForm({ setFirstName, setLastName, setRut }) {
+
+    const [rutPart1, setRutPart1] = useState("");
+
+    const handleSetRut = (e) => {
+        const rutPart2 = e.target.value;
+        setRut(`${rutPart1}-${rutPart2}`);
+    }
+
     return (
         <section className='bg-white'>
             <h3 className='text-lg font-semibold mb-4 text-center'>Datos del Usuario</h3>
@@ -12,7 +21,8 @@ function RequestUserForm({ setFirstName, setLastName, setRut }) {
                         id="firstName"
                         name="firstName"
                         onChange={(e) => setFirstName(e.target.value)}
-                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder='Francisco'
+                        className="mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                     />
                 </label>
                 <label htmlFor="lastName" className='grid'>
@@ -22,18 +32,37 @@ function RequestUserForm({ setFirstName, setLastName, setRut }) {
                         id="lastName"
                         name="lastName"
                         onChange={(e) => setLastName(e.target.value)}
-                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder='Sanchez'
+                        className="mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                     />
                 </label>
                 <label htmlFor="rut" className='grid'>
                     Rut:
-                    <input
-                        type="text"
-                        id="rut"
-                        name="rut"
-                        onChange={(e) => setRut(e.target.value)}
-                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                    />
+                    <div className='flex'>
+                        <input
+                            type="number"
+                            id="rut_part_1"
+                            name="rut_part_1"
+                            onInput={(e) => {
+                                if (e.target.value.length > 8) {
+                                    e.target.value = e.target.value.slice(0, 8);
+                                }
+                            }}
+                            onBlur={(e) => setRutPart1(e.target.value)}
+                            placeholder='12345678'
+                            className="mt-1 block w-5/6 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                        />
+                        <span className='flex items-center mx-2'>-</span>
+                        <input
+                            type="text"
+                            id="rut_part_2"
+                            name="rut_part_2"
+                            onBlur={(e) => handleSetRut(e)}
+                            maxLength="1"
+                            placeholder='k'
+                            className="mt-1 block w-1/6 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                        />
+                    </div>
                 </label>
             </div>
         </section>

@@ -1,30 +1,49 @@
+import {
+  fisrtHomeInterestRate,
+  secondHomeInterestRate,
+  commercialPropertyInterestRate,
+  remodelingInterestRate,
+} from "./Constants";
+
 export const comprobeSimulatedInterestRate = (
   creditType,
   simulatedInterestRate
 ) => {
   if (creditType == "firstHome") {
-    if (3.5 <= simulatedInterestRate && simulatedInterestRate <= 5.0) {
+    if (
+      fisrtHomeInterestRate[0] <= simulatedInterestRate &&
+      simulatedInterestRate <= fisrtHomeInterestRate[1]
+    ) {
       return true;
     } else {
       return false;
     }
   }
   if (creditType == "secondHome") {
-    if (4.0 <= simulatedInterestRate && simulatedInterestRate <= 6.0) {
+    if (
+      secondHomeInterestRate[0] <= simulatedInterestRate &&
+      simulatedInterestRate <= secondHomeInterestRate[1]
+    ) {
       return true;
     } else {
       return false;
     }
   }
   if (creditType == "commercialProperty") {
-    if (5.0 <= simulatedInterestRate && simulatedInterestRate <= 7.0) {
+    if (
+      commercialPropertyInterestRate[0] <= simulatedInterestRate &&
+      simulatedInterestRate <= commercialPropertyInterestRate[1]
+    ) {
       return true;
     } else {
       return false;
     }
   }
   if (creditType == "remodeling") {
-    if (4.5 <= simulatedInterestRate && simulatedInterestRate <= 6.0) {
+    if (
+      remodelingInterestRate[0] <= simulatedInterestRate &&
+      simulatedInterestRate <= remodelingInterestRate[1]
+    ) {
       return true;
     } else {
       return false;

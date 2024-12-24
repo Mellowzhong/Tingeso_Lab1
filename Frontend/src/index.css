@@ -2,11 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-input{
-    border: 1px solid ;
-    border-radius: 5px;   
+input {
+    border: 1px solid;
+    border-radius: 5px;
+    @apply p-2;
 }
 
-body{
-    background-color: rgb(235, 232, 232);
+input[type="number"] {
+    appearance: none;
+}
+
+body {
+    background-color: rgba(235, 232, 232, 0.318);
 }

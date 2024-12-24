@@ -8,7 +8,7 @@ export default function NavBar() {
                     to="/"
                     className="text-white text-lg font-semibold hover:text-gray-300 transition duration-300"
                 >
-                    Registrar Usuario
+                    Registrar Cliente
                 </Link>
                 <Link
                     to="/simulation"

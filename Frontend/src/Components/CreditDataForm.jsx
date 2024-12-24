@@ -14,7 +14,8 @@ export default function CreditDataForm({ setRequestedAmount, setTotalPriceHome, 
                     type="number"
                     id="creditAmount"
                     name="creditAmount"
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    className="mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    placeholder='10000000'
                     onBlur={(e) => setRequestedAmount(parseFloat(e.target.value))}
                 />
             </label>
@@ -26,7 +27,8 @@ export default function CreditDataForm({ setRequestedAmount, setTotalPriceHome, 
                     type="number"
                     id="totalPriceHome"
                     name="totalPriceHome"
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    className="mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    placeholder='100000000'
                     onBlur={(e) => setTotalPriceHome(parseFloat(e.target.value))}
                 />
             </label>
@@ -38,7 +40,8 @@ export default function CreditDataForm({ setRequestedAmount, setTotalPriceHome, 
                     type="number"
                     id="monthlyClientIncome"
                     name="monthlyClientIncome"
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    className="mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    placeholder='1000000'
                     onBlur={(e) => setMonthlyClientIncome(parseFloat(e.target.value))}
                 />
             </label>

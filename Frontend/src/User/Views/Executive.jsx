@@ -87,7 +87,6 @@ function Executive() {
 
                         {/* Contenedor principal con grid para organizar la información del usuario y los documentos */}
                         <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6">
-                            {/* Información del usuario - ocupa 1/3 */}
                             <div className="bg-gray-100 p-4 rounded-lg">
                                 <div className="bg-white rounded-lg p-2 my-2">
                                     <h3 className="font-semibold text-lg mb-2 text-center">Información del usuario</h3>
@@ -125,7 +124,7 @@ function Executive() {
 
                             <div className="bg-gray-100 p-4 rounded-lg">
                                 <h3 className="text-lg font-semibold mb-4 text-center">Solicitar Documentos</h3>
-                                <div className="flex flex-wrap justify-center">
+                                <div className="grid grid-cols-2 justify-center">
                                     {credit.documents.map((document) => (
                                         <form
                                             key={document.id}

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/calculate")
+@CrossOrigin("*")
 public class CalculateSimulation {
 
     @PostMapping("/simulation")
