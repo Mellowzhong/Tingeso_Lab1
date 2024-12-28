@@ -7,7 +7,9 @@ function DocumentForm({ handleFunction, setFunction, documentName, documentRequi
                 type="file"
                 id={documentName}
                 name={documentName}
-                onBlur={(e) => handleFunction(e, setFunction, documentName)}
+                onBlur={(e) =>
+                    handleFunction(e, setFunction)
+                }
             />
         </label>
     )
@@ -17,7 +19,8 @@ DocumentForm.propTypes = {
     handleFunction: PropTypes.func.isRequired,
     setFunction: PropTypes.func.isRequired,
     documentName: PropTypes.string.isRequired,
-    documentRequiredName: PropTypes.string.isRequired
+    documentRequiredName: PropTypes.string.isRequired,
+    // isFileLoadedFunction: PropTypes.func.isRequired
 }
 
 export default DocumentForm;

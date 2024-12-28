@@ -3,9 +3,9 @@ import api from "../../Utils/BaseUrl";
 export const postUser = async (user) => {
   try {
     const response = await api.post("/user/post", user);
-    return response.data;
+    return { status: response.status };
   } catch (error) {
-    console.error("Error posting user", error);
+    return { status: error.response.status };
   }
 };
 

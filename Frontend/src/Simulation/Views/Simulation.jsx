@@ -18,6 +18,8 @@ function Simulation() {
     const [isNumberOfPaysValid, setIsNumberOfPaysValid] = useState(false);
     const [isSimulatedInterestRateValid, setIsSimulatedInterestRateValid] = useState(false);
 
+    const [simulationError, setSimulationError] = useState("");
+
     // Verificar si todas las validaciones son verdaderas y si los campos están completos
     const isFormValid =
         isCreditAmountValid &&
@@ -48,7 +50,7 @@ function Simulation() {
             setMessage(response.message);
             setMaxTotalPriceHome(response.totalPriceHome);
         } catch {
-            alert("Error al simular");
+            setSimulationError("Error al simular.");
         }
     };
 
@@ -101,7 +103,9 @@ function Simulation() {
                     />
 
                     {/* Botón para simular */}
+                    <div id="simulationError" className="flex justify-center">{simulationError}</div>
                     <button
+                        id="simulateButton"
                         type="submit"
                         disabled={!isFormValid} // Deshabilitar si alguna validación es falsa o algún campo está vacío
                         className={`w-full py-2 px-4 rounded-md ${isFormValid
@@ -116,7 +120,7 @@ function Simulation() {
 
             {/* Sección de información */}
             {quote && message && maxTotalPriceHome && (
-                <section className="w-1/3 text-center my-auto">
+                <section id="informationAboutCredit" className="w-1/3 text-center my-auto">
                     <h2 className="text-4xl mb-4">Información</h2>
                     <div className="border-2 p-4 rounded-lg bg-white">
                         <h3 className="grid my-4">
@@ -124,15 +128,15 @@ function Simulation() {
                                 Cantidad máxima de préstamo por valor de la casa
                             </strong>
                         </h3>
-                        <p className="text-4xl">{maxTotalPriceHome}</p>
+                        <p id="maxTotalPriceHome" className="text-4xl">{maxTotalPriceHome}</p>
                         <h3 className="grid my-4">
                             <strong className="text-4xl mb-4">Cuota mensual</strong>
                         </h3>
-                        <p className="text-4xl">{quote}</p>
+                        <p id="quote" className="text-4xl">{quote}</p>
                         <h3 className="grid my-4">
                             <strong className="text-4xl mb-4">Resultado</strong>
                         </h3>
-                        <p className="text-4xl">{message}</p>
+                        <p id="messageForUserAboutTheCredit" className="text-4xl">{message}</p>
                     </div>
                 </section>
             )}

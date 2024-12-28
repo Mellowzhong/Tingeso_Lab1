@@ -11,20 +11,27 @@ function SecondHomeForm({ creditId }) {
     const [firstHomeCertificate, setFirstHomeCertificate] = useState(null);
     const [employment, setEmployment] = useState(null);
 
-    // Estado para manejar la carga
-    const [isLoading, setIsLoading] = useState(false);
+    const [incomeCertificateFileLoaded, setIncomeCertificateFileLoaded] = useState(false);
+    const [appraisalCertificateFileLoaded, setAppraisalCertificateFileLoaded] = useState(false);
+    const [creditHistorialFileLoaded, setCreditHistorialFileLoaded] = useState(false);
+    const [firstHomeCertificateFileLoaded, setFirstHomeCertificateFileLoaded] = useState(false);
+    const [employmentFileLoaded, setEmploymentFileLoaded] = useState(false);
 
-    const handleFileChange = (event, setFile) => {
+    const [statusUploadMessage, setStatusUploadMessage] = useState(false);
+
+    const isFormValid = incomeCertificate && appraisalCertificate && creditHistorial && firstHomeCertificate && employment;
+
+    const handleFileChange = (event, setFile, isFileLoadedFunction) => {
         const file = event.target.files[0];
         if (file) {
             setFile(file);
+            isFileLoadedFunction(true);
         }
     };
 
     const handleUpload = async () => {
-        setIsLoading(true); // Iniciar la carga
         try {
-            if (incomeCertificate) await postFile(incomeCertificate, "comrpobante de ingresos", creditId);
+            if (incomeCertificate) await postFile(incomeCertificate, "comprobante de ingresos", creditId);
             if (appraisalCertificate) await postFile(appraisalCertificate, "certificado de avaluo", creditId);
             if (firstHomeCertificate) await postFile(firstHomeCertificate, "certificado de primer vivienda", creditId);
             if (creditHistorial) await postFile(creditHistorial, "historial crediticio", creditId);
@@ -44,10 +51,9 @@ function SecondHomeForm({ creditId }) {
                 evaluationResult: false
             };
             await postFinanceEvaluation(creditId, financeEvaluationData);
+            setStatusUploadMessage(true);
         } catch {
             alert("Error al subir los archivos");
-        } finally {
-            setIsLoading(false); // Finalizar la carga
         }
     };
 
@@ -55,54 +61,96 @@ function SecondHomeForm({ creditId }) {
         <div className="w-full max-w-md bg-white shadow-md rounded-lg p-6 mt-8">
             <h2 className="text-xl font-semibold mb-4">Documentos para Segunda Vivienda</h2>
 
-            {/* Mostrar mensaje de carga si está subiendo archivos */}
-            {isLoading && (
-                <div className="text-blue-600 font-semibold mb-4">
-                    Subiendo los archivos...
-                </div>
-            )}
-
             <form className="grid gap-4">
-                <DocumentForm
-                    documentRequiredName="Comprobante de ingresos"
-                    handleFunction={(event) => handleFileChange(event, setIncomeCertificate)}
-                    setFunction={setIncomeCertificate}
-                    documentName="comrpobante de ingresos"
-                />
-                <DocumentForm
-                    documentRequiredName="Certificado de avalúo"
-                    handleFunction={(event) => handleFileChange(event, setAppraisalCertificate)}
-                    setFunction={setAppraisalCertificate}
-                    documentName="certificado de avaluo"
-                />
-                <DocumentForm
-                    documentRequiredName="Certificado de primera vivienda"
-                    handleFunction={(event) => handleFileChange(event, setFirstHomeCertificate)}
-                    setFunction={setFirstHomeCertificate}
-                    documentName="certificado de primer vivienda"
-                />
-                <DocumentForm
-                    documentRequiredName="Historial crediticio"
-                    handleFunction={(event) => handleFileChange(event, setCreditHistorial)}
-                    setFunction={setCreditHistorial}
-                    documentName="historial crediticio"
-                />
-                <DocumentForm
-                    documentRequiredName="Laboral"
-                    handleFunction={(event) => handleFileChange(event, setEmployment)}
-                    setFunction={setEmployment}
-                    documentName="Laboral"
-                />
+                <div id="secondHomeIncomeCertificate">
+                    <DocumentForm
+                        documentRequiredName="Comprobante de ingresos"
+                        handleFunction={(event) => handleFileChange(event, setIncomeCertificate, setIncomeCertificateFileLoaded)}
+                        setFunction={setIncomeCertificate}
+                        documentName="comprobante de ingresos"
+                    />
+                    {
+                        incomeCertificateFileLoaded && (
+                            <span id='incomeCertificateFileLoaded' className="text-green-600 text-sm mt-1">
+                                Archivo cargado correctamente
+                            </span>
+                        )
 
+                    }
+                </div>
+                <div id="secondHomeAppraisalCertificate">
+                    <DocumentForm
+                        documentRequiredName="Certificado de avalúo"
+                        handleFunction={(event) => handleFileChange(event, setAppraisalCertificate, setAppraisalCertificateFileLoaded)}
+                        setFunction={setAppraisalCertificate}
+                        documentName="certificado de avaluo"
+                    />
+                    {
+                        appraisalCertificateFileLoaded && (
+                            <span id='appraisalCertificateFileLoaded' className="text-green-600 text-sm mt-1">
+                                Archivo cargado correctamente
+                            </span>
+                        )
+
+                    }
+                </div>
+                <div id="secondHomeFirstHomeCertificate">
+                    <DocumentForm
+                        documentRequiredName="Certificado de primera vivienda"
+                        handleFunction={(event) => handleFileChange(event, setFirstHomeCertificate, setFirstHomeCertificateFileLoaded)}
+                        setFunction={setFirstHomeCertificate}
+                        documentName="certificado de primer vivienda"
+                    />
+                    {
+                        firstHomeCertificateFileLoaded && (
+                            <span id='firstHomeCertificateFileLoaded' className="text-green-600 text-sm mt-1">
+                                Archivo cargado correctamente
+                            </span>
+                        )
+                    }
+                </div>
+                <div id="secondHomeCreditHistorial">
+                    <DocumentForm
+                        documentRequiredName="Historial crediticio"
+                        handleFunction={(event) => handleFileChange(event, setCreditHistorial, setCreditHistorialFileLoaded)}
+                        setFunction={setCreditHistorial}
+                        documentName="historial crediticio"
+                    />
+                    {
+                        creditHistorialFileLoaded && (
+                            <span id='creditHistorialFileLoaded' className="text-green-600 text-sm mt-1">
+                                Archivo cargado correctamente
+                            </span>
+                        )
+                    }
+                </div>
+                <div id="secondHomeEmployment">
+                    <DocumentForm
+                        documentRequiredName="Laboral"
+                        handleFunction={(event) => handleFileChange(event, setEmployment, setEmploymentFileLoaded)}
+                        setFunction={setEmployment}
+                        documentName="Laboral"
+                    />
+                    {
+                        employmentFileLoaded && (
+                            <span id='employmentFileLoaded' className="text-green-600 text-sm mt-1">
+                                Archivo cargado correctamente
+                            </span>
+                        )
+                    }
+                </div>
                 {/* Botón deshabilitado mientras se suben los archivos */}
                 <button
                     type="button"
                     onClick={handleUpload}
-                    className={`bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
-                    disabled={isLoading}
+                    disabled={!isFormValid} // Deshabilitar si alguna validación es falsa o algún campo está vacío
+                    className={`w-full py-2 px-4 rounded-md ${isFormValid
+                        ? "bg-indigo-600 text-white hover:bg-indigo-700"
+                        : "bg-gray-400 text-gray-700 cursor-not-allowed"
+                        }`}
                 >
-                    {isLoading ? 'Subiendo...' : 'Subir Archivos'}
                 </button>
+                {statusUploadMessage && <span id="uploadFilesText" className="text-sm flex justify-center font-bold">Todos los archivos se han subido correctamente</span>}
             </form>
         </div>
     );

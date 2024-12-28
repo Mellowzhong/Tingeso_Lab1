@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
-import { comprobeSimulatedInterestRate } from '../../Utils/SimulationUtils';
+import { useState } from 'react';
 import {
     fisrtHomeInterestRate,
     secondHomeInterestRate,
     commercialPropertyInterestRate,
     remodelingInterestRate,
 } from '../../Utils/Constants';
-import { useState } from 'react';
+import { comprobeSimulatedInterestRate } from '../../Utils/SimulationUtils';
 
 function SimulationForm({
     creditType,
@@ -24,13 +24,24 @@ function SimulationForm({
     setIsNumberOfPaysValid,
     setIsSimulatedInterestRateValid,
 }) {
-    // Estados para rastrear si los campos han sido tocados
+
     const [touchedFields, setTouchedFields] = useState({
         creditAmount: false,
         totalPriceHome: false,
         numberOfPays: false,
         simulatedInterestRate: false,
     });
+
+    const interestRates = {
+        firstHome: fisrtHomeInterestRate,
+        secondHome: secondHomeInterestRate,
+        commercialProperty: commercialPropertyInterestRate,
+        remodeling: remodelingInterestRate,
+    };
+
+    const placeholderContent = interestRates[creditType]
+        ? `${interestRates[creditType][0]} - ${interestRates[creditType][1]}`
+        : 'Select a credit type';
 
     const markFieldAsTouched = (fieldName) => {
         setTouchedFields((prev) => ({ ...prev, [fieldName]: true }));
@@ -53,8 +64,7 @@ function SimulationForm({
 
     const handleIntegerInput = (e, setter, setValidity, fieldName) => {
         const inputValue = e.target.value;
-        markFieldAsTouched(fieldName); // Marcar el campo como tocado
-        // Permitir solo números enteros
+        markFieldAsTouched(fieldName);
         if (/^\d*$/.test(inputValue)) {
             setter(inputValue);
             setValidity(true);
@@ -68,15 +78,14 @@ function SimulationForm({
             {creditType === 'Select' ? (
                 ''
             ) : (
-                <section className="border-2 p-4 w-full rounded-lg">
+                <section id='simulatedCreditSection' className="border-2 p-4 w-full rounded-lg">
                     <div className="grid gap-4">
-                        {/* Cantidad solicitada */}
-                        <label className="grid" htmlFor="Credit_Amount">
+                        <label className="grid" htmlFor="CreditAmount">
                             Cantidad solicitada:
                             <input
                                 type="text"
-                                id="Credit_Amount"
-                                name="Credit_Amount"
+                                id="CreditAmount"
+                                name="CreditAmount"
                                 placeholder="10000000"
                                 onBlur={(e) =>
                                     handleIntegerInput(
@@ -92,13 +101,12 @@ function SimulationForm({
                                     }`}
                             />
                             {touchedFields.creditAmount && !isCreditAmountValid && (
-                                <span className="text-red-500 text-sm flex justify-center">
+                                <span id='simulationCreditAmountErrorMessage' className="text-red-500 text-sm flex justify-center">
                                     Ingrese un número válido
                                 </span>
                             )}
                         </label>
 
-                        {/* Precio total de la casa */}
                         <label className="grid" htmlFor="totalPriceHome">
                             Precio total de la casa:
                             <input
@@ -120,15 +128,12 @@ function SimulationForm({
                                     }`}
                             />
                             {touchedFields.totalPriceHome && !isTotalPriceHomeValid && (
-                                <span className="text-red-500 text-sm flex justify-center">
+                                <span id='simulationTotalPriceHomeErrorMessage' className="text-red-500 text-sm flex justify-center">
                                     Ingrese un número válido
                                 </span>
                             )}
                         </label>
-                        <span className="text-sm flex justify-center font-bold">
-                            Ingrese el monto según se muestra, sin el punto decimal.
-                        </span>
-                        {/* Plazo en años */}
+
                         <label className="grid" htmlFor="numberOfPays">
                             Plazo (en años):
                             <input
@@ -144,68 +149,48 @@ function SimulationForm({
                                         'numberOfPays'
                                     )
                                 }
-                                className={`borde ${touchedFields.numberOfPays && !isNumberOfPaysValid
+                                className={`border ${touchedFields.numberOfPays && !isNumberOfPaysValid
                                     ? 'border-red-500'
                                     : 'border-black'
                                     }`}
                             />
                             {touchedFields.numberOfPays && !isNumberOfPaysValid && (
-                                <span className="text-red-500 text-sm flex justify-center">
+                                <span id='simulationNumberOfPaysErrorMessage' className="text-red-500 text-sm flex justify-center">
                                     Ingrese un número válido
                                 </span>
                             )}
                         </label>
-                        <span className="text-sm flex justify-center font-bold">
-                            Ingrese los años como se muestra.
-                        </span>
 
-                        {/* Tasa de interés anual */}
                         <label className="grid" htmlFor="simulatedInterestRate">
                             Tasa de interes anual:
                             <input
                                 type="number"
                                 id="simulatedInterestRate"
                                 name="simulatedInterestRate"
-                                step="0.000000001"
-                                placeholder="3.5"
+                                step="0.1"
+                                placeholder={placeholderContent}
                                 onBlur={() => markFieldAsTouched('simulatedInterestRate')}
                                 className={`border ${touchedFields.simulatedInterestRate ? 'border-black' : ''
                                     }`}
                             />
                             <section>
                                 <div className="flex justify-center my-2 font-bold">
-                                    {messageSimulatedInterestRate ? (
-                                        ''
-                                    ) : (
-                                        <div>
-                                            <span className="mr-1">Rango de tasa de interés: </span>
-                                            {creditType === 'firstHome' && (
-                                                <p className="text-center">
-                                                    {fisrtHomeInterestRate[0]} -{' '}
-                                                    {fisrtHomeInterestRate[1]}
-                                                </p>
-                                            )}
-                                            {creditType === 'secondHome' && (
-                                                <p className="text-center">
-                                                    {secondHomeInterestRate[0]} -{' '}
-                                                    {secondHomeInterestRate[1]}
-                                                </p>
-                                            )}
-                                            {creditType === 'commercialProperty' && (
-                                                <p className="text-center">
-                                                    {commercialPropertyInterestRate[0]} -{' '}
-                                                    {commercialPropertyInterestRate[1]}
-                                                </p>
-                                            )}
-                                            {creditType === 'remodeling' && (
-                                                <p className="text-center">
-                                                    {remodelingInterestRate[0]} -{' '}
-                                                    {remodelingInterestRate[1]}
-                                                </p>
-                                            )}
-                                        </div>
+                                    {!messageSimulatedInterestRate && (
+                                        <>
+                                            <span id='RangeSimulatedInterestRate'>
+                                                Rango de tasa de interés:
+                                                {interestRates[creditType] && (
+                                                    <span className="text-center">
+                                                        {interestRates[creditType][0]} -{' '}
+                                                        {interestRates[creditType][1]}
+                                                    </span>
+                                                )}
+                                            </span>
+                                        </>
                                     )}
-                                    <p className="text-center">{messageSimulatedInterestRate}</p>
+                                    <p id="textIsValidOrNot" className="text-center">
+                                        {messageSimulatedInterestRate}
+                                    </p>
                                 </div>
                                 <div className="flex justify-center">
                                     <button
@@ -224,8 +209,9 @@ function SimulationForm({
                         </label>
                     </div>
                 </section>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 }
 

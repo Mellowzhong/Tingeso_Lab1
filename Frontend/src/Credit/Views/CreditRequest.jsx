@@ -27,59 +27,84 @@ function CreditRequest() {
     const [errorUserNotFound, setErrorUserNotFound] = useState(false);
     const [checkClient, setCheckClient] = useState(false);
 
-    const isFormValid = errorUserNotFound == false && creditType !== "" && requestedAmount > 0 && totalPriceHome > 0 && monthlyClientIncome > 0;
+    const [creditRequestError, setCreditRequestError] = useState("");
+
+    const isFormValid = !errorUserNotFound &&
+        creditType !== "" &&
+        Number(requestedAmount) > 0 &&
+        Number(totalPriceHome) > 0 &&
+        Number(monthlyClientIncome) > 0;
+
+    const userRequestData = { firstName, lastName, rut };
 
     const handleSelectChange = (e) => {
         setCreditType(e.target.value);
     };
 
     const handleCheckClient = async () => {
-        const userRequestData = { firstName, lastName, rut };
-        const user = await getUser(userRequestData);
-        if (user) {
-            setCheckClient(true);
-            setUserId(user.id);
-        } else {
+        try {
+            // Limpiar el estado de error antes de la verificación
+            setErrorUserNotFound(false);
+
+            const user = await getUser(userRequestData);
+
+            // Agregar un pequeño retraso para asegurar que el DOM se actualice
+            setTimeout(() => {
+                if (user && user.id) {
+                    setCheckClient(true);
+                    setUserId(user.id);
+                } else {
+                    setErrorUserNotFound(true);
+                }
+            }, 100);
+        } catch {
             setErrorUserNotFound(true);
         }
     };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (creditType === "") {
             alert("Seleccione un tipo de crédito");
         } else {
-            setShowCreditDocuments(true);
-
             try {
-                const creditRequestData = { creditType, status: "En revisión", applicationDate: new Date(), requestedAmount, totalPriceHome, monthlyClientIncome };
+                const creditRequestData = {
+                    creditType,
+                    status: "En revisión",
+                    applicationDate: new Date(),
+                    requestedAmount,
+                    totalPriceHome,
+                    monthlyClientIncome
+                };
                 const response = await postCredit(creditRequestData, userId);
+                setShowCreditDocuments(true);
                 setCreditId(response);
-                alert("Crédito solicitado con éxito");
             } catch {
-                alert("Error al solicitar el crédito");
+                setCreditRequestError("Error al solicitar el crédito");
             }
         }
     };
 
+
     return (
-        <div className='flex flex-col items-center justify-center'>
+        <div className='grid items-center justify-center'>
             <h1 className='text-4xl font-bold text-center'>Solicitud de Crédito</h1>
-            {!showCreditDocuments && (
+            <div className="flex ">
                 <section className='w-full max-w-lg bg-white shadow-md rounded-lg p-6 m-8'>
 
                     {/* Formulario de solicitud de usuario */}
                     <div className="border-2 p-4 rounded-lg">
-                        <RequestUserForm setFirstName={setFirstName}
+                        <RequestUserForm
+                            setFirstName={setFirstName}
                             setLastName={setLastName}
                             setRut={setRut}
                         />
-                        {userId ? <span className="flex justify-center mt-2">Cliente se encuentra registrado</span> : null}
-                        <span className={`flex justify-center ${errorUserNotFound ? 'text-red-500' : 'hidden'}`}>
-                            Cliente no encontrado
-                        </span>
+
                         <div className="flex justify-center">
                             <button
+                                id="checkClientButton"
+                                data-testid="check-client"
                                 type="button"
                                 className='w-1/2 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 mt-4'
                                 onClick={handleCheckClient}
@@ -87,18 +112,37 @@ function CreditRequest() {
                                 Comprobar cliente
                             </button>
                         </div>
-                        {!checkClient ? "" :
-                            <div>
-                                <CreditDataForm setRequestedAmount={setRequestedAmount}
-                                    setTotalPriceHome={setTotalPriceHome}
-                                    setMonthlyClientIncome={setMonthlyClientIncome}
-                                />
-                                <span className="text-sm flex justify-center font-bold">
-                                    Ingrese el monto según se muestra, sin el punto decimal.
-                                </span>
-                            </div>
-                        }
+
+
                     </div>
+                    {userId && (
+                        <span
+                            id="clientFoundMessage"
+                            data-testid="client-found"
+                            className="flex justify-center mt-2"
+                        >
+                            Cliente se encuentra registrado
+                        </span>
+                    )}
+
+                    <span
+                        id="clientNotFoundMessage"
+                        data-testid="client-not-found"
+                        className={`flex justify-center ${errorUserNotFound ? 'text-red-500' : 'hidden'}`}
+                    >
+                        Cliente no encontrado
+                    </span>
+                    {!checkClient ? "" :
+                        <div>
+                            <CreditDataForm setRequestedAmount={setRequestedAmount}
+                                setTotalPriceHome={setTotalPriceHome}
+                                setMonthlyClientIncome={setMonthlyClientIncome}
+                            />
+                            <span className="text-sm flex justify-center font-bold">
+                                Ingrese el monto según se muestra, sin el punto decimal.
+                            </span>
+                        </div>
+                    }
                     {/* Formulario para seleccionar el tipo de crédito */}
                     <form onSubmit={handleSubmit} className="grid gap-4">
                         {!checkClient ? "" :
@@ -121,7 +165,8 @@ function CreditRequest() {
                             </label>
                         }
                         {/* Botón para continuar */}
-                        <button type="submit" className={`w-full py-2 px-4 rounded-md mt-4 ${isFormValid
+                        <div id="creditRequestError" className="flex justify-center">{creditRequestError}</div>
+                        <button type="submit" className={`w-full py-2 px-4 rounded-md ${isFormValid
                             ? "bg-indigo-600 text-white hover:bg-indigo-700"
                             : "bg-gray-400 text-gray-700 cursor-not-allowed"
                             }`}>
@@ -129,26 +174,25 @@ function CreditRequest() {
                         </button>
                     </form>
                 </section>
-            )
-            }
 
-            {/* Parte de los documentos */}
-            {
-                showCreditDocuments && (
-                    <section className='w-full max-w-md bg-white shadow-md rounded-lg p-6 mt-8'>
-                        <h2 className='text-xl font-semibold mb-4 text-center'>Documentos del Crédito</h2>
-                        {creditId && (
-                            <>
-                                {/* Mostrar formularios específicos basados en el tipo de crédito seleccionado */}
-                                {creditType === "firstHome" && <FirstHomeForm creditId={creditId} />}
-                                {creditType === "secondHome" && <SecondHomeForm creditId={creditId} />}
-                                {creditType === "commercialProperty" && <ComercialPropertyForm creditId={creditId} />}
-                                {creditType === "remodeling" && <RemoldingForm creditId={creditId} />}
-                            </>
-                        )}
-                    </section>
-                )
-            }
+                {/* Parte de los documentos */}
+                {
+                    showCreditDocuments && (
+                        <section id="documentsBody">
+                            <h2 id="documentsBodyTittle" className='text-xl font-semibold mb-4 text-center'>Documentos del Crédito</h2>
+                            {creditId && (
+                                <>
+                                    {/* Mostrar formularios específicos basados en el tipo de crédito seleccionado */}
+                                    {creditType === "firstHome" && <FirstHomeForm creditId={creditId} />}
+                                    {creditType === "secondHome" && <SecondHomeForm creditId={creditId} />}
+                                    {creditType === "commercialProperty" && <ComercialPropertyForm creditId={creditId} />}
+                                    {creditType === "remodeling" && <RemoldingForm creditId={creditId} />}
+                                </>
+                            )}
+                        </section>
+                    )
+                }
+            </div>
         </div >
     );
 }

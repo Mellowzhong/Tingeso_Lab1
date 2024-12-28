@@ -8,6 +8,8 @@ function RegisterUserForm() {
     const [address, setAddress] = useState("");
     const [age, setAge] = useState(0);
     const [rutPart1, setRutPart1] = useState("");
+    const [message, setMessage] = useState("");
+    const [messageType, setMessageType] = useState("");
 
     const handleSetRut = (e) => {
         const rutPart2 = e.target.value;
@@ -16,14 +18,28 @@ function RegisterUserForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const userData = { firstName, lastName, rut, address, age };
+
         try {
-            const userData = { firstName, lastName, rut, address, age };
-            await postUser(userData);
-            alert("Usuario registrado correctamente");
+            const { status } = await postUser(userData);
+
+            if (status === 201) {
+                setMessageType("success");
+                setMessage("Usuario registrado correctamente.");
+            } else if (status === 409) {
+                setMessageType("error");
+                setMessage("El usuario ya existe.");
+            } else {
+                setMessageType("error");
+                setMessage("Error al registrar usuario.");
+            }
         } catch {
-            alert("Error al registrar usuario");
+            setMessageType("error");
+            setMessage("Ocurrió un error inesperado. Por favor, inténtalo nuevamente.");
         }
     };
+
 
     return (
         <div className='flex flex-col items-center justify-center '>
@@ -96,6 +112,11 @@ function RegisterUserForm() {
                             placeholder='25'
                             className='border p-2 focus:ring-indigo-500 focus:border-indigo-500' />
                     </label>
+                    {message && (
+                        <div id='messageUserExist' className={`flex justify-center p-2 text-white ${messageType === 'success' ? 'bg-green-500' : 'bg-red-500'}`}>
+                            {message}
+                        </div>
+                    )}
                     <button type="submit" className='w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700'>
                         Registrarse
                     </button>

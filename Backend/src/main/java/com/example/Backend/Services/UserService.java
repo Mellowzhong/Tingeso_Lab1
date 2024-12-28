@@ -28,6 +28,12 @@ public class UserService {
             throw new IllegalArgumentException("User cannot be null");
         }
 
+        Optional<User> getterUser = userRepository.findByFirstNameAndLastNameAndRut(user.getFirstName(), user.getLastName(), user.getRut());
+
+        if (getterUser.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        }
+
         User savedUser = userRepository.save(user);
 
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
