@@ -1,17 +1,48 @@
 import PropTypes from 'prop-types';
 import { comprobeSimulatedInterestRate } from '../Utils/SimulationUtils';
 import { useState } from 'react';
+import {
+    fisrtHomeInterestRate,
+    secondHomeInterestRate,
+    commercialPropertyInterestRate,
+    remodelingInterestRate,
+} from '../Utils/Constants';
 
 function CalculateDataForm({
     creditType,
     setSimulatedInterestRate,
     setNumberOfPays,
-    setBalance
+    setBalance,
 }) {
     const [message, setMessage] = useState('No validado');
+    const [numberOfPaysMessage, setNumberOfPaysMessage] = useState('');
+    const [balanceMessage, setBalanceMessage] = useState('');
+
+    const interestRates = {
+        firstHome: fisrtHomeInterestRate,
+        secondHome: secondHomeInterestRate,
+        commercialProperty: commercialPropertyInterestRate,
+        remodeling: remodelingInterestRate,
+    };
+
+    const placeholderContent = interestRates[creditType]
+        ? `${interestRates[creditType][0]} - ${interestRates[creditType][1]}`
+        : 'Select a credit type';
+
+    // Función para validar si un número es entero
+    const handleIntegerInput = (e, setter, setMessage) => {
+        const value = e.target.value;
+        if (/^\d+$/.test(value)) {
+            setter(parseInt(value, 10));
+            setMessage('');
+        } else {
+            setMessage('Ingrese un número entero válido');
+        }
+    };
+
     return (
         <div className="grid gap-4 bg-white p-6 rounded-lg shadow-md border border-gray-200">
-            <h3 className="text-lg font-semibold mb-4">Datos del Crédito</h3>
+            <h3 className="text-lg font-semibold mb-4 text-center">Datos del Crédito</h3>
 
             {/* Tasa de interés anual */}
             <label htmlFor="simulatedInterestRate" className="block text-sm font-medium text-gray-700">
@@ -22,6 +53,7 @@ function CalculateDataForm({
                     name="simulatedInterestRate"
                     step="0.000000001"
                     className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    placeholder={placeholderContent}
                     onBlur={(e) => {
                         const value = parseFloat(e.target.value);
                         const response = comprobeSimulatedInterestRate(creditType, value);
@@ -36,6 +68,7 @@ function CalculateDataForm({
                 />
             </label>
             <p className='text-center'>{message}</p>
+
             {/* Plazo */}
             <label htmlFor="numberOfPays" className="block text-sm font-medium text-gray-700">
                 Plazo (en años):
@@ -43,13 +76,16 @@ function CalculateDataForm({
                     type="number"
                     id="numberOfPays"
                     name="numberOfPays"
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    onBlur={(e) => {
-                        const value = parseInt(e.target.value, 10);
-                        const newValue = value * 12;
-                        setNumberOfPays(newValue);
-                    }}
+                    className={`mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${numberOfPaysMessage ? 'border-red-500' : ''
+                        }`}
+                    placeholder='20'
+                    onBlur={(e) =>
+                        handleIntegerInput(e, (value) => setNumberOfPays(value * 12), setNumberOfPaysMessage)
+                    }
                 />
+                {numberOfPaysMessage && (
+                    <span id='numberOfPaysErrorMessage' className="text-red-500 text-sm">{numberOfPaysMessage}</span>
+                )}
             </label>
 
             {/* Saldo */}
@@ -59,9 +95,16 @@ function CalculateDataForm({
                     type="number"
                     id="balance"
                     name="balance"
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    onBlur={(e) => setBalance(parseInt(e.target.value))}
+                    placeholder='1000000'
+                    className={`mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${balanceMessage ? 'border-red-500' : ''
+                        }`}
+                    onBlur={(e) =>
+                        handleIntegerInput(e, setBalance, setBalanceMessage)
+                    }
                 />
+                {balanceMessage && (
+                    <span id='balanceErrorMessage' className="text-red-500 text-sm">{balanceMessage}</span>
+                )}
             </label>
         </div>
     );

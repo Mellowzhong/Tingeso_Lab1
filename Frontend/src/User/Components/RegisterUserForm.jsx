@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { postUser } from '../Services/UserServices';
 
 function RegisterUserForm() {
@@ -10,11 +10,23 @@ function RegisterUserForm() {
     const [rutPart1, setRutPart1] = useState("");
     const [message, setMessage] = useState("");
     const [messageType, setMessageType] = useState("");
+    const [isFormValid, setIsFormValid] = useState(false); // Nuevo estado para validar el formulario
+
+    // Actualiza el estado de validación del formulario cuando cambian los valores
+    useEffect(() => {
+        const isValid =
+            firstName.trim() !== "" &&
+            lastName.trim() !== "" &&
+            rut.trim() !== "" &&
+            address.trim() !== "" &&
+            age > 0; // Asegúrate de que la edad sea mayor a 0
+        setIsFormValid(isValid);
+    }, [firstName, lastName, rut, address, age]);
 
     const handleSetRut = (e) => {
         const rutPart2 = e.target.value;
         setRut(`${rutPart1}-${rutPart2}`);
-    }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,7 +51,6 @@ function RegisterUserForm() {
             setMessage("Ocurrió un error inesperado. Por favor, inténtalo nuevamente.");
         }
     };
-
 
     return (
         <div className='flex flex-col items-center justify-center '>
@@ -67,6 +78,7 @@ function RegisterUserForm() {
                             placeholder='Sanchez'
                             className='border p-2 focus:ring-indigo-500 focus:border-indigo-500' />
                     </label>
+                    <span>Rut:</span>
                     <div className='flex'>
                         <input
                             type="number"
@@ -117,13 +129,17 @@ function RegisterUserForm() {
                             {message}
                         </div>
                     )}
-                    <button type="submit" className='w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700'>
+                    {/* El botón estará deshabilitado si el formulario no es válido */}
+                    <button
+                        type="submit"
+                        disabled={!isFormValid}
+                        className={`w-full py-2 px-4 rounded-md text-white ${isFormValid ? 'bg-indigo-600 hover:bg-indigo-700' : 'bg-gray-400 cursor-not-allowed'}`}>
                         Registrarse
                     </button>
                 </form>
             </section>
         </div>
-    )
+    );
 }
 
 export default RegisterUserForm;

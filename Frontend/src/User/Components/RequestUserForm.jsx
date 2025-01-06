@@ -12,7 +12,7 @@ function RequestUserForm({ setFirstName, setLastName, setRut }) {
 
     return (
         <section className='bg-white'>
-            <h3 className='text-lg font-semibold mb-4 text-center'>Datos del Usuario</h3>
+            <h2 className='text-xl font-semibold mb-4 text-center'>Datos del Usuario</h2>
             <div className='grid gap-4'>
                 <label htmlFor="firstName" className='grid'>
                     Nombre:

@@ -13,6 +13,23 @@ function SavingCapacityForm({ balance, monthlyClientIncome, creditAmount, setSav
     const [savingCapacityRecentWithdrawals, setSavingCapacityRecentWithdrawals] = useState(false);
 
     const [evaluationResult, setEvaluationResult] = useState('No válida');
+    const [errorMessageYears, setErrorMessageYears] = useState('');
+
+    // Función para validar si un valor es un número entero positivo
+    const validateIntegerInput = (value) => /^\d+$/.test(value);
+
+    // Manejo del cambio en el campo de años con validación
+    const handleYearsChange = (e) => {
+        const value = e.target.value;
+
+        if (validateIntegerInput(value)) {
+            setYears(parseInt(value, 10));
+            setErrorMessageYears(''); // Limpiar mensaje de error si el valor es válido
+        } else {
+            setYears(0); // Restablecer el valor si no es válido
+            setErrorMessageYears('Ingrese un número entero válido');
+        }
+    };
 
     // Función para validar la capacidad de ahorro
     const validateSavingCapacity = () => {
@@ -79,7 +96,7 @@ function SavingCapacityForm({ balance, monthlyClientIncome, creditAmount, setSav
             {/* Saldo mínimo requerido */}
             <section className="mb-4 text-center">
                 <h2 className="text-lg font-semibold mb-2">Saldo Mínimo Requerido</h2>
-                <p className={isMinAmountValid ? 'text-green-500' : 'text-red-500'}>
+                <p className={isMinAmountValid ? 'text-green-600' : 'text-red-600'}>
                     {isMinAmountValid ? 'Válido' : 'No válido'}
                 </p>
                 <button
@@ -101,6 +118,7 @@ function SavingCapacityForm({ balance, monthlyClientIncome, creditAmount, setSav
                             <CalculateSavingCapacityForm
                                 setSavingHistory={setSavingHistory}
                                 handleIncomeChange={handleIncomeChange}
+                                balance={balance}
                             />
                         </div>
                     ))}
@@ -110,13 +128,13 @@ function SavingCapacityForm({ balance, monthlyClientIncome, creditAmount, setSav
                 <div className='text-center border-2 p-4 rounded-lg'>
                     <div className='border-2 w-1/4 mx-auto rounded-lg bg-white p-4 my-2'>
                         <h2 className="text-lg font-semibold mb-2">Historial de Ahorro</h2>
-                        <p className={savingHistory ? 'text-green-500' : 'text-red-500'}>
+                        <p className={savingHistory ? 'text-green-600' : 'text-red-700'}>
                             {savingHistory ? 'Válido' : 'No válido'}
                         </p>
                     </div>
                     <div className='border-2 w-1/4 mx-auto rounded-lg bg-white p-4 my-2'>
                         <h3 className="font-semibold">Depósitos Periódicos: {totalIncomes}</h3>
-                        <p className={periodicDeposits ? 'text-green-500' : 'text-red-500'}>
+                        <p className={periodicDeposits ? 'text-green-600' : 'text-red-700'}>
                             {periodicDeposits ? 'Válido' : 'No válido'}
                         </p>
                         <button
@@ -129,10 +147,11 @@ function SavingCapacityForm({ balance, monthlyClientIncome, creditAmount, setSav
                     </div>
                 </div>
             </div>
+
             {/* Relación saldo/años */}
-            <section className="border-2 border-gray-300 rounded-lg p-4 mb-4 text-center">
+            <section className="grid border-2 border-gray-300 rounded-lg p-4 mb-4 text-center">
                 <h2 className="text-lg font-semibold mb-2">Relación Saldo/Años</h2>
-                <p className={savingCapacityBalanceYears ? 'text-green-500' : 'text-red-500'}>
+                <p className={savingCapacityBalanceYears ? 'text-green-600' : 'text-red-700'}>
                     {savingCapacityBalanceYears ? 'Válido' : 'No válido'}
                 </p>
                 <label htmlFor="years" className="block mb-2">
@@ -141,14 +160,21 @@ function SavingCapacityForm({ balance, monthlyClientIncome, creditAmount, setSav
                         type="number"
                         name="years"
                         id="years"
-                        onChange={(e) => setYears(parseInt(e.target.value))}
-                        className="border border-gray-300 rounded-md p-2 w-1/4 mt-1"
+                        placeholder="2"
+                        onChange={handleYearsChange}
+                        className={`border border-gray-300 rounded-md p-2 w-1/4 mt-1 ${errorMessageYears ? 'border-red-500' : ''
+                            }`}
                     />
                 </label>
+                {errorMessageYears && (
+                    <span id='yearsErrorMessage' className="text-red-500 text-sm">{errorMessageYears}</span>
+                )}
                 <button
                     type="button"
                     onClick={handleValidateBalanceYears}
-                    className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
+                    className={`bg-indigo-600 text-white mx-auto py-2 px-4 w-1/4 rounded-md hover:bg-indigo-700 ${errorMessageYears ? 'opacity-50 cursor-not-allowed' : ''
+                        }`}
+                    disabled={!!errorMessageYears} // Deshabilitar si hay un error
                 >
                     Validar Relación Saldo/Años
                 </button>
@@ -158,7 +184,7 @@ function SavingCapacityForm({ balance, monthlyClientIncome, creditAmount, setSav
             {/* Retiros recientes */}
             <section className="border-2 border-gray-300 rounded-lg p-4 mb-4 text-center">
                 <h2 className="text-lg font-semibold mb-2">Retiros Recientes</h2>
-                <p className={savingCapacityRecentWithdrawals ? 'text-green-500' : 'text-red-500'}>
+                <p className={savingCapacityRecentWithdrawals ? 'text-green-600' : 'text-red-700'}>
                     {savingCapacityRecentWithdrawals ? 'Válido' : 'No válido'}
                 </p>
                 <div className="flex flex-wrap justify-center mt-4">

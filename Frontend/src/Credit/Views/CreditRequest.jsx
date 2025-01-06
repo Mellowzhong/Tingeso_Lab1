@@ -5,6 +5,7 @@ import RemoldingForm from "../Components/RemoldingForm";
 import RequestUserForm from "../../User/Components/RequestUserForm";
 import CreditDataForm from "../../Components/CreditDataForm";
 
+import { postFinanceEvaluation } from "../../FinanceEvaluation/Services/FinanceEvaluationService";
 import { useState } from "react";
 import { postCredit } from "../Services/CreditService";
 import { getUser } from "../../User/Services/UserServices";
@@ -28,6 +29,18 @@ function CreditRequest() {
     const [checkClient, setCheckClient] = useState(false);
 
     const [creditRequestError, setCreditRequestError] = useState("");
+
+    // Datos de evaluación financiera
+    const financeEvaluationData = {
+        feeToIncomeRatio: false,
+        creditHistory: false,
+        employmentHistory: false,
+        debtToIncomeRatio: false,
+        financeMaxAmount: false,
+        applicantAge: false,
+        savingCapacity: false,
+        evaluationResult: false
+    };
 
     const isFormValid = !errorUserNotFound &&
         creditType !== "" &&
@@ -69,6 +82,7 @@ function CreditRequest() {
             alert("Seleccione un tipo de crédito");
         } else {
             try {
+
                 const creditRequestData = {
                     creditType,
                     status: "En revisión",
@@ -80,6 +94,7 @@ function CreditRequest() {
                 const response = await postCredit(creditRequestData, userId);
                 setShowCreditDocuments(true);
                 setCreditId(response);
+                await postFinanceEvaluation(response, financeEvaluationData);
             } catch {
                 setCreditRequestError("Error al solicitar el crédito");
             }
@@ -94,7 +109,7 @@ function CreditRequest() {
                 <section className='w-full max-w-lg bg-white shadow-md rounded-lg p-6 m-8'>
 
                     {/* Formulario de solicitud de usuario */}
-                    <div className="border-2 p-4 rounded-lg">
+                    <div>
                         <RequestUserForm
                             setFirstName={setFirstName}
                             setLastName={setLastName}
@@ -166,12 +181,17 @@ function CreditRequest() {
                         }
                         {/* Botón para continuar */}
                         <div id="creditRequestError" className="flex justify-center">{creditRequestError}</div>
-                        <button type="submit" className={`w-full py-2 px-4 rounded-md ${isFormValid
-                            ? "bg-indigo-600 text-white hover:bg-indigo-700"
-                            : "bg-gray-400 text-gray-700 cursor-not-allowed"
-                            }`}>
-                            Siguiente
-                        </button>
+                        {creditId ? "" :
+                            <button type="submit" className={`w-full py-2 px-4 rounded-md ${isFormValid
+                                ? "bg-indigo-600 text-white hover:bg-indigo-700"
+                                : "bg-gray-400 text-black cursor-not-allowed"
+                                }`}
+                                disabled={!isFormValid}
+                            >
+                                Siguiente
+                            </button>
+                        }
+
                     </form>
                 </section>
 

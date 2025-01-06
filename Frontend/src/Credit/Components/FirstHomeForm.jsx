@@ -1,7 +1,6 @@
 import DocumentForm from "../../Document/Components/DocumentForm";
 import { useState } from "react";
 import { postFile } from '../../Document/Services/DocumentServices';
-import { postFinanceEvaluation } from "../../FinanceEvaluation/Services/FinanceEvaluationService";
 import PropTypes from 'prop-types';
 
 function FirstHomeForm({ creditId }) {
@@ -35,18 +34,6 @@ function FirstHomeForm({ creditId }) {
             if (creditHistorial) await postFile(creditHistorial, "historial_crediticio", creditId);
             if (employment) await postFile(employment, "laboral", creditId);
 
-            // Datos de evaluación financiera
-            const financeEvaluationData = {
-                feeToIncomeRatio: false,
-                creditHistory: false,
-                employmentHistory: false,
-                debtToIncomeRatio: false,
-                financeMaxAmount: false,
-                applicantAge: false,
-                savingCapacity: false,
-                evaluationResult: false
-            };
-            await postFinanceEvaluation(creditId, financeEvaluationData);
             setStatusUploadMessage(true);
         } catch {
             alert("Error al subir los archivos");
@@ -56,7 +43,7 @@ function FirstHomeForm({ creditId }) {
     return (
         <div className="w-full max-w-md bg-white shadow-md rounded-lg p-6 mt-8">
             <h2 className="text-xl font-semibold mb-4">Documentos para Primera Vivienda</h2>
-
+            <p>Haga click fuera del bloque para que se cargue el archivo</p>
             <form onSubmit={handleUpload} className="grid gap-4">
                 <DocumentForm
                     documentRequiredName="Comprobante de ingresos"
@@ -131,7 +118,8 @@ function FirstHomeForm({ creditId }) {
                 >
                     Subir Archivos
                 </button>
-                {statusUploadMessage && <span id="uploadFilesText" className="text-sm flex justify-center font-bold">Todos los archivos se han subido correctamente</span>}
+                {statusUploadMessage ? <span id="uploadFilesText" className="text-sm flex justify-center font-bold">Todos los archivos se han subido correctamente</span> : <span className="text-sm flex justify-center font-bold">Aun no se suben los archivos</span>}
+                {statusUploadMessage ? <span className="mx-auto">Puede seguir a la seccion de ejecutivo</span> : ""}
             </form>
         </div>
     );

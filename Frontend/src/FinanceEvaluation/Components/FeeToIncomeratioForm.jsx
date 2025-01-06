@@ -11,8 +11,9 @@ function FeeToIncomeRatio({
     totalPriceHome,
     monthlyClientIncome
 }) {
+    const [response, setResponse] = useState(false);
     const [quote, setQuote] = useState(0);
-    const [message, setMessage] = useState("message");
+    const [message, setMessage] = useState("");
 
     const handleSimulationSubmit = async (e) => {
         e.preventDefault();
@@ -25,6 +26,7 @@ function FeeToIncomeRatio({
         };
         try {
             const response = await getDebtToIncomeRatioCalculation(simulationData);
+            setResponse(true);
             setQuote(response.quote);
             setMessage(response.message);
         } catch {
@@ -38,7 +40,7 @@ function FeeToIncomeRatio({
     };
 
     return (
-        <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-full text-center">
+        <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-1/2 text-center">
             {/* Información del crédito */}
             <h2 className="text-4xl font-semibold text-center">Relación Cuota/Ingreso</h2>
             <section className="mb-4">
@@ -59,18 +61,22 @@ function FeeToIncomeRatio({
             </button>
 
             {/* Resultados de la simulación */}
-            <section className="mb-4">
-                <h2 className="text-lg font-semibold mb-2">Respuesta</h2>
-                <p>{`Cuota: ${quote}`}</p>
-                <p className={message.includes('No') ? 'text-red-500' : 'text-green-500'}>{message}</p>
-            </section>
+            {response ?
+                <section className="mb-4">
+                    <h2 className="text-lg font-semibold mb-2">Respuesta</h2>
+                    <p>{`Cuota: ${quote}`}</p>
+                    <p className={message.includes('No') ? 'text-red-500' : 'text-green-600'}>{message}</p>
+                </section>
+                : ""
+            }
+
 
             {/* Botón para validar relación cuota/ingreso */}
             <div className="flex justify-center mt-6">
                 <button
                     onClick={handleValidation}
                     type="button"
-                    className={`bg-${feeToIncomeRatio ? 'green' : 'red'}-500 text-white py-2 px-4 rounded-md hover:bg-${feeToIncomeRatio ? 'green' : 'red'}-600`}
+                    className={`bg-${feeToIncomeRatio ? 'green-600' : 'red-600'} text-white py-2 px-4 rounded-md hover:bg-${feeToIncomeRatio ? 'green' : 'red'}-600`}
                 >
                     {feeToIncomeRatio ? "Relación validada" : "Validar Relación"}
                 </button>

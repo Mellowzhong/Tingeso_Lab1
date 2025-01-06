@@ -6,7 +6,7 @@ function EvaluationResultForm({ evaluationResult, setEvaluationResult }) {
     };
 
     return (
-        <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-full">
+        <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-1/2 ml-2 items-center grid">
             <h2 className="text-4xl font-semibold text-center mb-4">Resultado de la Evaluación</h2>
 
             {/* Botón para validar resultado de la evaluación */}

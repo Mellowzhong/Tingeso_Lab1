@@ -2,7 +2,6 @@ import DocumentForm from "../../Document/Components/DocumentForm";
 import PropTypes from 'prop-types';
 import { useState } from "react";
 import { postFile } from '../../Document/Services/DocumentServices';
-import { postFinanceEvaluation } from '../../FinanceEvaluation/Services/FinanceEvaluationService';
 
 function ComercialPropertyForm({ creditId }) {
     const [incomeCertificate, setIncomeCertificate] = useState(null);
@@ -39,18 +38,6 @@ function ComercialPropertyForm({ creditId }) {
 
             alert("All files uploaded successfully");
 
-            // Datos de evaluación financiera
-            const financeEvaluationData = {
-                feeToIncomeRatio: false,
-                creditHistory: false,
-                employmentHistory: false,
-                debtToIncomeRatio: false,
-                financeMaxAmount: false,
-                applicantAge: false,
-                savingCapacity: false,
-                evaluationResult: false
-            };
-            await postFinanceEvaluation(creditId, financeEvaluationData);
             setStatusUploadMessage(true);
         } catch {
             alert("Error al subir los archivos");

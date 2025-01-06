@@ -4,12 +4,13 @@ import { getSimulation } from '../../Simulation/Services/SimulationServices';
 
 function TotalCostForm({ creditAmount, simulatedInterestRate, numberOfPays, totalPriceHome, creditType }) {
     const [totalCost, setTotalCost] = useState(0);
+    const [response, setResponse] = useState(false);
 
     const handleSimulationSubmit = async (e) => {
         e.preventDefault();
         const creditLifeInsurance = Math.round(creditAmount * 0.0003);
         const administrationFee = creditAmount * 0.01;
-
+        setResponse(true);
         const simulationData = {
             creditAmount,
             simulatedInterestRate,
@@ -32,7 +33,7 @@ function TotalCostForm({ creditAmount, simulatedInterestRate, numberOfPays, tota
     };
 
     return (
-        <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-full text-center">
+        <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-1/2 text-center mr-2">
             {/* Información del crédito */}
             <h2 className="text-4xl font-semibold mb-2 text-center">Costo Total</h2>
 
@@ -52,10 +53,12 @@ function TotalCostForm({ creditAmount, simulatedInterestRate, numberOfPays, tota
                 Calcular
             </button>
 
-            {/* Resultados de la simulación */}
-            <section className="mb-4">
-                <p className="text-green-500">{`Costo Total Simulado: ${totalCost}`}</p>
+            {response ? <section className="mb-4">
+                <p className="text-black">{`Costo Total Simulado: ${totalCost}`}</p>
             </section>
+                : ""
+            }
+
         </div>
     );
 }

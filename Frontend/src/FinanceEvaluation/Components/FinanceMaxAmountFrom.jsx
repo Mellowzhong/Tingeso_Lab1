@@ -13,6 +13,7 @@ function FinanceMaxAmountFrom({
 }) {
     const [quote, setQuote] = useState(0);
     const [message, setMessage] = useState("message");
+    const [response, setResponse] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,6 +26,7 @@ function FinanceMaxAmountFrom({
         };
         try {
             const response = await getSimulation(simulationData);
+            setResponse(true);
             setQuote(response.quote);
             setMessage(response.message);
         } catch {
@@ -38,7 +40,7 @@ function FinanceMaxAmountFrom({
     };
 
     return (
-        <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-full text-center">
+        <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-1/2 text-center mr-2">
             {/* Información del crédito */}
             <h2 className="text-4xl font-semibold text-center">Monto Máximo</h2>
 
@@ -59,18 +61,22 @@ function FinanceMaxAmountFrom({
             </button>
 
             {/* Resultados de la simulación */}
-            <section className="mb-4">
-                <h2 className="text-lg font-semibold mb-2">Respuesta</h2>
-                <p>{`Cuota: ${quote}`}</p>
-                <p className={message.includes('No') ? 'text-red-500' : 'text-green-500'}>{message}</p>
-            </section>
+            {response ?
+                <section className="mb-4">
+                    <h2 className="text-lg font-semibold mb-2">Respuesta</h2>
+                    <p>{`Cuota: ${quote}`}</p>
+                    <p className={message.includes('No') ? 'text-red-500' : 'text-green-500'}>{message}</p>
+                </section>
+                : ""
+            }
+
 
             {/* Botón para validar monto máximo */}
             <div className="flex justify-center mt-6">
                 <button
                     onClick={handleValidation}
                     type="button"
-                    className={`bg-${financeMaxAmount ? 'green' : 'red'}-500 text-white py-2 px-4 rounded-md hover:bg-${financeMaxAmount ? 'green' : 'red'}-600`}
+                    className={`bg-${financeMaxAmount ? 'green' : 'red'}-600 text-white py-2 px-4 rounded-md hover:bg-${financeMaxAmount ? 'green' : 'red'}-600`}
                 >
                     {financeMaxAmount ? "Monto validado" : "Validar Monto"}
                 </button>

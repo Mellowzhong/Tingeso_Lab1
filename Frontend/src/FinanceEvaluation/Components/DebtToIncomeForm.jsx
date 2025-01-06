@@ -77,34 +77,36 @@ function DebtToIncomeForm({
                 {/* Botones para agregar o quitar deudas */}
                 <div className="flex justify-center mb-4">
                     <button
-                        className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 mr-4"
+                        className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 mx-2"
                         type="button"
                         onClick={discount}
                     >
                         Descontar
                     </button>
                     <button
-                        className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600"
+                        className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 mx-2"
                         type="button"
                         onClick={add}
                     >
                         Agregar
                     </button>
                 </div>
-                {/* Mostrar total en deudas */}
-                <h3 className="text-lg font-semibold mb-2">Total en deudas: {totalDebts}</h3>
-                <p className={`mb-4 ${message.includes('No') ? 'text-red-500' : 'text-green-500'}`}>
-                    {message}
-                </p>
+                <div className='grid justify-center'>
+                    {/* Mostrar total en deudas */}
+                    <h3 className="text-lg font-semibold mb-2">Total en deudas: {totalDebts}</h3>
+                    <p className={`mb-4 ${message.includes('No') ? 'text-red-500' : 'text-green-500'}`}>
+                        {message}
+                    </p>
 
-                {/* Botón para calcular */}
-                <button
-                    type="button"
-                    onClick={handleCalculate}
-                    className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
-                >
-                    Calcular
-                </button>
+                    {/* Botón para calcular */}
+                    <button
+                        type="button"
+                        onClick={handleCalculate}
+                        className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
+                    >
+                        Calcular
+                    </button>
+                </div>
             </section>
 
             {/* Botón para validar relación deuda-ingresos */}
@@ -112,7 +114,7 @@ function DebtToIncomeForm({
                 <button
                     onClick={handleValidation}
                     type="button"
-                    className={`bg-${debtToIncomeRatio ? 'green' : 'red'}-500 text-white py-2 px-4 rounded-md hover:bg-${debtToIncomeRatio ? 'green' : 'red'}-600`}
+                    className={`bg-${debtToIncomeRatio ? 'green' : 'red'}-600 text-white py-2 px-4 rounded-md hover:bg-${debtToIncomeRatio ? 'green' : 'red'}-600`}
                 >
                     {debtToIncomeRatio ? "Relación validada" : "Validar Relación"}
                 </button>
