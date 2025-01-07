@@ -19,7 +19,6 @@ function FirstHomeForm({ creditId }) {
     return (
         <div className="w-full max-w-md bg-white shadow-md rounded-lg p-6 mt-8">
             <h2 className="text-xl font-semibold mb-4">Documentos para Primera Vivienda</h2>
-            <p>Haga click fuera del bloque para que se cargue el archivo</p>
             <form className="grid gap-4">
                 <DocumentForm
                     documentRequiredName="Comprobante de ingresos"
@@ -30,7 +29,7 @@ function FirstHomeForm({ creditId }) {
                 />
                 {
                     incomeCertificateFileLoaded && (
-                        <span id='incomeCertificateFileLoaded' className="text-green-600 text-sm mt-1">
+                        <span id='incomeCertificateFileLoaded' className="text-green-600 text-sm mt-1 mx-auto">
                             Archivo cargado correctamente
                         </span>
                     )
@@ -45,7 +44,7 @@ function FirstHomeForm({ creditId }) {
                 />
                 {
                     appraisalCertificateFileLoaded && (
-                        <span id='appraisalCertificateFileLoaded' className="text-green-600 text-sm mt-1">
+                        <span id='appraisalCertificateFileLoaded' className="text-green-600 text-sm mt-1 mx-auto">
                             Archivo cargado correctamente
                         </span>
                     )
@@ -60,7 +59,7 @@ function FirstHomeForm({ creditId }) {
                 />
                 {
                     creditHistorialFileLoaded && (
-                        <span id='creditHistorialFileLoaded' className="text-green-600 text-sm mt-1">
+                        <span id='creditHistorialFileLoaded' className="text-green-600 text-sm mt-1 mx-auto">
                             Archivo cargado correctamente
                         </span>
                     )
@@ -76,7 +75,7 @@ function FirstHomeForm({ creditId }) {
                 />
                 {
                     employmentFileLoaded && (
-                        <span id='employmentFileLoaded' className="text-green-600 text-sm mt-1">
+                        <span id='employmentFileLoaded' className="text-green-600 text-sm mt-1 mx-auto">
                             Archivo cargado correctamente
                         </span>
                     )

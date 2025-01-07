@@ -8,11 +8,13 @@ function RegisterUserForm() {
     const [address, setAddress] = useState("");
     const [age, setAge] = useState(0);
     const [rutPart1, setRutPart1] = useState("");
+    const [rutPart2, setRutPart2] = useState("");
+    const [errors, setErrors] = useState({ rutPart1: "", rutPart2: "" });
     const [message, setMessage] = useState("");
     const [messageType, setMessageType] = useState("");
-    const [isFormValid, setIsFormValid] = useState(false); // Nuevo estado para validar el formulario
+    const [isFormValid, setIsFormValid] = useState(false);
 
-    // Actualiza el estado de validación del formulario cuando cambian los valores
+    // Validación del formulario completo
     useEffect(() => {
         const isValid =
             firstName.trim() !== "" &&
@@ -23,11 +25,32 @@ function RegisterUserForm() {
         setIsFormValid(isValid);
     }, [firstName, lastName, rut, address, age]);
 
-    const handleSetRut = (e) => {
-        const rutPart2 = e.target.value;
-        setRut(`${rutPart1}-${rutPart2}`);
+    // Validación de rut_part_1
+    const validateRutPart1 = (value) => {
+        if (value.length < 8) {
+            setErrors((prev) => ({ ...prev, rutPart1: "El RUT debe tener al menos 8 dígitos." }));
+        } else {
+            setErrors((prev) => ({ ...prev, rutPart1: "" }));
+        }
     };
 
+    // Validación de rut_part_2
+    const validateRutPart2 = (value) => {
+        if (value.length !== 1) {
+            setErrors((prev) => ({ ...prev, rutPart2: "El dígito verificador debe tener 1 carácter." }));
+        } else {
+            setErrors((prev) => ({ ...prev, rutPart2: "" }));
+        }
+    };
+
+    // Actualiza el RUT completo si ambos campos son válidos
+    const updateFullRut = () => {
+        if (!errors.rutPart1 && !errors.rutPart2 && rutPart1 && rutPart2) {
+            setRut(`${rutPart1}-${rutPart2}`);
+        }
+    };
+
+    // Manejo del envío del formulario
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -79,30 +102,47 @@ function RegisterUserForm() {
                             className='border p-2 focus:ring-indigo-500 focus:border-indigo-500' />
                     </label>
                     <span>Rut:</span>
-                    <div className='flex'>
-                        <input
-                            type="number"
-                            id="rut_part_1"
-                            name="rut_part_1"
-                            onInput={(e) => {
-                                if (e.target.value.length > 8) {
-                                    e.target.value = e.target.value.slice(0, 8);
-                                }
-                            }}
-                            onBlur={(e) => setRutPart1(e.target.value)}
-                            placeholder='12345678'
-                            className="mt-1 block w-5/6 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                        />
-                        <span className='flex items-center mx-2'>-</span>
-                        <input
-                            type="text"
-                            id="rut_part_2"
-                            name="rut_part_2"
-                            onBlur={(e) => handleSetRut(e)}
-                            maxLength="1"
-                            placeholder='k'
-                            className="mt-1 block w-1/6 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                        />
+                    <div className='flex flex-col'>
+                        <div className='flex'>
+                            {/* Cambiado a type="text" para evitar problemas con ceros iniciales */}
+                            <input
+                                type="text"
+                                id="rut_part_1"
+                                name="rut_part_1"
+                                value={rutPart1}
+                                onChange={(e) => {
+                                    const value = e.target.value.slice(0, 8); // Limitar a 8 caracteres
+                                    setRutPart1(value);
+                                    validateRutPart1(value);
+                                }}
+                                onBlur={updateFullRut} // Actualiza el RUT completo al perder el foco
+                                placeholder='12345678'
+                                className="mt-1 block w-5/6 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                            />
+                            <span className='flex items-center mx-2'>-</span>
+                            <input
+                                type="text"
+                                id="rut_part_2"
+                                name="rut_part_2"
+                                value={rutPart2}
+                                onChange={(e) => {
+                                    const value = e.target.value.slice(0, 1); // Limitar a 1 carácter
+                                    setRutPart2(value);
+                                    validateRutPart2(value);
+                                }}
+                                onBlur={updateFullRut} // Actualiza el RUT completo al perder el foco
+                                maxLength="1"
+                                placeholder='k'
+                                className="mt-1 block w-1/6 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                            />
+                        </div>
+                        {/* Mensajes de error */}
+                        {errors.rutPart1 && (
+                            <span className="text-red-500 text-sm mt-1">{errors.rutPart1}</span>
+                        )}
+                        {errors.rutPart2 && (
+                            <span className="text-red-500 text-sm mt-1">{errors.rutPart2}</span>
+                        )}
                     </div>
                     <label className='grid' htmlFor="address">
                         Dirección:

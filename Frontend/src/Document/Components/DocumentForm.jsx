@@ -34,26 +34,29 @@ function DocumentForm({ documentRequiredName, setFunction, documentName, creditI
     };
 
     return (
-        <>
-            <label className='grid' htmlFor={documentName}>
+        <div className="flex flex-col items-center space-y-4">
+            <label htmlFor={documentName} className="block text-sm font-medium text-gray-700 text-center">
                 {documentRequiredName}
-                <input
-                    type="file"
-                    id={documentName}
-                    name={documentName}
-                    onChange={handleFileChange}
-                    ref={fileInputRef}
-                />
+                <div className="mt-2 relative">
+                    <input
+                        type="file"
+                        id={documentName}
+                        name={documentName}
+                        onChange={handleFileChange}
+                        ref={fileInputRef}
+                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+                    />
+                </div>
             </label>
             {docuemntIdExist && (
                 <button
                     onClick={(e) => deleteDocumentFunction(e)}
-                    className='bg-indigo-600 text-white hover:bg-indigo-700 rounded-md py-2 w-1/2 mx-auto'
+                    className="bg-red-600 text-white hover:bg-red-700 rounded-md py-2 px-4"
                 >
                     Deshacer
                 </button>
             )}
-        </>
+        </div>
     );
 }
 
