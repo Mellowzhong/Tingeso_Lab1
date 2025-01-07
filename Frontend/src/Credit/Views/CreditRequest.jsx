@@ -182,10 +182,12 @@ function CreditRequest() {
                         {/* Botón para continuar */}
                         <div id="creditRequestError" className="flex justify-center">{creditRequestError}</div>
                         {creditId ? "" :
-                            <button type="submit" className={`w-full py-2 px-4 rounded-md ${isFormValid
-                                ? "bg-indigo-600 text-white hover:bg-indigo-700"
-                                : "bg-gray-400 text-black cursor-not-allowed"
-                                }`}
+                            <button
+                                id="nextStepCreditRequestButton"
+                                type="submit" className={`w-full py-2 px-4 rounded-md ${isFormValid
+                                    ? "bg-indigo-600 text-white hover:bg-indigo-700"
+                                    : "bg-gray-400 text-black cursor-not-allowed"
+                                    }`}
                                 disabled={!isFormValid}
                             >
                                 Siguiente

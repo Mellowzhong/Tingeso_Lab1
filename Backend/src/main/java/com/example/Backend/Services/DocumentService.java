@@ -8,6 +8,7 @@ import com.example.Backend.Repositories.CreditRepository;
 import com.example.Backend.Repositories.DocumentRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -68,5 +69,14 @@ public class DocumentService {
         return documents.stream()
                 .map(toDTO::convertToDocumentDTO) // Utilizar el método del servicio inyectado
                 .collect(Collectors.toList());
+    }
+
+    public UUID deleteDocument(UUID id) {
+        Optional<Document> document = documentRepository.findById(id);
+        if (document.isPresent()) {
+            documentRepository.delete(document.get());
+            return document.get().getId();
+        }
+        return null;
     }
 }

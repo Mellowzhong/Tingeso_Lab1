@@ -1,56 +1,32 @@
 import DocumentForm from "../../Document/Components/DocumentForm";
 import { useState } from "react";
-import { postFile } from '../../Document/Services/DocumentServices';
 import PropTypes from 'prop-types';
 
 function FirstHomeForm({ creditId }) {
-    const [incomeCertificate, setIncomeCertificate] = useState(null);
-    const [appraisalCertificate, setAppraisalCertificate] = useState(null);
-    const [creditHistorial, setCreditHistorial] = useState(null);
-    const [employment, setEmployment] = useState(null);
+    // Convertirlos en verificadores
+    const [incomeCertificate, setIncomeCertificate] = useState(false);
+    const [appraisalCertificate, setAppraisalCertificate] = useState(false);
+    const [creditHistorial, setCreditHistorial] = useState(false);
+    const [employment, setEmployment] = useState(false);
 
     const [incomeCertificateFileLoaded, setIncomeCertificateFileLoaded] = useState(false);
     const [appraisalCertificateFileLoaded, setAppraisalCertificateFileLoaded] = useState(false);
     const [creditHistorialFileLoaded, setCreditHistorialFileLoaded] = useState(false);
     const [employmentFileLoaded, setEmploymentFileLoaded] = useState(false);
 
-    const [statusUploadMessage, setStatusUploadMessage] = useState(false);
-
     const isFormValid = incomeCertificate && appraisalCertificate && creditHistorial && employment;
-
-    const handleFileChange = (event, setFile, isFileLoadedFunction) => {
-        const file = event.target.files[0];
-        if (file) {
-            setFile(file);
-            isFileLoadedFunction(true);
-        }
-    };
-
-    const handleUpload = async (e) => {
-        e.preventDefault();
-        try {
-            if (incomeCertificate) await postFile(incomeCertificate, "comprobante_de_ingresos", creditId);
-            if (appraisalCertificate) await postFile(appraisalCertificate, "certificado_de_avaluo", creditId);
-            if (creditHistorial) await postFile(creditHistorial, "historial_crediticio", creditId);
-            if (employment) await postFile(employment, "laboral", creditId);
-
-            setStatusUploadMessage(true);
-        } catch {
-            alert("Error al subir los archivos");
-        }
-    };
 
     return (
         <div className="w-full max-w-md bg-white shadow-md rounded-lg p-6 mt-8">
             <h2 className="text-xl font-semibold mb-4">Documentos para Primera Vivienda</h2>
             <p>Haga click fuera del bloque para que se cargue el archivo</p>
-            <form onSubmit={handleUpload} className="grid gap-4">
+            <form className="grid gap-4">
                 <DocumentForm
                     documentRequiredName="Comprobante de ingresos"
-                    handleFunction={(event) => handleFileChange(event, setIncomeCertificate, setIncomeCertificateFileLoaded)}
                     setFunction={setIncomeCertificate}
                     documentName="comprobante_de_ingresos"
                     isFileLoadedFunction={setIncomeCertificateFileLoaded}
+                    creditId={creditId}
                 />
                 {
                     incomeCertificateFileLoaded && (
@@ -62,10 +38,10 @@ function FirstHomeForm({ creditId }) {
                 }
                 <DocumentForm
                     documentRequiredName="Certificado de avalúo"
-                    handleFunction={(event) => handleFileChange(event, setAppraisalCertificate, setAppraisalCertificateFileLoaded)}
                     setFunction={setAppraisalCertificate}
                     documentName="certificado_de_avaluo"
                     isFileLoadedFunction={setAppraisalCertificateFileLoaded}
+                    creditId={creditId}
                 />
                 {
                     appraisalCertificateFileLoaded && (
@@ -77,10 +53,10 @@ function FirstHomeForm({ creditId }) {
                 }
                 <DocumentForm
                     documentRequiredName="Historial crediticio"
-                    handleFunction={(event) => handleFileChange(event, setCreditHistorial, setCreditHistorialFileLoaded)}
                     setFunction={setCreditHistorial}
                     documentName="historial_crediticio"
                     isFileLoadedFunction={setCreditHistorialFileLoaded}
+                    creditId={creditId}
                 />
                 {
                     creditHistorialFileLoaded && (
@@ -93,10 +69,10 @@ function FirstHomeForm({ creditId }) {
 
                 <DocumentForm
                     documentRequiredName="Laboral"
-                    handleFunction={(event) => handleFileChange(event, setEmployment, setEmploymentFileLoaded)}
                     setFunction={setEmployment}
                     documentName="laboral"
                     isFileLoadedFunction={setEmploymentFileLoaded}
+                    creditId={creditId}
                 />
                 {
                     employmentFileLoaded && (
@@ -106,20 +82,8 @@ function FirstHomeForm({ creditId }) {
                     )
 
                 }
-                {/* Botón deshabilitado mientras se suben los archivos */}
-                <button
-                    type="submit"
-                    id="uploadButton"
-                    disabled={!isFormValid} // Deshabilitar si alguna validación es falsa o algún campo está vacío
-                    className={`w-full py-2 px-4 rounded-md ${isFormValid
-                        ? "bg-indigo-600 text-white hover:bg-indigo-700"
-                        : "bg-gray-400 text-gray-700 cursor-not-allowed"
-                        }`}
-                >
-                    Subir Archivos
-                </button>
-                {statusUploadMessage ? <span id="uploadFilesText" className="text-sm flex justify-center font-bold">Todos los archivos se han subido correctamente</span> : <span className="text-sm flex justify-center font-bold">Aun no se suben los archivos</span>}
-                {statusUploadMessage ? <span className="mx-auto">Puede seguir a la seccion de ejecutivo</span> : ""}
+                {isFormValid ? <span id="uploadFilesText" className="text-sm flex justify-center font-bold">Todos los archivos se han subido correctamente</span> : <span className="text-sm flex justify-center font-bold">Aun no se suben los archivos</span>}
+                {isFormValid ? <span className="mx-auto">Puede seguir a la seccion de ejecutivo</span> : ""}
             </form>
         </div>
     );

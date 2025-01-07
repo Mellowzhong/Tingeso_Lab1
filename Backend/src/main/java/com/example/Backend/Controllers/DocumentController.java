@@ -1,6 +1,5 @@
 package com.example.Backend.Controllers;
 
-import com.example.Backend.DTOS.DocumentDTO;
 import com.example.Backend.Entities.Document;
 import com.example.Backend.Services.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -28,13 +26,13 @@ public class DocumentController {
     }
 
     @PostMapping("/post/{credit_id}")
-    public ResponseEntity<String> uploadDocument(
+    public ResponseEntity<UUID> uploadDocument(
             @RequestParam("file") MultipartFile file,
             @RequestParam("typeCredit") String doc,
             @PathVariable("credit_id") UUID creditId // Especifica el nombre del parámetro aquí
     ) throws IOException {
         Document savedDocument = documentService.saveDocument(file, doc, creditId);
-        return ResponseEntity.ok("Document uploaded successfully. ID: " + savedDocument.getId());
+        return ResponseEntity.ok(savedDocument.getId());
     }
 
     @GetMapping("/{id}")
@@ -44,5 +42,14 @@ public class DocumentController {
                 .header(HttpHeaders.CONTENT_TYPE, fileEntity.getDocumentType())
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileEntity.getDocumentName() + "\"")
                 .body(fileEntity.getData());
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteDocument(@PathVariable("id") UUID id) {
+        UUID documentId = documentService.deleteDocument(id);
+        if (documentId == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok("Document deleted successfully:" + documentId);
     }
 }
