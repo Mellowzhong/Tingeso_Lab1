@@ -8,6 +8,7 @@ function CreditHistoryForm({ creditHistory, setCreditHistory }) {
     return (
         <div className="border-2 border-gray-300 rounded-lg p-6 mb-6 w-full">
             <h2 className="text-4xl font-semibold text-center mb-4">Historial Crediticio</h2>
+            <p className="text-lg text-center mb-4">Requiere validacion manual, por favor descargue el documento.</p>
             {/* Botón para validar historial crediticio */}
             <div className="flex justify-center">
                 <button
